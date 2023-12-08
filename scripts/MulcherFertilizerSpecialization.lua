@@ -14,7 +14,7 @@ end
 -- @param   table       vehicleType     Provides information about the current vehicle (or rather implement) type.
 function MulcherFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processMulcherArea", MulcherFertilizerSpecialization.processMulcherArea)
-    print(g_currentModName .. ": Hooked into vehicle type " .. vehicleType.name)
+    print("MulcherFertilizerSpecialization: Hooked into vehicle type " .. vehicleType.name)
 end
 
 ---Adds fertilizer when mulching ready-to-harvest oilseed radish.
