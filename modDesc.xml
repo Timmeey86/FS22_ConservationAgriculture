@@ -16,7 +16,7 @@
 	</description>
 	
 	<multiplayer supported="true" />
-	<iconFilename>FS22_BetterCoverCrops.dds</iconFilename>
+	<iconFilename>icon_BetterCoverCrops.dds</iconFilename>
 	
     <extraSourceFiles>
         <sourceFile filename="scripts/BetterCoverCrops.lua" />
