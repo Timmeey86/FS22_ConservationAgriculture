@@ -1,41 +1,49 @@
+---This class is responsible for adding a specialization to mulchers which fertilizes when mulching oilseed radish
 MulcherFertilizerSpecialization = {
-    modName = g_currentModName
 }
 
+---Checks for other required specializations.
+-- Since this is only added to implements with the Mulcher specilization anyway, we don't need to check anything here.
+-- @param   table       specializations     A table of existing specializations.
+-- @return  boolean     true                (always)
 function MulcherFertilizerSpecialization.prerequisitesPresent(specializations)
     return true
 end
 
-function MulcherFertilizerSpecialization.registerEventListeners(vehicleType)
-    SpecializationUtil.registerEventListener(vehicleType, "onLoad", MulcherFertilizerSpecialization)
-    print("-- Registered MulcherFertilizerSpecialization for " .. tostring(vehicleType.name))
-end
-
+---Overrides the processMulcherArea so we can add fertilizer during the mulching process
+-- @param   table       vehicleType     Provides information about the current vehicle (or rather implement) type.
 function MulcherFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processMulcherArea", MulcherFertilizerSpecialization.processMulcherArea)
-    print("-- Registered functions for MulcherFertilizerSpecialization " .. tostring(vehicleType.name))
+    print(g_currentModName .. ": Hooked into vehicle type " .. vehicleType.name)
 end
 
-function MulcherFertilizerSpecialization:onLoad(savegame)
-    print("-- MulcherFertilizerSpecialization:onLoad start")
-    self.spec_MulcherFertilizerSpecialization = self["spec_" .. MulcherFertilizerSpecialization.modName .. ".MulcherFertilizerSpecialization"]
-
-    DebugUtil.printTableRecursively(self.spec_MulcherFertilizerSpecialization, "DBG::", 0, 0)
-end
-
+---Adds fertilizer when mulching ready-to-harvest oilseed radish.
+-- @param   function    superFunc       The GIANTS implementation of the method.
+-- @param   table       workArea        Provides information about the area to be mulched.
+-- @param   table       dt              Seems not even the superFunc uses this.
+-- @return  integer     realArea        Unknown
+-- @return  integer     area            Unknown
 function MulcherFertilizerSpecialization:processMulcherArea(superFunc, workArea, dt)
-    realArea, area = superFunc(self, workArea, dt)
     -- Retrieve the world coordinates for the current mulcher area (a subset of the mulcher's extents)
     local sx,sy,sz = getWorldTranslation(workArea.start)
     local wx,_,wz = getWorldTranslation(workArea.width)
     local hx,_,hz = getWorldTranslation(workArea.height)
+
     -- Get information about what we are mulching
     local fruitType = FSDensityMapUtil.getFruitTypeIndexAtWorldPos(sx, sz)
-    local onField, groundTypeBits, groundType = FSDensityMapUtil.getFieldDataAtWorldPosition(sx, sy, sz)
-    -- Only if we are mulching a grown oilseed radish field
+    local onField, _, groundType = FSDensityMapUtil.getFieldDataAtWorldPosition(sx, sy, sz)
+
+    -- Execute base game behavior (i.e. mulch now)
+    local realArea, area = superFunc(self, workArea, dt)
+
+    -- Only if we were mulching a grown oilseed radish field...
     if onField == true and fruitType == FruitType.OILSEEDRADISH and groundType == FieldGroundType.HARVEST_READY_OTHER then
-        -- Apply two levels of fertilizer
-        FSDensityMapUtil.updateSprayArea(sx,sz, wx,wz, hx,hz, 1, 2 )
+        -- ... apply two levels of fertilizer by calling what a sprayer would call
+        local sprayType = FieldSprayType.FERTILIZER
+        local sprayLevels = 2
+        FSDensityMapUtil.updateSprayArea(sx,sz, wx,wz, hx,hz, sprayType, sprayLevels)
     end
+
+    -- Return whatever the base game implementation returned
     return realArea, area
 end
