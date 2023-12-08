@@ -1,0 +1,1 @@
+robocopy . "%USERPROFILE%\Documents\my games\FarmingSimulator2022\mods\FS22_BetterCoverCrops" /mir /XD ".git" /XF "*.bat" "*.md" "LICENSE"

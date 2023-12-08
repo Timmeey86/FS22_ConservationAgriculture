@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="79">
+	<author>Farmsim Tim</author>
+	<version>0.1.0.0</version>
+	<title>
+		<en>Better Cover Crops</en>
+	</title>
+	
+	<description>
+		<en><![CDATA[This mod makes cover crops more useful.
+		
+		Features:
+		- Adds a fertilization stage when using a mulcher on a field which has oilseed radish planted in it
+		]]>
+		</en>
+	</description>
+	
+	<multiplayer supported="true" />
+	<iconFilename>FS22_BetterCoverCrops.dds</iconFilename>
+	
+    <extraSourceFiles>
+        <sourceFile filename="scripts/BetterCoverCrops.lua" />
+	</extraSourceFiles>
+	
+	<!--<l10n filenamePrefix="language/l10n" />-->
+</modDesc>
