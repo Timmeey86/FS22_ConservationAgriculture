@@ -1,0 +1,14 @@
+{
+    "Lua.diagnostics.globals": [
+        "g_currentMission",
+        "FieldDensityMap",
+        "DensityMapModifier",
+        "DensityMapFilter",
+        "DensityValueCompareType",
+        "FieldGroundType",
+        "getWorldTranslation",
+        "FSDensityMapUtil",
+        "FieldSprayType",
+        "SpecializationUtil"
+    ]
+}
