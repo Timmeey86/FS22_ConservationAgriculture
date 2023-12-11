@@ -9,6 +9,9 @@
         "getWorldTranslation",
         "FSDensityMapUtil",
         "FieldSprayType",
-        "SpecializationUtil"
+        "SpecializationUtil",
+        "DensityCoordType",
+        "FieldGroundSystem",
+        "g_fruitTypeManager"
     ]
 }

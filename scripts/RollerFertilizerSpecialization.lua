@@ -25,28 +25,10 @@ end
 ---@return  integer     @The amount of pixels which were processed
 ---@return  integer     @The amount of pixels in the work area
 function RollerFertilizerSpecialization:processRollerArea(superFunc, workArea, dt)
-    -- Retrieve the world coordinates for the current Roller area (a subset of the Roller's extents)
-    local sx,_,sz = getWorldTranslation(workArea.start)
-    local wx,_,wz = getWorldTranslation(workArea.width)
-    local hx,_,hz = getWorldTranslation(workArea.height)
 
-    -- Retrieve a modifier and filter for testing for cover crop pixels and for eventually modifying them
-    local groundTypeModifier, groundTypeFilter = CoverCropUtils.getCoverCropModifierAndFilter(sx,sz, wx,wz, hx,hz)
+    -- Mulch and fertilize any cover crops in the work area
+    CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
 
-    -- Check if there are any cover crop pixels in the work area
-    local numOfPixelsMatchingFilter = CoverCropUtils.getCoverCropPixels(groundTypeModifier, groundTypeFilter)
-
-    if numOfPixelsMatchingFilter > 0 then
-
-        -- Apply a mulching effect, a fertilizing stage and set the ground type to stubble tillage so we don't re-apply this stuff endlessly
-        -- We reuse the functions used by mulchers and fertilizers to hopefully profit from future changes without adapting the mod
-
-        -- Mulching effect
-        FSDensityMapUtil.updateMulcherArea(sx,sz, wx,wz, hx,hz)
-        CoverCropUtils.applyFertilizer(sx,sz, wx,wz, hx,hz)
-        CoverCropUtils.setGroundToStubbleTillage(groundTypeModifier, groundTypeFilter)
-    end
-
-    -- Execute base game behavior (If we created stubble tillage before, this will now create a seedbed).
+    -- Execute base game behavior
     return superFunc(self, workArea, dt)
 end
