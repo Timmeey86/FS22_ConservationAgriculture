@@ -12,6 +12,15 @@
         "SpecializationUtil",
         "DensityCoordType",
         "FieldGroundSystem",
-        "g_fruitTypeManager"
+        "g_fruitTypeManager",
+        "g_specializationManager",
+        "g_vehicleTypeManager",
+        "TypeManager",
+        "Utils",
+        "Mulcher",
+        "Roller",
+        "source",
+        "g_currentModName",
+        "g_currentModDirectory"
     ]
 }

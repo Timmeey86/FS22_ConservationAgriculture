@@ -7,6 +7,10 @@ source(modDirectory .. "scripts/RollerFertilizerSpecialization.lua")
 
 ---Registers the specializations
 -- @param   table   manager     The specialization manager
+
+
+--- Registers the specializations for this mod
+---@param   manager     table       the specialization manager
 local function registerSpecialization(manager)
     if manager.typeName == "vehicle" then
         g_specializationManager:addSpecialization(
