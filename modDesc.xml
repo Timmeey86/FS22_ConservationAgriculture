@@ -3,25 +3,71 @@
 	<author>Farmsim Tim</author>
 	<version>0.1.0.0</version>
 	<title>
-		<en>Better Cover Crops</en>
+		<en>Conservation Agriculture</en>
 	</title>
 	
 	<description>
-		<en><![CDATA[This mod makes cover crops more useful.
+		<en><![CDATA[This mod allows players with an interest in regenerative farming to respect the three principles of Conservation Agriculture (CA) without any disdvantage:
 		
-		Features:
-		- Adds a fertilization stage when using a mulcher on a field which has oilseed radish planted in it
-		]]>
-		</en>
+		1. Minimum mechanical soil disturbance (i.e. no tillage)
+		2. Permanent soil organic cover (with crop residues and/or cover crops)
+		3. Species diversification (through proper crop rotation)
+			
+		(Source: Food and Agriculture Organization of the United Nations)
+
+		While the base game already offers direct seeders (or planters) and oilseed radish as a cover crop for the first two principles, and crop rotation does not require an additional mod, getting a fertilization bonus from oilseed radish requires mechanical tillage.
+
+		While this is certainly something farmers do in real life, Conservation Agriculture usually involves mulching or roller crimping cover crops instead (principle #1).
+
+		This mod therefore introduces the following mechanics:
+		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and provide a maximum fertilization boost
+		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest) will do the same
+
+		This allows field work loops like the following:
+
+		Harvest crop -&gt; Apply lime -&gt; direct seed oilseed radish -&gt; let grow over winter -gt; roll or mulch in spring (this also fertilizes) -&gt;  direct seed/plant different crop -&gt; rinse and repeat
+
+		It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
+
+		This mod is compatibly with the Crop Rotation mod, but does not support Precision Farming yet.
+
+		In case of bugs, please create an issue at <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">my GitHub repository</a>.
+
+		Special thanks to Matthias on the German Discord who generously shared their script modding knowledge to make this mod possible.
+		]]></en>
+		<de><![CDATA[Diese Mod erlaubt es Spielern, die sich für regenerative Landwirtschaft interessieren, die drei Prinzipien von Conservation Agriculture (CA) ohne Nachteile zu respektieren:
+
+		1. Minimale Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
+		2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
+		3. Einhaltung von passenden Fruchtfolgen
+
+		(Quelle: Food and Agriculture Organization der Vereinten Nationen)
+
+		Während das Spiel von Haus aus Direktsaatmaschinen und Ölrettich als Zwischenfrucht für die ersten beiden Prinzipien bietet, und Fruchtfolgen keine zusätzliche Mod benötigen, bekommt man nur dann einen Düngebonus von Ölrettich, wenn man ihn in den Boden einarbeitet.
+
+		Auch wenn dies in der Realität ebenfalls von Bauern so gemacht wird, werden im Rahmen von Conservation Agriculture stattdessen Mulcher oder Walzen ("Roller Crimper") eingesetzt (Prinzip #1).
+
+		Diese Mod führt daher die folgenden Mechaniken ein:
+		- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und setzt die Düngestufe auf das Maximum.
+		- Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
+
+		Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
+
+		Ernten -&gt; Kalk streuen -&gt; Ölrettich per Direktsaat ausbringen -&gt; über den Winter wachsen lassen -&gt; Im Frühling walzen/mulchen (was auch düngt) -&gt; die nächste Frucht direktsäen/-pflanzen -&gt; und so weiter
+
+		Diese Mod ist mit Kompatibel mit "Crop Rotation", aber unterstützt im Moment noch nicht Precision Farming.
+
+		Falls Bugs auftreten, erzeugt bitte ein Ticket in <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">meinem GitHub repository</a>.
+
+		Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegebenund dadurch diese Mod ermöglicht hat.
+		]]></de>
 	</description>
 	
 	<multiplayer supported="true" />
-	<iconFilename>icon_BetterCoverCrops.dds</iconFilename>
+	<iconFilename>icon_ConservationAgriculture.dds</iconFilename>
 	
     <extraSourceFiles>
         <sourceFile filename="scripts/CoverCropUtils.lua" />
-        <sourceFile filename="scripts/BetterCoverCrops.lua" />
+        <sourceFile filename="scripts/ConservationAgriculture.lua" />
 	</extraSourceFiles>
-	
-	<!--<l10n filenamePrefix="language/l10n" />-->
 </modDesc>

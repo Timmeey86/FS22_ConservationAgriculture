@@ -69,6 +69,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
             -- Set the spray type to MANURE (since it's basically biological fertilizer) and the spray level to max for any pixel which were just mulched
             sprayTypeModifier:executeSet(FieldSprayType.MANURE, fruitFilter, onFieldFilter)
             sprayLevelModifier:executeSet(maxSprayLevel, fruitFilter, onFieldFilter)
+
+            -- TODO: Rolling does not create a mulch layer
         end
     end
 
