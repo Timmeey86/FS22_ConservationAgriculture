@@ -21,6 +21,7 @@
         "Roller",
         "source",
         "g_currentModName",
-        "g_currentModDirectory"
+        "g_currentModDirectory",
+        "Sprayer"
     ]
 }

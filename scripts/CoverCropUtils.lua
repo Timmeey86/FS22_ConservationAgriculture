@@ -49,8 +49,15 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
         -- Set up modifiers and filters so we modify only the state of this fruit type
         fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
         fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
-        -- Filter for forageable and harvestable crops
-        fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, desc.minForageGrowthState, desc.minHarvestingGrowthState)
+        -- If a crop has a "forage" state, allow only that one, otherwise allow min 
+        local minForageState = desc.minForageGrowthState
+        local maxForageState = desc.minHarvestingGrowthState
+        if maxForageState > minForageState then
+            maxForageState = maxForageState - 1 -- exclude the "ready to harvest" state
+        end
+        fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
+        -- TODO: For potatoes/sugar beets, the "forage" state is after haulm topping
+        --       For poplar, the "forage" state is the "ready to harvest" state
 
         -- Cut (mulch) any pixels which match the fruit type (including growth stage) and haven't had their stubble level set to max
         local _, numPixelsAffected, _ = fruitModifier:executeSet(desc.cutState, fruitFilter, onFieldFilter)

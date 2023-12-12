@@ -22,10 +22,13 @@ local function registerSpecialization(manager)
 
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
 			if typeEntry ~= nil then
+                -- Allow any mulcher to mulch forageable crops 
 				if SpecializationUtil.hasSpecialization(Mulcher, typeEntry.specializations)  then
 					g_vehicleTypeManager:addSpecialization(typeName, modName .. ".MulcherFertilizerSpecialization")
 				end
-                if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) then
+                -- Allow any roller to mulch forageable crops, except for "FertilizingRollerCultivator"
+                if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and 
+                    not SpecializationUtil.hasSpecialization(Sprayer, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, modName .. ".RollerFertilizerSpecialization")
                 end
             end
