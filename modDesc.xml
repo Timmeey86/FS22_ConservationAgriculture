@@ -23,7 +23,7 @@
 		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and provide a maximum fertilization boost
 		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
 		- Root crops can be rolled or mulched in the "remove foliage" state
-		- Grass and meadow can be rolled in both "ready to harvest" states
+		- Grass and meadow can be mulched or rolled in both "ready to harvest" states
 
 		This allows field work loops like the following:
 
@@ -52,16 +52,18 @@
 		Diese Mod führt daher die folgenden Mechaniken ein:
 		- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und setzt die Düngestufe auf das Maximum.
 		- Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
+		- Wurzelgemüse kann im "Kraut entfernen" Zustand gemulcht oder gewalzt werden
+		- Grass und Wiese können in beiden "erntereif" Zuständen gemulcht oder gewalzt werden
 
 		Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
 
 		Ernten -&gt; Kalk streuen -&gt; Ölrettich per Direktsaat ausbringen -&gt; über den Winter wachsen lassen -&gt; Im Frühling walzen/mulchen (was auch düngt) -&gt; die nächste Frucht direktsäen/-pflanzen -&gt; und so weiter
 
-		Diese Mod ist mit Kompatibel mit "Crop Rotation", aber unterstützt im Moment noch nicht Precision Farming.
+		Diese Mod ist kompatibel mit "Crop Rotation", aber unterstützt im Moment noch nicht Precision Farming.
 
 		Falls Bugs auftreten, erzeugt bitte ein Ticket in <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">meinem GitHub repository</a>.
 
-		Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegebenund dadurch diese Mod ermöglicht hat.
+		Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegeben und dadurch diese Mod ermöglicht hat.
 		]]></de>
 	</description>
 	
