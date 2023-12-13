@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
 	<author>Farmsim Tim</author>
-	<version>0.1.0.0</version>
+	<version>0.1.0.1</version>
 	<title>
 		<en>Conservation Agriculture</en>
 	</title>
@@ -21,7 +21,9 @@
 
 		This mod therefore introduces the following mechanics:
 		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and provide a maximum fertilization boost
-		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest) will do the same
+		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
+		- Root crops can be rolled or mulched in the "remove foliage" state
+		- Grass and meadow can be rolled in both "ready to harvest" states
 
 		This allows field work loops like the following:
 

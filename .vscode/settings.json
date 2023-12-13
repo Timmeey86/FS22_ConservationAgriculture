@@ -22,6 +22,7 @@
         "source",
         "g_currentModName",
         "g_currentModDirectory",
-        "Sprayer"
+        "Sprayer",
+        "FruitType"
     ]
 }
