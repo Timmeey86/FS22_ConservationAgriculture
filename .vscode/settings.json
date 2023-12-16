@@ -23,6 +23,9 @@
         "g_currentModName",
         "g_currentModDirectory",
         "Sprayer",
-        "FruitType"
+        "FruitType",
+        "ExtendedSprayer",
+        "DebugUtil",
+        "FS22_precisionFarming"
     ]
 }
