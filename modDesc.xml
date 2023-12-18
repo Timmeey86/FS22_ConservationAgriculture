@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
 	<author>Farmsim Tim</author>
-	<version>0.1.0.1</version>
+	<version>0.2.0.0</version>
 	<title>
 		<en>Conservation Agriculture</en>
 	</title>
 	
 	<description>
-		<en><![CDATA[This mod allows players with an interest in regenerative farming to respect the three principles of Conservation Agriculture (CA) without any disdvantage:
+		<en><![CDATA[This mod allows players with an interest in regenerative farming to respect the three principles of Conservation Agriculture (CA) without any disadvantage:
 		
 		1. Minimum mechanical soil disturbance (i.e. no tillage)
 		2. Permanent soil organic cover (with crop residues and/or cover crops)
@@ -20,7 +20,7 @@
 		While this is certainly something farmers do in real life, Conservation Agriculture usually involves mulching or roller crimping cover crops instead (principle #1).
 
 		This mod therefore introduces the following mechanics:
-		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and provide a maximum fertilization boost
+		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and grant a fertilization stage if the ground is not fertilized.
 		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
 		- Root crops can be rolled or mulched in the "remove foliage" state
 		- Grass and meadow can be mulched or rolled in both "ready to harvest" states
@@ -31,7 +31,8 @@
 
 		It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
 
-		This mod is compatibly with the Crop Rotation mod, but does not support Precision Farming yet.
+		This mod is compatible with the Precision Farming DLC and the Crop Rotation mod. In case of Precision Farming, rolling or mulching will provide enough nitrogen for light feeders like sunflowers.
+		Heavy feeders will require an additional fertilizer application afterwards.
 
 		In case of bugs, please create an issue at <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">my GitHub repository</a>.
 
@@ -50,7 +51,7 @@
 		Auch wenn dies in der Realität ebenfalls von Bauern so gemacht wird, werden im Rahmen von Conservation Agriculture stattdessen Mulcher oder Walzen ("Roller Crimper") eingesetzt (Prinzip #1).
 
 		Diese Mod führt daher die folgenden Mechaniken ein:
-		- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und setzt die Düngestufe auf das Maximum.
+		- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und gibt die erste Düngestufe, solange der Boden noch nicht gedüngt wurde.
 		- Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
 		- Wurzelgemüse kann im "Kraut entfernen" Zustand gemulcht oder gewalzt werden
 		- Grass und Wiese können in beiden "erntereif" Zuständen gemulcht oder gewalzt werden
@@ -59,7 +60,8 @@
 
 		Ernten -&gt; Kalk streuen -&gt; Ölrettich per Direktsaat ausbringen -&gt; über den Winter wachsen lassen -&gt; Im Frühling walzen/mulchen (was auch düngt) -&gt; die nächste Frucht direktsäen/-pflanzen -&gt; und so weiter
 
-		Diese Mod ist kompatibel mit "Crop Rotation", aber unterstützt im Moment noch nicht Precision Farming.
+		Diese Mod ist kompatibel mit dem Precision Farming DLC und der Mod "Crop Rotation". Im Fall von Precision Farming wird beim Walzen/Mulchen genügend Stickstoff für Schwachzehrer wie Sonnenblumen bereitgestellt.
+		Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen.
 
 		Falls Bugs auftreten, erzeugt bitte ein Ticket in <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">meinem GitHub repository</a>.
 

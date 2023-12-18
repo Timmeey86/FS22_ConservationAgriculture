@@ -1,5 +1,9 @@
 CoverCropUtils = {}
 
+--- Creates a modifier for the density map of the given type and restricts it to the given coordinates
+---@param coords            table       @The coordinates to modify
+---@params densityMapType   integer     @The type of the density map to modify
+---@return  table   @A modifier for the given type and coordinates 
 function CoverCropUtils.getDensityMapModifier(coords, densityMapType)
     -- Prepare a modifier for testing for specific ground data
     local densityMapMapId, densityMapFirstChannel, densityMapNumChannels = g_currentMission.fieldGroundSystem:getDensityMapData(densityMapType)
@@ -12,7 +16,8 @@ function CoverCropUtils.getDensityMapModifier(coords, densityMapType)
 end
 
 --- Creates a lookup table from a list in order to simulate a "contains" function
----@param list table    a one-dimensional list
+---@param list table    @a one-dimensional list
+---@return table    @A table which allows lookup like if myTable["myElement"] do
 function Set(list)
     local set = {}
     for _, l in ipairs(list) do set[l] = true end
@@ -50,6 +55,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
     -- Allow modifying the fertilization amount
     local sprayLevelModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.SPRAY_LEVEL)
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
+    local sprayLevelFilter = DensityMapFilter.new(sprayLevelModifier)
 
     -- Allow setting to a mulched state (by setting the stubble shred flag and "spraying" straw across the ground)
     local stubbleShredModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.STUBBLE_SHRED)
@@ -88,13 +94,12 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
             end
             fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
 
-
             -- if possible, use the mulched fruit state, otherwise use the cut state
             local mulchedFruitState = desc.cutState or 0
             if desc.mulcher ~= nil and desc.mulcher.hasChopperGroundLayer then
                 mulchedFruitState = desc.mulcher.state
             end
-            
+
             -- Cut (mulch) any pixels which match the fruit type (including growth stage) and haven't had their stubble level set to max
             local _, numPixelsAffected, _ = fruitModifier:executeSet(mulchedFruitState, fruitFilter, onFieldFilter)
             if numPixelsAffected > 0 then
@@ -104,10 +109,17 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
 
                 -- Set the "mulched" flag
                 stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
-                
-                -- Set the spray level to max for any pixel which was just mulched
+
+                -- "Spray" straw on the ground
                 sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)
-                sprayLevelModifier:executeSet(maxSprayLevel, fruitFilter, onFieldFilter)
+
+                -- Increase the spray level up to 1 below max
+                for i = 1, maxSprayLevel - 1 do
+                    local targetSprayLevel = maxSprayLevel - i
+                    local currentSprayLevel = targetSprayLevel - 1
+                    sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
+                    sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
+                end
 
                 -- precision farming: modify the nitrogen map
                 local precisionFarming = FS22_precisionFarming.g_precisionFarming
