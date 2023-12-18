@@ -1,79 +1,77 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
-	<author>Farmsim Tim</author>
-	<version>0.2.0.0</version>
-	<title>
-		<en>Conservation Agriculture</en>
-	</title>
-	
-	<description>
-		<en><![CDATA[This mod allows players with an interest in regenerative farming to respect the three principles of Conservation Agriculture (CA) without any disadvantage:
-		
-		1. Minimum mechanical soil disturbance (i.e. no tillage)
-		2. Permanent soil organic cover (with crop residues and/or cover crops)
-		3. Species diversification (through proper crop rotation)
-			
-		(Source: Food and Agriculture Organization of the United Nations)
+    <author>Farmsim Tim (timmeey86)</author>
+    <version>0.2.0.0</version>
+    <title>
+        <en>Conservation Agriculture</en>
+    </title>
+    
+    <description>
+        <en><![CDATA[This mod allows players with an interest in regenerative farming to respect the three principles of Conservation Agriculture (CA) without any disadvantage:
 
-		While the base game already offers direct seeders (or planters) and oilseed radish as a cover crop for the first two principles, and crop rotation does not require an additional mod, getting a fertilization bonus from oilseed radish requires mechanical tillage.
+1. Minimum mechanical soil disturbance (i.e. no tillage)
+2. Permanent soil organic cover (with crop residues and/or cover crops)
+3. Species diversification (through proper crop rotation)    
+(Source: Food and Agriculture Organization of the United Nations)
 
-		While this is certainly something farmers do in real life, Conservation Agriculture usually involves mulching or roller crimping cover crops instead (principle #1).
+The base game already offers direct seeders (or planters) and oilseed radish as a cover crop for the first two principles, and crop rotation does not require an additional mod, but getting a fertilization bonus from oilseed radish requires mechanical tillage.
+While this is certainly something farmers do in real life, Conservation Agriculture usually involves mulching or roller crimping cover crops instead (principle #1).
 
-		This mod therefore introduces the following mechanics:
-		- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and grant a fertilization stage if the ground is not fertilized.
-		- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
-		- Root crops can be rolled or mulched in the "remove foliage" state
-		- Grass and meadow can be mulched or rolled in both "ready to harvest" states
+This mod therefore introduces the following mechanics:
 
-		This allows field work loops like the following:
+- Dragging a roller or mulcher over grown oilseed radish will mulch the crop and grant a fertilization stage if the ground is not fertilized.
+- Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
+- Root crops can be rolled or mulched in the "remove foliage" state
+- Grass and meadow can be mulched or rolled in both "ready to harvest" states
 
-		Harvest crop -> Apply lime -> direct seed oilseed radish -> let grow over winter -gt; roll or mulch in spring (this also fertilizes) ->  direct seed/plant different crop -> rinse and repeat
+This allows field work loops like the following:
 
-		It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
+Harvest crop -> Apply lime -> direct seed oilseed radish -> let grow over winter -> roll or mulch in spring (this also fertilizes) ->  direct seed/plant different crop -> rinse and repeat
 
-		This mod is compatible with the Precision Farming DLC and the Crop Rotation mod. In case of Precision Farming, rolling or mulching will provide enough nitrogen for light feeders like sunflowers.
-		Heavy feeders will require an additional fertilizer application afterwards.
+It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
 
-		In case of bugs, please create an issue at <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">my GitHub repository</a>.
+This mod is compatible with the Precision Farming DLC and the Crop Rotation mod. In case of Precision Farming, rolling or mulching will provide enough nitrogen for light feeders like sunflowers.
+Heavy feeders will require an additional fertilizer application afterwards.
 
-		Special thanks to Matthias on the German Discord who generously shared their script modding knowledge to make this mod possible.
-		]]></en>
-		<de><![CDATA[Diese Mod erlaubt es Spielern, die sich für regenerative Landwirtschaft interessieren, die drei Prinzipien von Conservation Agriculture (CA) ohne Nachteile zu respektieren:
+In case of bugs, please create an issue at my GitHub repository.
 
-		1. Minimale Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
-		2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
-		3. Einhaltung von passenden Fruchtfolgen
+Special thanks to Matthias on the German Discord who generously shared their script modding knowledge to make this mod possible.
+]]></en>
+        <de><![CDATA[Diese Mod erlaubt es Spielern, die sich für regenerative Landwirtschaft interessieren, die drei Prinzipien von Conservation Agriculture (CA) ohne Nachteile zu respektieren:
 
-		(Quelle: Food and Agriculture Organization der Vereinten Nationen)
+1. Minimale Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
+2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
+3. Einhaltung von passenden Fruchtfolgen
+(Quelle: Food and Agriculture Organization der Vereinten Nationen)
 
-		Während das Spiel von Haus aus Direktsaatmaschinen und Ölrettich als Zwischenfrucht für die ersten beiden Prinzipien bietet, und Fruchtfolgen keine zusätzliche Mod benötigen, bekommt man nur dann einen Düngebonus von Ölrettich, wenn man ihn in den Boden einarbeitet.
+Das Spiel bietet von Haus aus Direktsaatmaschinen und Ölrettich als Zwischenfrucht für die ersten beiden Prinzipien, und Fruchtfolgen benötigen keine zusätzliche Mod. Man bekommt allerdings nur dann einen Düngebonus von Ölrettich, wenn man ihn in den Boden einarbeitet.
+Auch wenn dies in der Realität von Bauern so gemacht wird, werden im Rahmen von Conservation Agriculture stattdessen Mulcher oder Walzen ("Roller Crimper") eingesetzt (Prinzip #1).
 
-		Auch wenn dies in der Realität ebenfalls von Bauern so gemacht wird, werden im Rahmen von Conservation Agriculture stattdessen Mulcher oder Walzen ("Roller Crimper") eingesetzt (Prinzip #1).
+Diese Mod führt daher die folgenden Mechaniken ein:
 
-		Diese Mod führt daher die folgenden Mechaniken ein:
-		- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und gibt die erste Düngestufe, solange der Boden noch nicht gedüngt wurde.
-		- Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
-		- Wurzelgemüse kann im "Kraut entfernen" Zustand gemulcht oder gewalzt werden
-		- Grass und Wiese können in beiden "erntereif" Zuständen gemulcht oder gewalzt werden
+- Mulchen oder Walzen von ausgewachsenem Ölrettich erzeugt eine Mulchschicht und gibt die erste Düngestufe, solange der Boden noch nicht gedüngt wurde.
+- Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
+- Wurzelgemüse kann im "Kraut entfernen" Zustand gemulcht oder gewalzt werden
+- Grass und Wiese können in beiden "erntereif" Zuständen gemulcht oder gewalzt werden
 
-		Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
+Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
 
-		Ernten -> Kalk streuen -> Ölrettich per Direktsaat ausbringen -> über den Winter wachsen lassen -> Im Frühling walzen/mulchen (was auch düngt) -> die nächste Frucht direktsäen/-pflanzen -> und so weiter
+Ernten -> Kalk streuen -> Ölrettich per Direktsaat ausbringen -> über den Winter wachsen lassen -> Im Frühling walzen/mulchen (was auch düngt) -> die nächste Frucht direktsäen/-pflanzen -> und so weiter
 
-		Diese Mod ist kompatibel mit dem Precision Farming DLC und der Mod "Crop Rotation". Im Fall von Precision Farming wird beim Walzen/Mulchen genügend Stickstoff für Schwachzehrer wie Sonnenblumen bereitgestellt.
-		Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen.
+Diese Mod ist kompatibel mit dem Precision Farming DLC und der Mod "Crop Rotation". Im Fall von Precision Farming wird beim Walzen/Mulchen genügend Stickstoff für Schwachzehrer wie Sonnenblumen bereitgestellt.
+Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen.
 
-		Falls Bugs auftreten, erzeugt bitte ein Ticket in <a href="https://github.com/Timmeey86/FS22_ConservationAgriculture/issues">meinem GitHub repository</a>.
+Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 
-		Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegeben und dadurch diese Mod ermöglicht hat.
-		]]></de>
-	</description>
-	
-	<multiplayer supported="true" />
-	<iconFilename>icon_ConservationAgriculture.dds</iconFilename>
-	
+Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegeben und dadurch diese Mod ermöglicht hat.
+]]></de>
+    </description>
+    
+    <multiplayer supported="true" />
+    <iconFilename>icon_ConservationAgriculture.dds</iconFilename>
+    
     <extraSourceFiles>
         <sourceFile filename="scripts/CoverCropUtils.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
-	</extraSourceFiles>
+    </extraSourceFiles>
 </modDesc>
