@@ -26,6 +26,7 @@
         "FruitType",
         "ExtendedSprayer",
         "DebugUtil",
-        "FS22_precisionFarming"
+        "FS22_precisionFarming",
+        "SprayType"
     ]
 }

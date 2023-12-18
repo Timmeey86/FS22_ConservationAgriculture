@@ -6,10 +6,6 @@ source(modDirectory .. "scripts/MulcherFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/RollerFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/PrecisionFarmingDebuggingSpec.lua")
 
----Registers the specializations
--- @param   table   manager     The specialization manager
-
-
 --- Registers the specializations for this mod
 ---@param   manager     table       the specialization manager
 local function registerSpecialization(manager)
