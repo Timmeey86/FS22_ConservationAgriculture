@@ -51,6 +51,10 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
     local sprayLevelModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.SPRAY_LEVEL)
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
 
+    -- Allow setting to a mulched state (by setting the stubble shred flag and "spraying" straw across the ground)
+    local stubbleShredModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.STUBBLE_SHRED)
+    local strawSprayType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
+
     -- Exclude fruit types which wouldn't be cover crops. They don't seem to share common properties which separate them from the other types.
     local excludedFruitTypes = Set {
         FruitType.COTTON,
@@ -68,7 +72,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
             -- Set up modifiers and filters so we modify only the state of this fruit type
             fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
             fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
-            -- If a crop has a "forage" state, allow only that one, otherwise allow min 
+            -- If a crop has a "forage" state, allow only that one, otherwise allow min
             local minForageState = desc.minForageGrowthState
             local maxForageState = desc.minHarvestingGrowthState
             if desc.maxPreparingGrowthState > 0 then
@@ -80,25 +84,47 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
                 maxForageState = maxForageState - 1 -- exclude the "ready to harvest" state
             elseif desc.index == FruitType.GRASS or desc.index == FruitType.MEADOW then
                 -- grass/meadow: Mulch any ready-to-harvest stage
-                maxForageState = desc.maxHarvestingGrothState
+                maxForageState = desc.maxHarvestingGrowthState
             end
             fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
 
+
+            -- if possible, use the mulched fruit state, otherwise use the cut state
+            local mulchedFruitState = desc.cutState or 0
+            if desc.mulcher ~= nil and desc.mulcher.hasChopperGroundLayer then
+                mulchedFruitState = desc.mulcher.state
+            end
+            
             -- Cut (mulch) any pixels which match the fruit type (including growth stage) and haven't had their stubble level set to max
-            local _, numPixelsAffected, _ = fruitModifier:executeSet(desc.cutState, fruitFilter, onFieldFilter)
+            local _, numPixelsAffected, _ = fruitModifier:executeSet(mulchedFruitState, fruitFilter, onFieldFilter)
             if numPixelsAffected > 0 then
 
                 -- since we cut the ground, we need to filter for a cut fruit now
-                fruitFilter:setValueCompareParams(DensityValueCompareType.EQUAL, desc.cutState)
+                fruitFilter:setValueCompareParams(DensityValueCompareType.EQUAL, mulchedFruitState)
 
-                -- Set the spray type to MANURE (since it's basically biological fertilizer) and the spray level to max for any pixel which were just mulched
-                sprayTypeModifier:executeSet(FieldSprayType.MANURE, fruitFilter, onFieldFilter)
+                -- Set the "mulched" flag
+                stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
+                
+                -- Set the spray level to max for any pixel which was just mulched
+                sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)
                 sprayLevelModifier:executeSet(maxSprayLevel, fruitFilter, onFieldFilter)
 
-                -- TODO: Rolling does not create a mulch layer despite being in a cut state. We probably need to modify a different layer
-            end
+                -- precision farming: modify the nitrogen map
+                local precisionFarming = FS22_precisionFarming.g_precisionFarming
+                if precisionFarming ~= nil then
+                    local nitrogenMap = precisionFarming.nitrogenMap
+                    local sprayAuto = true
+                    local defaultNitrogenRequirementIndex = 1
 
+                    -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
+                    -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
+                    -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
+                    -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
+                    nitrogenMap:updateSprayArea(
+                        coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                        SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+                end
+            end
         end
     end
-
 end
