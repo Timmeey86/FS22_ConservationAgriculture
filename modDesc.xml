@@ -4,6 +4,7 @@
     <version>0.2.0.0</version>
     <title>
         <en>Conservation Agriculture</en>
+        <de>Konservierende Landwirschaft</en>
     </title>
     
     <description>
@@ -35,11 +36,11 @@ Heavy feeders will require an additional fertilizer application afterwards.
 
 In case of bugs, please create an issue at my GitHub repository.
 
-Special thanks to Matthias on the German Discord who generously shared their script modding knowledge to make this mod possible.
+Special thanks to Matthias and FS Gentleman on the official discord server who greatly helped in making this possible.
 ]]></en>
         <de><![CDATA[Diese Mod erlaubt es Spielern, die sich für regenerative Landwirtschaft interessieren, die drei Prinzipien von Conservation Agriculture (CA) ohne Nachteile zu respektieren:
 
-1. Minimale Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
+1. Minimale mechanische Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
 2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
 3. Einhaltung von passenden Fruchtfolgen
 (Quelle: Food and Agriculture Organization der Vereinten Nationen)
@@ -63,7 +64,7 @@ Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen.
 
 Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 
-Besonderen Dank an Matthias aus dem deutschen Discord, der seine Script Mod Erfahrungen großzügig weitergegeben und dadurch diese Mod ermöglicht hat.
+Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die viel dazu beigetragen haben, dass diese Mod möglich war.
 ]]></de>
     </description>
     
