@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.2.0.1</version>
+    <version>0.2.0.2</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</en>
@@ -15,7 +15,9 @@
 3. Species diversification (through proper crop rotation)    
 (Source: Food and Agriculture Organization of the United Nations)
 
-The base game already offers direct seeders (or planters) and oilseed radish as a cover crop for the first two principles, and crop rotation does not require an additional mod, but getting a fertilization bonus from oilseed radish requires mechanical tillage.
+The theory is that respecting these three principles will improve the overall soil quality which prevents soil erosion, nutrient runoff and other issues while at the same time improving the ecosystem in and above the soil.
+
+Base game already offers direct seeders (or planters) and oilseed radish as a cover crop for the first two principles, and crop rotation does not require an additional mod, but getting a fertilization bonus from oilseed radish requires mechanical tillage.
 While this is certainly something farmers do in real life, Conservation Agriculture usually involves mulching or roller crimping cover crops instead (principle #1).
 
 This mod therefore introduces the following mechanics:
@@ -44,6 +46,8 @@ Special thanks to Matthias and FS Gentleman on the official discord server who g
 2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
 3. Einhaltung von passenden Fruchtfolgen
 (Quelle: Food and Agriculture Organization der Vereinten Nationen)
+
+Die Theorie dabei ist, dass bei Einhaltung dieser drei Prinzipien die Qualität des Bodens verbessert wird, wodurch Erosion, Nährstoffauswaschung und andere Probleme vermieden werden. Gleichzeitig soll das Ökosystem im und über dem Boden verbessert werden.
 
 Das Spiel bietet von Haus aus Direktsaatmaschinen und Ölrettich als Zwischenfrucht für die ersten beiden Prinzipien, und Fruchtfolgen benötigen keine zusätzliche Mod. Man bekommt allerdings nur dann einen Düngebonus von Ölrettich, wenn man ihn in den Boden einarbeitet.
 Auch wenn dies in der Realität von Bauern so gemacht wird, werden im Rahmen von Conservation Agriculture stattdessen Mulcher oder Walzen ("Roller Crimper") eingesetzt (Prinzip #1).
