@@ -1,8 +1,8 @@
-# FS22_BetterCoverCrops
+# FS22_ConservationAgriculture
 
 ## Mod description
 
-This mod strives to allow the player to respect the three [Conservation Agriculture](https://www.fao.org/conservation-agriculture/en/) principles.
+This mod for Farming Simulator 22 strives to allow the player to respect the three [Conservation Agriculture](https://www.fao.org/conservation-agriculture/en/) principles while at the same time getting a benefit in doing so.
 Read the description in the [mod desc xml](modDesc.xml) for more information.
 
 ## How to install
