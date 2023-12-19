@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.2.0.0</version>
+    <version>0.2.0.1</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</en>
@@ -32,7 +32,7 @@ Harvest crop -> Apply lime -> direct seed oilseed radish -> let grow over winter
 It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
 
 This mod is compatible with the Precision Farming DLC and the Crop Rotation mod. In case of Precision Farming, rolling or mulching will provide enough nitrogen for light feeders like sunflowers.
-Heavy feeders will require an additional fertilizer application afterwards.
+Heavy feeders will require an additional fertilizer application afterwards. Make sure you keep your soil samples up to date to make this work properly.
 
 In case of bugs, please create an issue at my GitHub repository.
 
@@ -60,7 +60,7 @@ Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
 Ernten -> Kalk streuen -> Ölrettich per Direktsaat ausbringen -> über den Winter wachsen lassen -> Im Frühling walzen/mulchen (was auch düngt) -> die nächste Frucht direktsäen/-pflanzen -> und so weiter
 
 Diese Mod ist kompatibel mit dem Precision Farming DLC und der Mod "Crop Rotation". Im Fall von Precision Farming wird beim Walzen/Mulchen genügend Stickstoff für Schwachzehrer wie Sonnenblumen bereitgestellt.
-Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen.
+Für Starkzehrer müsst ihr danach zusätzlichen Dünger einbringen. Stellt sicher, dass eure Bodenproben aktuell bleiben, damit dieser Effekt funktioniert.
 
 Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 
