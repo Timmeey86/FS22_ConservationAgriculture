@@ -24,6 +24,27 @@ function Set(list)
     return set
 end
 
+--- Sets up the fruit filter to filter for the forageable growth stages
+---@param fruitFilter table @the fruit filter to be modifeid
+---@param fruitDescription table @provides information about the current fruit
+function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitDescription)
+    -- If a crop has a "forage" state, allow only that one, otherwise allow min
+    local minForageState = fruitDescription.minForageGrowthState
+    local maxForageState = fruitDescription.minHarvestingGrowthState
+    if fruitDescription.maxPreparingGrowthState > 0 then
+        -- root crops: Mulch only before haulm topping
+        minForageState = fruitDescription.maxPreparingGrowthState
+        maxForageState = minForageState
+    elseif maxForageState > minForageState then
+        -- grains etc: Mulch one stage before harvesting
+        maxForageState = maxForageState - 1 -- exclude the "ready to harvest" state
+    elseif fruitDescription.index == FruitType.GRASS or fruitDescription.index == FruitType.MEADOW then
+        -- grass/meadow: Mulch any ready-to-harvest stage
+        maxForageState = fruitDescription.maxHarvestingGrowthState
+    end
+    fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
+end
+
 --- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
 ---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
 function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
@@ -78,21 +99,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
             -- Set up modifiers and filters so we modify only the state of this fruit type
             fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
             fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
-            -- If a crop has a "forage" state, allow only that one, otherwise allow min
-            local minForageState = desc.minForageGrowthState
-            local maxForageState = desc.minHarvestingGrowthState
-            if desc.maxPreparingGrowthState > 0 then
-                -- root crops: Mulch only before haulm topping
-                minForageState = desc.maxPreparingGrowthState
-                maxForageState = minForageState
-            elseif maxForageState > minForageState then
-                -- grains etc: Mulch one stage before harvesting
-                maxForageState = maxForageState - 1 -- exclude the "ready to harvest" state
-            elseif desc.index == FruitType.GRASS or desc.index == FruitType.MEADOW then
-                -- grass/meadow: Mulch any ready-to-harvest stage
-                maxForageState = desc.maxHarvestingGrowthState
-            end
-            fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
+
+            CoverCropUtils.filterForForageableFruit(fruitFilter, desc)
 
             -- if possible, use the mulched fruit state, otherwise use the cut state
             local mulchedFruitState = desc.cutState or 0
@@ -125,16 +133,24 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
                 local precisionFarming = FS22_precisionFarming.g_precisionFarming
                 if precisionFarming ~= nil then
                     local nitrogenMap = precisionFarming.nitrogenMap
+                    local soilMap = precisionFarming.soilMap
                     local sprayAuto = true
                     local defaultNitrogenRequirementIndex = 1
 
-                    -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
-                    -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
-                    -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
-                    -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
-                    nitrogenMap:updateSprayArea(
-                        coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
-                        SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+                    -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
+                    -- We only check if at least one corner is on sampled soil to not make the check too expensive
+                    if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
+                       soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
+                       soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
+                       
+                        -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
+                        -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
+                        -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
+                        -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
+                        nitrogenMap:updateSprayArea(
+                            coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                            SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+                    end
                 end
             end
         end
