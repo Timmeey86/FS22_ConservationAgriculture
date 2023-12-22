@@ -1,5 +1,4 @@
 --- This class is responsible for adding a specialization to Mulchers which fertilizes when mulching over oilseed radish
----Additionally, the ground will get a mulched and seedbed status
 MulcherFertilizerSpecialization = {
 }
 
@@ -27,7 +26,7 @@ end
 function MulcherFertilizerSpecialization:processMulcherArea(superFunc, workArea, dt)
 
     -- Mulch and fertilize any cover crops in the work area
-    CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
+    CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, true)
 
     -- Execute base game behavior
     return superFunc(self, workArea, dt)

@@ -26,6 +26,7 @@ This mod therefore introduces the following mechanics:
 - Dragging a roller or mulcher over any crop in its "forage" state (one month before harvest, or two for corn) will do the same
 - Root crops can be rolled or mulched in the "remove foliage" state
 - Grass and meadow can be mulched or rolled in both "ready to harvest" states
+- Direct seeding under any of the conditions above will provide the same effect, except for the mulching bonus
 
 This allows field work loops like the following:
 
@@ -61,6 +62,7 @@ Diese Mod führt daher die folgenden Mechaniken ein:
 - Mulchen oder Walzen von Futtermittel (Getreide einen Monat vor der Erntezeit) hat den selben Effekt.
 - Wurzelgemüse kann im "Kraut entfernen" Zustand gemulcht oder gewalzt werden
 - Grass und Wiese können in beiden "erntereif" Zuständen gemulcht oder gewalzt werden
+- Direktsäen führt in jedem der oben genannten Fälle zum gleichen Effekt, abgesehen vom Mulch-Bonus
 
 Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
 

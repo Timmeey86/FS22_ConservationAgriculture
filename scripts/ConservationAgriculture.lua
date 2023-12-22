@@ -4,6 +4,7 @@ local modName = g_currentModName or "unknown"
 -- Dynamically load the specializations
 source(modDirectory .. "scripts/MulcherFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/RollerFertilizerSpecialization.lua")
+source(modDirectory .. "scripts/SeederFertilizerSpecialization.lua")
 
 ---Registers the specializations
 -- @param   table   manager     The specialization manager
@@ -19,6 +20,9 @@ local function registerSpecialization(manager)
         g_specializationManager:addSpecialization(
             "RollerFertilizerSpecialization", "RollerFertilizerSpecialization", modDirectory .. "scripts/RollerFertilizerSpecialization.lua", nil
         )
+        g_specializationManager:addSpecialization(
+            "SeederFertilizerSpecialization", "SeederFertilizerSpecialization", modDirectory .. "scripts/SeederFertilizerSpecialization.lua", nil
+        )
 
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
 			if typeEntry ~= nil then
@@ -30,6 +34,10 @@ local function registerSpecialization(manager)
                 if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and 
                     not SpecializationUtil.hasSpecialization(Sprayer, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, modName .. ".RollerFertilizerSpecialization")
+                end
+                -- Modify any sowing machine (including ExtendedSowingMachine) to adapt the nitrogen behavior when seeding into cover crops
+                if SpecializationUtil.hasSpecialization(SowingMachine, typeEntry.specializations) then
+                    g_vehicleTypeManager:addSpecialization(typeName, modName .. ".SeederFertilizerSpecialization")
                 end
             end
         end

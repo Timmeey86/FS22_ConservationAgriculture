@@ -47,7 +47,8 @@ end
 
 --- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
 ---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
-function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
+---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
+function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulched)
 
     -- Retrieve the world coordinates for the current Roller area (a subset of the Roller's extents)
     local startX,_,startZ = getWorldTranslation(workArea.start)
@@ -104,7 +105,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
 
             -- if possible, use the mulched fruit state, otherwise use the cut state
             local mulchedFruitState = desc.cutState or 0
-            if desc.mulcher ~= nil and desc.mulcher.hasChopperGroundLayer then
+            if groundShallBeMulched and desc.mulcher ~= nil and desc.mulcher.hasChopperGroundLayer then
                 mulchedFruitState = desc.mulcher.state
             end
 
@@ -116,7 +117,9 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea)
                 fruitFilter:setValueCompareParams(DensityValueCompareType.EQUAL, mulchedFruitState)
 
                 -- Set the "mulched" flag
-                stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
+                if groundShallBeMulched then
+                    stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
+                end
 
                 -- "Spray" straw on the ground
                 sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)

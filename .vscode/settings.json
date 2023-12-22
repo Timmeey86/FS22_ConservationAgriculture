@@ -26,6 +26,7 @@
         "FruitType",
         "FS22_precisionFarming",
         "SprayType",
-        "FieldChopperType"
+        "FieldChopperType",
+        "SowingMachine"
     ]
 }
