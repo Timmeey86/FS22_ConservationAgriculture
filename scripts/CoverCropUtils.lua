@@ -24,22 +24,24 @@ function Set(list)
     return set
 end
 
---- Sets up the fruit filter to filter for the forageable growth stages
+--- Sets up the fruit filter to filter for the forageable growth stages. We consider "half grown" forageable.
+--- We can't be too restrictive, as otherwise some cover crops would not be ready in time for the next crop.
 ---@param fruitFilter table @the fruit filter to be modifeid
 ---@param fruitDescription table @provides information about the current fruit
 function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitDescription)
     -- If a crop has a "forage" state, allow only that one, otherwise allow min
-    local minForageState = fruitDescription.minForageGrowthState
-    local maxForageState = fruitDescription.minHarvestingGrowthState
+    local minForageState = math.floor(fruitDescription.numGrowthStates / 2)
+    local maxForageState = fruitDescription.minHarvestingGrowthState - 1
     if fruitDescription.maxPreparingGrowthState > 0 then
         -- root crops: Mulch only before haulm topping
-        minForageState = fruitDescription.maxPreparingGrowthState
-        maxForageState = minForageState
-    elseif maxForageState > minForageState then
+        maxForageState = fruitDescription.maxPreparingGrowthState
+        minForageState = 2 -- numGrowthStates is usually 3 for root crops, and the first growing stage would be too soon
+    elseif maxForageState > fruitDescription.minForageGrowthState then
         -- grains etc: Mulch one stage before harvesting
         maxForageState = maxForageState - 1 -- exclude the "ready to harvest" state
     elseif fruitDescription.index == FruitType.GRASS or fruitDescription.index == FruitType.MEADOW then
         -- grass/meadow: Mulch any ready-to-harvest stage
+        minForageState = fruitDescription.minHarvestingGrowthState
         maxForageState = fruitDescription.maxHarvestingGrowthState
     end
     fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
