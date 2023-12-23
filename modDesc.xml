@@ -98,6 +98,7 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
     <iconFilename>icon_ConservationAgriculture.dds</iconFilename>
     
     <extraSourceFiles>
+        <sourceFile filename="scripts/RollerCrimpingData.lua" />
         <sourceFile filename="scripts/CoverCropUtils.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>

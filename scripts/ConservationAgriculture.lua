@@ -26,12 +26,12 @@ local function registerSpecialization(manager)
 
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
 			if typeEntry ~= nil then
-                -- Allow any mulcher to mulch forageable crops 
+                -- Allow any mulcher to mulch forageable crops
 				if SpecializationUtil.hasSpecialization(Mulcher, typeEntry.specializations)  then
 					g_vehicleTypeManager:addSpecialization(typeName, modName .. ".MulcherFertilizerSpecialization")
 				end
                 -- Allow any roller to mulch forageable crops, except for "FertilizingRollerCultivator"
-                if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and 
+                if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and
                     not SpecializationUtil.hasSpecialization(Sprayer, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, modName .. ".RollerFertilizerSpecialization")
                 end
@@ -46,3 +46,8 @@ end
 
 -- Register specializations before type validation
 TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, registerSpecialization)
+BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
+        g_rollerCrimpingData:init(g_fruitTypeManager:getFruitTypes())
+    end)
+
+g_rollerCrimpingData = RollerCrimpingData.new()

@@ -25,27 +25,13 @@ function Set(list)
 end
 
 --- Sets up the fruit filter to filter for the forageable growth stages. We consider "half grown" forageable for most things.
---- We can't be too restrictive, as otherwise some cover crops would never be ready in time for the next crop.
+--- We can't be too restrictive, as otherwise some things like wheat or barley would never be ready in time for the next crop.
 ---@param fruitFilter table @the fruit filter to be modifeid
----@param fruitDescription table @provides information about the current fruit
-function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitDescription)
+---@param fruitTypeIndex integer @the index of the fruit type in the global list of fruit types
+function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
+    local rollerCrimpingGrowthStates = g_rollerCrimpingData:getForageableStates(fruitTypeIndex)
 
-    -- For grains and anything else not specially handled: allow from "half grown" (rounded down) to the last state before "ready to harvest"
-    local growthStatesWithoutSownState = fruitDescription.numGrowthStates - 1
-    local midGrowthState = math.floor(growthStatesWithoutSownState / 2)
-    local minForageState = midGrowthState + 1 -- state 1 = sown state, so the first growth state is 2
-    local maxForageState = fruitDescription.minHarvestingGrowthState - 1
-
-    -- root crops: Mulch only before haulm topping
-    if fruitDescription.maxPreparingGrowthState > 0 then
-        maxForageState = fruitDescription.maxPreparingGrowthState
-    -- Oilseed radish, grass, meadow, alfalfa, clover, ...: Allow all "ready to harvest" states
-    elseif fruitDescription.minForageGrowthState == fruitDescription.minHarvestingGrowthState then
-        minForageState = fruitDescription.minHarvestingGrowthState
-        maxForageState = fruitDescription.maxHarvestingGrowthState
-    end
-
-    fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, minForageState, maxForageState)
+    fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max)
 end
 
 --- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
@@ -95,7 +81,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
     }
 
     -- For every possible fruit:
-    for _, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
+    for fruitTypeIndex, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
 
         -- Read as: "if excluded fruit types does not contain desc.index then"
         if not excludedFruitTypes[desc.index] then
@@ -104,7 +90,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
             fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
             fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
 
-            CoverCropUtils.filterForForageableFruit(fruitFilter, desc)
+            CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
 
             -- if possible, use the mulched fruit state, otherwise use the cut state
             local mulchedFruitState = desc.cutState or 0

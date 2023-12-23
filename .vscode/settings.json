@@ -27,6 +27,9 @@
         "FS22_precisionFarming",
         "SprayType",
         "FieldChopperType",
-        "SowingMachine"
+        "SowingMachine",
+        "g_rollerCrimpingData",
+        "Class",
+        "BaseMission"
     ]
 }
