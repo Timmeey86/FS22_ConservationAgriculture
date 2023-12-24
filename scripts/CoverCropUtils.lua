@@ -34,12 +34,10 @@ function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
     fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max)
 end
 
---- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
----@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
----@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
-function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulched)
-
-    -- Retrieve the world coordinates for the current Roller area (a subset of the Roller's extents)
+---Retrieves the world coordinates for the given work area
+---@param workArea table @The work area to be analyzed
+---@return table @A coordinates structure consisting of x1..x3 and z1..z3
+function CoverCropUtils.getWorldCoords(workArea)
     local startX,_,startZ = getWorldTranslation(workArea.start)
     local widthX,_,widthZ = getWorldTranslation(workArea.width)
     local heightX,_,heightZ = getWorldTranslation(workArea.height)
@@ -51,6 +49,16 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
         x3 = heightX,
         z3 = heightZ
     }
+    return coords
+end
+
+--- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
+---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
+---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
+function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulched)
+
+    -- Translate work area coordinates to world coordinates
+    local coords = CoverCropUtils.getWorldCoords(workArea)
 
     -- These will be used in the loop later. The parameters will be overriden later
     local fruitModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.GROUND_TYPE)
@@ -134,7 +142,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
                     if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
                        soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
                        soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
-                       
+
                         -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
                         -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
                         -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
