@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.3.0.0</version>
+    <version>0.4.0.0</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -19,6 +19,8 @@ The effects described above will be applied in the following cases:
 - Everything else: After being half grown until just before "ready for harvest"
 - Root crops: Like above, but also in the "remove foliage" state
 - Most modded crops will behave accordingly, for example alfalfa and clover behave like grass
+
+Additionally, direct seeders get an option to allow field creation so you can get rid of your plow for good.
 
 In general, this mod tries to make the three principles of Conservation Agriculture (CA) more viable:
 
@@ -62,6 +64,8 @@ Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
 - Wurzelgemüse: Wie oben, aber auch im Zustand "Kraut entfernen"
 - Die meisten Mod-Früchte verhalten sich analog, zum Beispiel sind Luzerne und Klee ähnlich wie Gras
 
+Darüber hinaus erhalten Direktsaatmaschinen eine Option zur Felderzeugung, damit ihr das Pflügen entgültig an den Nagel hängen könnt.
+
 Grundsätzlich versucht diese Mod, die drei Prinzipien von Conservation Agriculture (CA) lohnenswerter zu machen:
 
 1. Minimale mechanische Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
@@ -100,6 +104,7 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
     <extraSourceFiles>
         <sourceFile filename="scripts/RollerCrimpingData.lua" />
         <sourceFile filename="scripts/CoverCropUtils.lua" />
+        <sourceFile filename="scripts/Events/SowingMachineLimitToFieldEvent.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
 </modDesc>

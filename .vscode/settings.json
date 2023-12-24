@@ -30,6 +30,19 @@
         "SowingMachine",
         "g_rollerCrimpingData",
         "Class",
-        "BaseMission"
+        "BaseMission",
+        "InputAction",
+        "GS_PRIO_NORMAL",
+        "g_inputBinding",
+        "g_i18n",
+        "GS_PRIO_HIGH",
+        "Event",
+        "InitEventClass",
+        "NetworkUtil",
+        "streamReadBool",
+        "streamWriteBool",
+        "g_server",
+        "g_client",
+        "InputActions"
     ]
 }
