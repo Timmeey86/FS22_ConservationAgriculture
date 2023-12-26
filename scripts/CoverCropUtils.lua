@@ -118,6 +118,9 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
                     stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
                 end
 
+                -- prevent weeds
+                FSDensityMapUtil.setWeedBlockingState(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, fruitFilter, onFieldFilter)
+
                 -- "Spray" straw on the ground
                 sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)
 
