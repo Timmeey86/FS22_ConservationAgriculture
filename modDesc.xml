@@ -102,9 +102,11 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
     <iconFilename>icon_ConservationAgriculture.dds</iconFilename>
     
     <extraSourceFiles>
+        <sourceFile filename="scripts/CASettings.lua" />
         <sourceFile filename="scripts/RollerCrimpingData.lua" />
         <sourceFile filename="scripts/CoverCropUtils.lua" />
         <sourceFile filename="scripts/Events/SowingMachineLimitToFieldEvent.lua" />
+        <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
 </modDesc>

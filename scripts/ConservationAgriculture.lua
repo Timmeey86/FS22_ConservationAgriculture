@@ -40,6 +40,22 @@ local function registerSpecialization(manager)
     end
 end
 
+--- Creates a settings object which can be accessed from the UI and the rest of the code
+---@param   mission     table   @The object which is later available as g_currentMission
+local function createModSettings(mission)
+    mission.conservationAgricultureSettings = CASettings:new()
+    addModEventListener(mission.conservationAgricultureSettings)
+end
+
+--- Destroys the settings object when it is no longer needed.
+local function destroyModSettings()
+    if g_currentMission ~= nil and g_currentMission.conservationAgricultureSettings ~= nil then
+        removeModEventListener(g_currentMission.conservationAgricultureSettings)
+        g_currentMission.conservationAgricultureSettings:delete()
+        g_currentMission.conservationAgricultureSettings = nil
+    end
+end
+
 -- Register specializations before type validation
 TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, registerSpecialization)
 
@@ -48,3 +64,11 @@ g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
         g_rollerCrimpingData:init(g_fruitTypeManager:getFruitTypes())
     end)
+
+-- Create (and cleanup) a global settings object
+Mission00.load = Utils.prependedFunction(Mission00.load, createModSettings)
+FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, destroyModSettings)
+
+-- Add elements to the settings UI
+InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, CASettingsGUI.inj_onFrameOpen)
+InGameMenuGeneralSettingsFrame.updateGameSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGameSettings, CASettingsGUI.inj_updateGameSettings)

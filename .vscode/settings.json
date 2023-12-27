@@ -43,6 +43,14 @@
         "streamWriteBool",
         "g_server",
         "g_client",
-        "InputActions"
+        "InputActions",
+        "TextElement",
+        "Player",
+        "Mission00",
+        "FSBaseMission",
+        "addModEventListener",
+        "removeModEventListener",
+        "InGameMenuGeneralSettingsFrame",
+        "CheckedOptionElement"
     ]
 }
