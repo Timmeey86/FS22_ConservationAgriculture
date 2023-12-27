@@ -43,6 +43,25 @@
         "streamWriteBool",
         "g_server",
         "g_client",
-        "InputActions"
+        "InputActions",
+        "TextElement",
+        "Player",
+        "Mission00",
+        "FSBaseMission",
+        "addModEventListener",
+        "removeModEventListener",
+        "InGameMenuGeneralSettingsFrame",
+        "CheckedOptionElement",
+        "MultiTextOptionElement",
+        "XMLSchema",
+        "XmlValueType",
+        "createXMLFile",
+        "createXmlFile",
+        "setXMLBool",
+        "setXMLInt",
+        "saveXMLFile",
+        "loadXMLFile",
+        "getXMLBool",
+        "getXMLInt"
     ]
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Farmsim Tim</translationContributors>
+    <texts>
+        <text name="ca_group_title" text="Conservation Agriculture"/>
+        <text name="ca_enable_roller_crimping_short" text="Enable Roller Crimping"/>
+        <text name="ca_enable_roller_crimping_long" text="If enabled, rolling over cover crops will crimp them in order to stop their growth"/>
+        <text name="ca_enable_roller_mulch_bonus_short" text="Enable Roller Mulch Bonus"/>
+        <text name="ca_enable_roller_mulch_bonus_long" text="If enabled, roller crimping cover crops will grant a mulching bonus"/>
+        <text name="ca_enable_seeder_mulch_bonus_short" text="Enable Seeder Mulch Bonus"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="If enabled, direct seeding into cover crops will grant a mulching bonus"/>
+        <text name="ca_fertilization_behavior_base_game_short" text="Fertilization Behavior (Base Game)"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Sets the fertilization strategy when roller crimping, mulching or direct seeding into cover crops."/>
+        <text name="ca_fertilization_behavior_base_game_off" text="No fertilization"/>
+        <text name="ca_fertilization_behavior_base_game_first" text="First Fertilizer Stage"/>
+        <text name="ca_fertilization_behavior_base_game_full" text="Full Fertilization"/>
+        <text name="ca_fertilization_behavior_pf_short" text="Fertilization Behavior (Precision Farming)"/>
+        <text name="ca_fertilization_behavior_pf_long" text="Sets the fertilization strategy when roller crimping, mulching or direct seeding into cover crops with the Precision Farming DLC active."/>
+        <text name="ca_fertilization_behavior_pf_off" text="No fertilization"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Medium fertilization"/>
+        <text name="ca_enable_weed_suppression_short" text="Enable Weed Suppression"/>
+        <text name="ca_enable_weed_suppression_long" text="If enabled, weeds will not grow after direct seeding into cover crops or seeding into roller crimped/mulched cover crops."/>
+        <text name="ca_allow_direct_seeder_field_creation_short" text="Allow Seeder Field Creation"/>
+        <text name="ca_allow_direct_seeder_field_creation_long" text="If enabled, direct seeders may be used for field creation. Field creation can be toggled for each seeder separately by using the 'Tool Function 4' keybind (default: 'y')"/>
+    </texts>
+</l10n>

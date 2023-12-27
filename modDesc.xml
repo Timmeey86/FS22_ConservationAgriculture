@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.4.0.0</version>
+    <version>0.5.0.0</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -13,6 +13,7 @@
 - Roller crimping of cover crops is now possible and will provide a mulching and fertilization bonus
 - Mulching cover crops will provide the same effect as rolling them
 - Direct seeding into cover crops with Precision Farming grants more nitrogen now
+- Weeds will no longer appear when seeding into growing, mulched or roller crimped cover crops (until after the next harvest)
 
 The effects described above will be applied in the following cases:
 - Grass, Meadow and Oilseed Radish: In any "ready for harvest" states
@@ -21,6 +22,8 @@ The effects described above will be applied in the following cases:
 - Most modded crops will behave accordingly, for example alfalfa and clover behave like grass
 
 Additionally, direct seeders get an option to allow field creation so you can get rid of your plow for good.
+
+If you only want a part of these features, you can affect the behavior through the in-game settings
 
 In general, this mod tries to make the three principles of Conservation Agriculture (CA) more viable:
 
@@ -36,9 +39,9 @@ Farming Simulator 2022 already provides the following things for these principle
 - Oilseed radish as pure cover crop
 - One fertilizer stage (base game) or 25kg/ha nitrogen (Precision Farming DLC) when direct seeding into or cultivating growing crops
 
-This is already a good start, but it's not possible to get both the mulching and fertilizing bonus, and the fertilizing bonus doesn't offset the fuel, repair and seed costs for planting cover crops, at least with the Precision Farming DLC active.
+This is already a good start, but it's not possible to get both the mulching and fertilizing bonus from oilseed radish, and the fertilizing bonus doesn't offset the fuel, repair and seed costs for planting cover crops, at least with the Precision Farming DLC active.
 This mod therefore introduces mulching or roller crimping of cover crops with a large enough fertilization bonus.
-Note that with precision farming, nitrogen will currently be set to the lowest requirement of any base game crop, which is sunflowers (soybeans completely ignore nitrogen). While this means you still have to apply chemical fertilizer for most crops, you will never have to deal with planting into an overfertilized field afterwards. You need to have valid soil samples for the effect to be applied.
+Note that with precision farming, nitrogen will be set to the lowest requirement of any base game crop, which is sunflowers (soybeans completely ignore nitrogen). While this means you still have to apply chemical fertilizer for most crops, you will never have to deal with planting into an overfertilized field afterwards. You need to have valid soil samples for the effect to be applied.
 
 This allows field work loops like the following:
 
@@ -52,11 +55,12 @@ In case of bugs, please create an issue at my GitHub repository.
 
 Special thanks to Matthias and FS Gentleman on the official discord server who greatly helped in making this possible.
 ]]></en>
-        <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unsicher, ob sich Ölrettich wirklich lohnt? Dann ist diese Mod für dich:
+        <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unzufrieden mit dem Kosten/Nutzen Verhältnis von Ölrettich? Dann ist diese Mod für dich:
 
 - Zwischenfrüchte können nun mit einer Walze umgeknickt werden (engl. "roller crimping") und geben Mulch- und Düngeboni
 - Der selbe Effekt wird mit Mulchern erzielt
 - Beim Direktsäen in Zwischenfrüchte mit dem Precision Farming DLC wird mehr Stickstoff bereitgestellt
+- Nach dem Säen in wachsende, gewalzte oder gemulchte Zwischenfrüchte wächst kein Unkraut (bis nach der nächsten Ernte)
 
 Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
 - Gras, Wiese und Ölrettich: In jedem erntereifen Zustand
@@ -65,6 +69,8 @@ Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
 - Die meisten Mod-Früchte verhalten sich analog, zum Beispiel sind Luzerne und Klee ähnlich wie Gras
 
 Darüber hinaus erhalten Direktsaatmaschinen eine Option zur Felderzeugung, damit ihr das Pflügen entgültig an den Nagel hängen könnt.
+
+Falls ihr nur ein Teil dieser Effekt möchtet, könnt ihr das Verhalten durch die Spieleinstellungen beinflussen
 
 Grundsätzlich versucht diese Mod, die drei Prinzipien von Conservation Agriculture (CA) lohnenswerter zu machen:
 
@@ -80,9 +86,9 @@ Der Landwirtschaftssimulator 2022 bietet bereits die folgenden Dinge für diese 
 - Ölrettich als reine Zwischenfrucht
 - Eine Düngestufe (Base game) oder 25kg/ha Stickstoff (Precision Farming DLC) beim Direktsäen in oder Grubbern von Zwischenfrüchten
 
-Dies ist bereits ein guter Anfang, aber es ist nicht möglich, einen Mulchbonus und den Düngebonus zu erhalten, und der Düngebonus deckt die Kosten für Sprit, Reparatur und Saatgut für die Zwischenfrucht nicht ab, zumindest mit dem Precision Farming DLC.
+Dies ist bereits ein guter Anfang, aber es ist nicht möglich, gleichzeitig den Mulchbonus und den Düngebonus von Ölrettich zu erhalten, und der Düngebonus deckt die Kosten für Sprit, Reparatur und Saatgut für die Zwischenfrucht nicht ab, zumindest mit dem Precision Farming DLC.
 Diese Mod führt erlaubt daher das Mulchen oder Walzen (mit Mulcheffekt) von Zwischenfrüchten mit einem ausreichend großen Düngebonus.
-Wenn Precision Farming aktiv ist, wird der Stickstoff zur Zeit auf die benötigte Menge der sparsamsten Frucht im base game gesetzt: Sonnenblumen (Sojabohnen ignorieren Stickstoff komplett). Auch wenn das bedeutet, dass meistens noch nachgedüngt werden muss, muss man sich nicht damit rumschlagen, in ein überdüngtes Feld zu säen. Der Effekt wird nur angewendet, wenn gültige Bodenproben vorhanden sind.
+Wenn Precision Farming aktiv ist, wird der Stickstoff auf die benötigte Menge der sparsamsten Frucht im base game gesetzt: Sonnenblumen (Sojabohnen ignorieren Stickstoff komplett). Auch wenn das bedeutet, dass meistens noch nachgedüngt werden muss, muss man sich dagegen nicht damit rumschlagen, in ein überdüngtes Feld zu säen. Der Effekt wird nur angewendet, wenn gültige Bodenproben vorhanden sind.
 
 Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
 
@@ -99,12 +105,18 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
     </description>
     
     <multiplayer supported="true" />
+
     <iconFilename>icon_ConservationAgriculture.dds</iconFilename>
-    
+
     <extraSourceFiles>
-        <sourceFile filename="scripts/RollerCrimpingData.lua" />
-        <sourceFile filename="scripts/CoverCropUtils.lua" />
+        <sourceFile filename="scripts/settings/CASettings.lua" />
+        <sourceFile filename="scripts/settings/CASettingsRepository.lua" />
+        <sourceFile filename="scripts/settings/RollerCrimpingData.lua" />
+        <sourceFile filename="scripts/specializations/CoverCropUtils.lua" />
         <sourceFile filename="scripts/Events/SowingMachineLimitToFieldEvent.lua" />
+        <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
+
+    <l10n filenamePrefix="i18n/locale" />
 </modDesc>

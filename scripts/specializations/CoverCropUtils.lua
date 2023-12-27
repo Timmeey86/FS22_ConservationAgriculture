@@ -57,6 +57,8 @@ end
 ---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
 function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulched)
 
+    local settings = g_currentMission.conservationAgricultureSettings
+
     -- Translate work area coordinates to world coordinates
     local coords = CoverCropUtils.getWorldCoords(workArea)
 
@@ -118,20 +120,31 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulch
                     stubbleShredModifier:executeSet(1, fruitFilter, onFieldFilter)
                 end
 
+                if settings.weedSuppressionIsEnabled then
+                    -- prevent weeds
+                    FSDensityMapUtil.setWeedBlockingState(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, fruitFilter, onFieldFilter)
+                end
+
                 -- "Spray" straw on the ground
                 sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)
 
-                -- Increase the spray level up to 1 below max
-                for i = 1, maxSprayLevel - 1 do
-                    local targetSprayLevel = maxSprayLevel - i
-                    local currentSprayLevel = targetSprayLevel - 1
-                    sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
-                    sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
+                -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
+                -- so we execute this even with Precision Farming active.)
+                if settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
+                    for i = 1, maxSprayLevel - 1 do
+                        local targetSprayLevel = maxSprayLevel - i
+                        local currentSprayLevel = targetSprayLevel - 1
+                        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
+                        sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
+                    end
+                elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
+                    sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
+                    sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
                 end
 
                 -- precision farming: modify the nitrogen map
                 local precisionFarming = FS22_precisionFarming.g_precisionFarming
-                if precisionFarming ~= nil then
+                if precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
                     local nitrogenMap = precisionFarming.nitrogenMap
                     local soilMap = precisionFarming.soilMap
                     local sprayAuto = true

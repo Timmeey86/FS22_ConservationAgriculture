@@ -14,7 +14,6 @@ end
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function RollerFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processRollerArea", RollerFertilizerSpecialization.processRollerArea)
-    print("RollerFertilizerSpecialization: Hooked into vehicle type " .. vehicleType.name)
 end
 
 --- Adds fertilizer when rolling ready-to-harvest cover crops
@@ -25,8 +24,10 @@ end
 ---@return  integer     @The amount of pixels in the work area
 function RollerFertilizerSpecialization:processRollerArea(superFunc, workArea, dt)
 
-    -- Mulch and fertilize any cover crops in the work area
-    CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, true)
+    if g_currentMission.conservationAgricultureSettings.rollerCrimpingIsEnabled then
+        -- Mulch and fertilize any cover crops in the work area
+        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, g_currentMission.conservationAgricultureSettings.rollerMulchBonusIsEnabled)
+    end
 
     -- Execute base game behavior
     return superFunc(self, workArea, dt)
