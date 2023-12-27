@@ -27,7 +27,7 @@ function RollerFertilizerSpecialization:processRollerArea(superFunc, workArea, d
 
     if g_currentMission.conservationAgricultureSettings.rollerCrimpingIsEnabled then
         -- Mulch and fertilize any cover crops in the work area
-        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, true)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, g_currentMission.conservationAgricultureSettings.rollerMulchBonusIsEnabled)
     end
 
     -- Execute base game behavior

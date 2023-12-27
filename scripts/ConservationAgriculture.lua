@@ -51,7 +51,6 @@ end
 local function destroyModSettings()
     if g_currentMission ~= nil and g_currentMission.conservationAgricultureSettings ~= nil then
         removeModEventListener(g_currentMission.conservationAgricultureSettings)
-        g_currentMission.conservationAgricultureSettings:delete()
         g_currentMission.conservationAgricultureSettings = nil
     end
 end

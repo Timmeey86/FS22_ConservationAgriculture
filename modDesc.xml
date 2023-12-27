@@ -99,8 +99,9 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
     </description>
     
     <multiplayer supported="true" />
+
     <iconFilename>icon_ConservationAgriculture.dds</iconFilename>
-    
+
     <extraSourceFiles>
         <sourceFile filename="scripts/CASettings.lua" />
         <sourceFile filename="scripts/RollerCrimpingData.lua" />
@@ -109,4 +110,6 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
         <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
+
+    <l10n filenamePrefix="i18n/locale" />
 </modDesc>

@@ -51,6 +51,7 @@
         "addModEventListener",
         "removeModEventListener",
         "InGameMenuGeneralSettingsFrame",
-        "CheckedOptionElement"
+        "CheckedOptionElement",
+        "MultiTextOptionElement"
     ]
 }

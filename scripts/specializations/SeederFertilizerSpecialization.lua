@@ -209,13 +209,13 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
     if not skipSpecialization then
         -- In case of direct seeders/planters, create fields where necessary if that feature is turned on
-        if basegameSpec.useDirectPlanting and not spec.workAreaParameters.limitToField then
+        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and not spec.workAreaParameters.limitToField then
             SeederFertilizerSpecialization:createFieldArea(workArea)
         end
 
         -- Fertilize any cover crops in the work area, but do not set the "mulched" ground
         -- Otherwise, there would be no benefit of mulching/roller crimping before sowing
-        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, false)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled)
     end
 
     -- Execute base game behavior
