@@ -109,7 +109,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
 
     -- The list of active mods doesn't change in the same playthrough so it's enough to show either base game or precision farming
     if FS22_precisionFarming.g_precisionFarming then
-        generalSettingsPage.ca_fertilizationBehavioPF= CASettingsGUI.createChoiceElement(
+        generalSettingsPage.ca_fertilizationBehaviorPF = CASettingsGUI.createChoiceElement(
             generalSettingsPage,
             "ca_fertilizationBehaviorPF",
             CASettingsGUI.I18N_IDS.FERTILIZATION_BEHAVIOR_PF,
