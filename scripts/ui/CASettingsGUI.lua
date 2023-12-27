@@ -76,8 +76,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
     -- Create a text for the title and configure it as subtitle
     local groupTitle = TextElement.new()
     groupTitle:applyProfile("settingsMenuSubtitle", true)
-    --groupTitle:setText(g_i18n:getText(CASettingsGUI.I18N_IDS.GROUP_TITLE))
-    groupTitle:setText(CASettingsGUI.I18N_IDS.GROUP_TITLE)
+    groupTitle:setText(g_i18n:getText(CASettingsGUI.I18N_IDS.GROUP_TITLE))
     generalSettingsPage.boxLayout:addElement(groupTitle)
 
     -- Create yes/no settings

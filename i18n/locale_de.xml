@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Farmsim Tim</translationContributors>
+    <texts>
+        <text name="ca_group_title" text="Konservierende Landwirtschaft"/>
+        <text name="ca_enable_roller_crimping_short" text="Erlaube 'Roller Crimping'"/>
+        <text name="ca_enable_roller_crimping_long" text="Wenn aktiv, können Zwischenfrüchte plattgewalzt werden, um ihr Wachstum zu stoppen und eine Bodenbedeckung zu erreichen"/>
+        <text name="ca_enable_roller_mulch_bonus_short" text="Mulchbonus für Walzen"/>
+        <text name="ca_enable_roller_mulch_bonus_long" text="Wenn aktiv, wird beim 'Roller Crimping' von Zwischenfrüchten auch ein Mulchbonus vergeben"/>
+        <text name="ca_enable_seeder_mulch_bonus_short" text="Mulchbonus für Sämaschinen"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="Wenn aktiv, wird beim Direktsäen in Zwischenfrüchte auch ein Mulchbonus vergeben"/>
+        <text name="ca_fertilization_behavior_base_game_short" text="Düngeverhalten (Base Game)"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Bestimmt das Düngeverhalten beim 'Roller Crimping', Mulchen oder Direktsäen in Zwischenfrüchte"/>
+        <text name="ca_fertilization_behavior_base_game_off" text="Kein Düngebonus"/>
+        <text name="ca_fertilization_behavior_base_game_first" text="Erste Düngestufe"/>
+        <text name="ca_fertilization_behavior_base_game_full" text="Zweite Düngestufe"/>
+        <text name="ca_fertilization_behavior_pf_short" text="Düngeverhalten (Precision Farming)"/>
+        <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim 'Roller Crimping', Mulchen oder Direktsäen in Zwischenfrüchte, wenn der Precision Farming DLC aktiv ist."/>
+        <text name="ca_fertilization_behavior_pf_off" text="Kein Düngebonus"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Mittlerer Düngebonus"/>
+        <text name="ca_enable_weed_suppression_short" text="Unkrautunterdrückung"/>
+        <text name="ca_enable_weed_suppression_long" text="Wenn aktiv, wachsen nach dem Direktsäen in Zwischenfrüchte oder dem Säen in gewalzte/gemulchte Zwischenfrüchte keine Unkräuter"/>
+        <text name="ca_allow_direct_seeder_field_creation_short" text="Erlaube Felderzeugung mit Sämaschinen"/>
+        <text name="ca_allow_direct_seeder_field_creation_long" text="Wenn aktiv, können Direktsaatmaschinen zur Felderzeugung genutzt werden. Diese Funktion lässt sich zusätzlich für jedes Gerät separat ein-oder ausschalten (Werkzeugfunktion 4. Default: 'Y')"/>
+    </texts>
+</l10n>
