@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.4.0.1</version>
+    <version>0.4.1.0</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -22,6 +22,8 @@ The effects described above will be applied in the following cases:
 - Most modded crops will behave accordingly, for example alfalfa and clover behave like grass
 
 Additionally, direct seeders get an option to allow field creation so you can get rid of your plow for good.
+
+If you only want a part of these features, you can affect the behavior through the in-game settings
 
 In general, this mod tries to make the three principles of Conservation Agriculture (CA) more viable:
 
@@ -67,6 +69,8 @@ Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
 - Die meisten Mod-Früchte verhalten sich analog, zum Beispiel sind Luzerne und Klee ähnlich wie Gras
 
 Darüber hinaus erhalten Direktsaatmaschinen eine Option zur Felderzeugung, damit ihr das Pflügen entgültig an den Nagel hängen könnt.
+
+Falls ihr nur ein Teil dieser Effekt möchtet, könnt ihr das Verhalten durch die Spieleinstellungen beinflussen
 
 Grundsätzlich versucht diese Mod, die drei Prinzipien von Conservation Agriculture (CA) lohnenswerter zu machen:
 
