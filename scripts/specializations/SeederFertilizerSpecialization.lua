@@ -18,7 +18,6 @@ end
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function SeederFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processSowingMachineArea", SeederFertilizerSpecialization.processSowingMachineArea)
-    print("SeederFertilizerSpecialization: Hooked into vehicle type " .. vehicleType.name)
 end
 
 --- Registers the "create field" action (which will only be available for direct seeders)

@@ -52,6 +52,16 @@
         "removeModEventListener",
         "InGameMenuGeneralSettingsFrame",
         "CheckedOptionElement",
-        "MultiTextOptionElement"
+        "MultiTextOptionElement",
+        "XMLSchema",
+        "XmlValueType",
+        "createXMLFile",
+        "createXmlFile",
+        "setXMLBool",
+        "setXMLInt",
+        "saveXMLFile",
+        "loadXMLFile",
+        "getXMLBool",
+        "getXMLInt"
     ]
 }

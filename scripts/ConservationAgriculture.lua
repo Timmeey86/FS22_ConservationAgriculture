@@ -1,5 +1,5 @@
 local modDirectory = g_currentModDirectory or ""
-local modName = g_currentModName or "unknown"
+MOD_NAME = g_currentModName or "unknown"
 
 -- Dynamically load the specializations
 source(modDirectory .. "scripts/specializations/MulcherFertilizerSpecialization.lua")
@@ -24,16 +24,16 @@ local function registerSpecialization(manager)
 			if typeEntry ~= nil then
                 -- Allow any mulcher to mulch forageable crops
 				if SpecializationUtil.hasSpecialization(Mulcher, typeEntry.specializations)  then
-					g_vehicleTypeManager:addSpecialization(typeName, modName .. ".CA_MulcherSpecialization")
+					g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_MulcherSpecialization")
 				end
                 -- Allow any roller to mulch forageable crops, except for "FertilizingRollerCultivator"
                 if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and
                     not SpecializationUtil.hasSpecialization(Sprayer, typeEntry.specializations) then
-                    g_vehicleTypeManager:addSpecialization(typeName, modName .. ".CA_RollerSpecialization")
+                    g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_RollerSpecialization")
                 end
                 -- Modify any sowing machine (including ExtendedSowingMachine) to adapt the nitrogen behavior when seeding into cover crops
                 if SpecializationUtil.hasSpecialization(SowingMachine, typeEntry.specializations) then
-                    g_vehicleTypeManager:addSpecialization(typeName, modName .. ".CA_SeederSpecialization")
+                    g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_SeederSpecialization")
                 end
             end
         end
@@ -62,6 +62,7 @@ TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, r
 g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
         g_rollerCrimpingData:init(g_fruitTypeManager:getFruitTypes())
+        CASettingsRepository.restoreSettings()
     end)
 
 -- Create (and cleanup) a global settings object
@@ -71,3 +72,6 @@ FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, destroyModSe
 -- Add elements to the settings UI
 InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, CASettingsGUI.inj_onFrameOpen)
 InGameMenuGeneralSettingsFrame.updateGameSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGameSettings, CASettingsGUI.inj_updateGameSettings)
+
+-- Save and load settings (loading is done in loadMapFinished)
+FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, CASettingsRepository.storeSettings)

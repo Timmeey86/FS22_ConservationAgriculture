@@ -14,7 +14,6 @@ end
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function RollerFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processRollerArea", RollerFertilizerSpecialization.processRollerArea)
-    print("RollerFertilizerSpecialization: Hooked into vehicle type " .. vehicleType.name)
 end
 
 --- Adds fertilizer when rolling ready-to-harvest cover crops
