@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.5.0.1</version>
+    <version>0.5.0.2</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -113,7 +113,7 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
         <sourceFile filename="scripts/settings/CASettingsRepository.lua" />
         <sourceFile filename="scripts/settings/RollerCrimpingData.lua" />
         <sourceFile filename="scripts/specializations/CoverCropUtils.lua" />
-        <sourceFile filename="scripts/Events/SowingMachineLimitToFieldEvent.lua" />
+        <sourceFile filename="scripts/events/SowingMachineLimitToFieldEvent.lua" />
         <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
