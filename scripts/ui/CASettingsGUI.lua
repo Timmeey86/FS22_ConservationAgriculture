@@ -24,7 +24,7 @@ CASettingsGUI = {
     }
 }
 
---- Adds a simple yes/no switch to the UI
+---Adds a simple yes/no switch to the UI
 ---@param generalSettingsPage   table       @The base game object for the settings page
 ---@param id                    string      @The unique ID of the new element
 ---@param i18nTextId            string      @The key in the internationalization XML (must be two keys with a _short and _long suffix)
@@ -46,7 +46,7 @@ function CASettingsGUI.createBoolElement(generalSettingsPage, id, i18nTextId, ca
     return boolElement
 end
 
---- Creates an element which allows choosing one out of several values
+---Creates an element which allows choosing one out of several values
 ---@param generalSettingsPage   table       @The base game object for the settings page
 ---@param id                    string      @The unique ID of the new element
 ---@param i18nTextId            string      @The key in the internationalization XML (must be two keys with a _short and _long suffix)
@@ -66,7 +66,7 @@ function CASettingsGUI.createChoiceElement(generalSettingsPage, id, i18nTextId, 
     return choiceElement
 end
 
---- This gets called every time the settings page gets opened
+---This gets called every time the settings page gets opened
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
     if generalSettingsPage.conservationAgricultureInitialized then
@@ -130,7 +130,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
     generalSettingsPage.conservationAgricultureInitialized = true
 end
 
---- This gets called every time the settings page gets updated
+---This gets called every time the settings page gets updated
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.inj_updateGameSettings(generalSettingsPage)
     if generalSettingsPage.conservationAgricultureInitialized then
@@ -138,7 +138,7 @@ function CASettingsGUI.inj_updateGameSettings(generalSettingsPage)
     end
 end
 
---- Updates the UI elements to the current settings
+---Updates the UI elements to the current settings
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.updateUiElements(generalSettingsPage)
     local settings = g_currentMission.conservationAgricultureSettings

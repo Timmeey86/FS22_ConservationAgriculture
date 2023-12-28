@@ -6,7 +6,7 @@ source(modDirectory .. "scripts/specializations/MulcherFertilizerSpecialization.
 source(modDirectory .. "scripts/specializations/RollerFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua")
 
---- Registers the specializations for this mod
+---Registers the specializations for this mod
 ---@param   manager     table       the specialization manager
 local function registerSpecialization(manager)
     if manager.typeName == "vehicle" then
@@ -40,14 +40,14 @@ local function registerSpecialization(manager)
     end
 end
 
---- Creates a settings object which can be accessed from the UI and the rest of the code
+---Creates a settings object which can be accessed from the UI and the rest of the code
 ---@param   mission     table   @The object which is later available as g_currentMission
 local function createModSettings(mission)
     mission.conservationAgricultureSettings = CASettings:new()
     addModEventListener(mission.conservationAgricultureSettings)
 end
 
---- Destroys the settings object when it is no longer needed.
+---Destroys the settings object when it is no longer needed.
 local function destroyModSettings()
     if g_currentMission ~= nil and g_currentMission.conservationAgricultureSettings ~= nil then
         removeModEventListener(g_currentMission.conservationAgricultureSettings)

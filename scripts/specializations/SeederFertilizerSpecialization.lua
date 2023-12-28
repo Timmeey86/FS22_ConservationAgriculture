@@ -6,7 +6,7 @@
 SeederFertilizerSpecialization = {
 }
 
---- Checks for other required specializations.
+---Checks for other required specializations.
 ---Since this is only added to implements with the SowingMachine specilization anyway, we don't need to check anything here.
 ---@param   specializations     table   @A table of existing specializations (unused).
 ---@return  boolean     @Always true
@@ -14,13 +14,13 @@ function SeederFertilizerSpecialization.prerequisitesPresent(specializations)
     return true
 end
 
---- Overrides the processRollerArea so we can add fertilizer during the sowing process
+---Overrides the processRollerArea so we can add fertilizer during the sowing process
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function SeederFertilizerSpecialization.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "processSowingMachineArea", SeederFertilizerSpecialization.processSowingMachineArea)
 end
 
---- Registers the "create field" action (which will only be available for direct seeders)
+---Registers the "create field" action (which will only be available for direct seeders)
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function SeederFertilizerSpecialization.registerEventListeners(vehicleType)	
     SpecializationUtil.registerEventListener(vehicleType, "onLoad", SeederFertilizerSpecialization)
@@ -32,7 +32,7 @@ function SeederFertilizerSpecialization.registerEventListeners(vehicleType)
 	SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", SeederFertilizerSpecialization)
 end
 
---- Called on the client when connecting to a server. It will be called once for each seeder on the map
+---Called on the client when connecting to a server. It will be called once for each seeder on the map
 ---@param streamId any
 ---@param connection any
 function SeederFertilizerSpecialization:onReadStream(streamId, connection)
@@ -42,7 +42,7 @@ function SeederFertilizerSpecialization:onReadStream(streamId, connection)
     self:setLimitToField(streamReadBool(streamId), suppressEvents)
 end
 
---- Called on the server when a client connects. It will be called once for each seeder on the map
+---Called on the server when a client connects. It will be called once for each seeder on the map
 ---@param streamId any
 ---@param connection any
 function SeederFertilizerSpecialization:onWriteStream(streamId, connection)
@@ -50,14 +50,14 @@ function SeederFertilizerSpecialization:onWriteStream(streamId, connection)
     streamWriteBool(streamId, self.spec_CA_SeederSpecialization.limitToField)
 end
 
---- Registers functions for setting or retrieving the "limit to field" state on seeders
+---Registers functions for setting or retrieving the "limit to field" state on seeders
 ---@param vehicleType table @The vehicle which shall receive the functions
 function SeederFertilizerSpecialization.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setLimitToField", SeederFertilizerSpecialization.setLimitToField)
     SpecializationUtil.registerFunction(vehicleType, "getLimitToField", SeederFertilizerSpecialization.getLimitToField)
 end
 
---- One-time initialization of this specialization
+---One-time initialization of this specialization
 ---@param savegame table @The save game
 function SeederFertilizerSpecialization:onLoad(savegame)
     self.spec_CA_SeederSpecialization = self["spec_FS22_ConservationAgriculture.CA_SeederSpecialization"]
@@ -74,7 +74,7 @@ function SeederFertilizerSpecialization:onLoad(savegame)
     spec.workAreaParameters.limitToField = spec.limitToField
 end
 
---- Registers an action for toggling the "allow field creation" option
+---Registers an action for toggling the "allow field creation" option
 ---@param isActiveForInput boolean @Unused
 ---@param isActiveForInputIgnoreSelection boolean @Event will only be registered if this is true.
 function SeederFertilizerSpecialization:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
@@ -92,7 +92,7 @@ function SeederFertilizerSpecialization:onRegisterActionEvents(isActiveForInput,
     end
 end
 
---- Toggles the "limit to field" property every time the user presses the appropriate keybind for it.
+---Toggles the "limit to field" property every time the user presses the appropriate keybind for it.
 ---Note: The plow specialization has a "force limit to field" feature, but it looks like this is only used by stump cutters so we don't introduce that here
 ---@param actionName any @Unused
 ---@param inputValue any @Unused
@@ -103,7 +103,7 @@ function SeederFertilizerSpecialization:actionEventLimitToField(actionName, inpu
     self:setLimitToField(not spec.limitToField, false)
 end
 
---- Turns of field creation before detaching the implement
+---Turns of field creation before detaching the implement
 ---@param attacherVehicle table @Unusued
 ---@param implement table @Unused
 function SeederFertilizerSpecialization:onPreDetach(attacherVehicle, implement)
@@ -111,7 +111,7 @@ function SeederFertilizerSpecialization:onPreDetach(attacherVehicle, implement)
     spec.limitToField = true
 end
 
---- Allows field creation if it is turned on and the player has the permission for it (in multiplayer)
+---Allows field creation if it is turned on and the player has the permission for it (in multiplayer)
 ---@param dt any @Unused
 function SeederFertilizerSpecialization:onStartWorkAreaProcessing(dt)
     local spec = self.spec_CA_SeederSpecialization
@@ -122,7 +122,7 @@ function SeederFertilizerSpecialization:onStartWorkAreaProcessing(dt)
     spec.workAreaParameters.limitToField = limitToField
 end
 
---- Adjusts the text to be displayed for the action to toggle field creation dependent on the current state
+---Adjusts the text to be displayed for the action to toggle field creation dependent on the current state
 ---@param dt any @Unused
 ---@param isActiveForInput any @Unused
 ---@param isActiveForInputIgnoreSelection any @Unused
@@ -151,13 +151,13 @@ function SeederFertilizerSpecialization:onUpdate(dt, isActiveForInput, isActiveF
     end
 end
 
---- Checks whether or not the direct seeder may only seed within existing field bounds
+---Checks whether or not the direct seeder may only seed within existing field bounds
 ---@return boolean @True if the seeder may only operate within the field
 function SeederFertilizerSpecialization:getLimitToField()
     return self.spec_CA_SeederSpecialization.limitToField
 end
 
---- Enables or disables field creation for direct seeders
+---Enables or disables field creation for direct seeders
 ---@param newValue boolean @The new "limit to field" value.
 ---@param noEventSend boolean @True if no event shall be sent.
 function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
@@ -175,7 +175,7 @@ function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
             end
         end
         spec.limitToField = newValue
-        
+
         -- This is similar to what onUpdate does, but the Plow spec has it, so there is probably a reason for doing it here (e.g. update otherwise too late)
         local actionEvent = spec.actionEvents[InputAction.IMPLEMENT_EXTRA4]
         if actionEvent ~= nil then
@@ -190,7 +190,7 @@ function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
     end
 end
 
---- Creates a field area where there is no field area yet
+---Creates a field area where there is no field area yet
 ---@param workArea table @the work area to be analyzed
 function SeederFertilizerSpecialization:createFieldArea(workArea)
     -- Retrieve world coordinates for the work area
@@ -206,7 +206,7 @@ function SeederFertilizerSpecialization:createFieldArea(workArea)
     groundTypeModifier:executeSet(g_currentMission.fieldGroundSystem:getFieldGroundValue(FieldGroundType.PLOWED), notOnFieldFilter)
 end
 
---- Adds fertilizer when sowing ready-to-harvest cover crops
+---Adds fertilizer when sowing ready-to-harvest cover crops
 ---@param   superFunc   function        @The GIANTS implementation of the method.
 ---@param   workArea    table           @Provides information about the area to be mulched.
 ---@param   dt          table           @delta time? Not used here.

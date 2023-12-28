@@ -1,6 +1,6 @@
 CoverCropUtils = {}
 
---- Creates a modifier for the density map of the given type and restricts it to the given coordinates
+---Creates a modifier for the density map of the given type and restricts it to the given coordinates
 ---@param coords            table       @The coordinates to modify
 ---@params densityMapType   integer     @The type of the density map to modify
 ---@return  table   @A modifier for the given type and coordinates 
@@ -15,7 +15,7 @@ function CoverCropUtils.getDensityMapModifier(coords, densityMapType)
     return densityMapModifier
 end
 
---- Creates a lookup table from a list in order to simulate a "contains" function
+---Creates a lookup table from a list in order to simulate a "contains" function
 ---@param list table    @a one-dimensional list
 ---@return table    @A table which allows lookup like if myTable["myElement"] do
 function Set(list)
@@ -24,8 +24,8 @@ function Set(list)
     return set
 end
 
---- Sets up the fruit filter to filter for the forageable growth stages. We consider "half grown" forageable for most things.
---- We can't be too restrictive, as otherwise some things like wheat or barley would never be ready in time for the next crop.
+---Sets up the fruit filter to filter for the forageable growth stages. We consider "half grown" forageable for most things.
+---We can't be too restrictive, as otherwise some things like wheat or barley would never be ready in time for the next crop.
 ---@param fruitFilter table @the fruit filter to be modifeid
 ---@param fruitTypeIndex integer @the index of the fruit type in the global list of fruit types
 function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
@@ -52,7 +52,7 @@ function CoverCropUtils.getWorldCoords(workArea)
     return coords
 end
 
---- Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
+---Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
 ---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
 ---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
 function CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, groundShallBeMulched)

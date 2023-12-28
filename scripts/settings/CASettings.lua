@@ -7,7 +7,7 @@ CASettings = {
 }
 local CASettings_mt = Class(CASettings)
 
---- Creates a new instance of this class
+---Creates a new instance of this class
 ---@return table @A new class instance
 function CASettings.new()
     local self = setmetatable({}, CASettings_mt)
@@ -22,7 +22,7 @@ function CASettings.new()
     return self
 end
 
---- Converts STATE_CHECKED and STATE_UNCHECKED values to bool
+---Converts STATE_CHECKED and STATE_UNCHECKED values to bool
 ---@param checkState    integer     @the check state
 ---@return boolean @true if checkState is STATE_CHECKED
 function CASettings.checkStateToBool(checkState)

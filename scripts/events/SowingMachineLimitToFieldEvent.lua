@@ -7,13 +7,13 @@ local SowingMachineLimitToFieldEvent_mt = Class(SowingMachineLimitToFieldEvent, 
 
 InitEventClass(SowingMachineLimitToFieldEvent, "SowingMachineLimitToFieldEvent")
 
---- Creates an empty event.
+---Creates an empty event.
 ---@return table @The new event.
 function SowingMachineLimitToFieldEvent.emptyNew()
 	return Event.new(SowingMachineLimitToFieldEvent_mt)
 end
 
---- Creates a new event for the given seeder or planter.
+---Creates a new event for the given seeder or planter.
 ---@param sowingMachine table @The direct seeder or planter related to the event.
 ---@param limitToField boolean @True if the seeder or planter shall only operate within field bounds.
 ---@return table
@@ -24,7 +24,7 @@ function SowingMachineLimitToFieldEvent.new(sowingMachine, limitToField)
 	return self
 end
 
---- Reads event data on the server after receiving it from the client
+---Reads event data on the server after receiving it from the client
 ---Note: Most readStream implementations are documented as "Called on client side on join", but in my tests, this was only ever executed on the server.
 ---@param streamId any @The ID of the stream to read from.
 ---@param connection any @The connection to use.
@@ -34,7 +34,7 @@ function SowingMachineLimitToFieldEvent:readStream(streamId, connection)
 	self:run(connection)
 end
 
---- Sends event data from the client to the server
+---Sends event data from the client to the server
 ---@param streamId any @The ID of the stream to write to.
 ---@param connection any @The connection to use.
 function SowingMachineLimitToFieldEvent:writeStream(streamId, connection)
@@ -42,7 +42,7 @@ function SowingMachineLimitToFieldEvent:writeStream(streamId, connection)
 	streamWriteBool(streamId, self.limitToField)
 end
 
---- Runs the event on the receiving side (in this case the server)
+---Runs the event on the receiving side (in this case the server)
 ---@param connection any @The connection to be used
 function SowingMachineLimitToFieldEvent:run(connection)
 	if self.sowingMachine ~= nil and self.sowingMachine:getIsSynchronized() then

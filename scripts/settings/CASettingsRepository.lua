@@ -13,7 +13,7 @@ CASettingsRepository = {
     STATE_ATTRIBUTE = "state"
 }
 
---- Creates and returns an XML schema for the settings.
+---Creates and returns an XML schema for the settings.
 ---@return  table   @the XML schema
 function CASettingsRepository.createXmlSchema()
     local xmlSchema = XMLSchema.new(CASettingsRepository.CA_KEY)
@@ -32,7 +32,7 @@ function CASettingsRepository.createXmlSchema()
     return xmlSchema
 end
 
---- Writes the settings to a separate XML file in the save game folder
+---Writes the settings to a separate XML file in the save game folder
 function CASettingsRepository.storeSettings()
     local xmlPath = CASettingsRepository.getXmlFilePath()
     local settings = g_currentMission.conservationAgricultureSettings
@@ -57,7 +57,7 @@ function CASettingsRepository.storeSettings()
     saveXMLFile(settingsXmlId)
 end
 
---- Reads the settings from an existing XML file (or leaves them at default if there is none yet)
+---Reads the settings from an existing XML file (or leaves them at default if there is none yet)
 function CASettingsRepository.restoreSettings()
     local xmlPath = CASettingsRepository.getXmlFilePath()
     local settings = g_currentMission.conservationAgricultureSettings
@@ -86,7 +86,7 @@ function CASettingsRepository.restoreSettings()
 end
 
 
---- Builds an XML path for the given parameters
+---Builds an XML path for the given parameters
 ---@param   attribute       string      @the XML attribute
 ---@param   property        string      @the XML property which contains the attribute
 ---@param   parentProperty  any         @the parent property (if this is empty, the root node will be used)
@@ -96,7 +96,7 @@ function CASettingsRepository.getXmlAttributePath(attribute, property, parentPro
     return parentProp .. "." .. property .. "#" .. attribute
 end
 
---- Builds an XML path for "state" values like bool or enums
+---Builds an XML path for "state" values like bool or enums
 ---@param   property        string      @the XML property which contains the attribute
 ---@param   parentProperty  any         @the parent property (if this is empty, the root node will be used)
 ---@return  string      @the XML path
@@ -104,7 +104,7 @@ function CASettingsRepository.getXmlStateAttributePath(property, parentProperty)
     return CASettingsRepository.getXmlAttributePath(CASettingsRepository.STATE_ATTRIBUTE, property, parentProperty)
 end
 
---- Builds a path to the XML file which contains the settings
+---Builds a path to the XML file which contains the settings
 ---@return  any      @The path to the XML or nil
 function CASettingsRepository.getXmlFilePath()
     if g_currentMission.missionInfo and g_currentMission.missionInfo.savegameDirectory ~= nil then
