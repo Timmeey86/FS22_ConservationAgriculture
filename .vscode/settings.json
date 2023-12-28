@@ -62,6 +62,7 @@
         "saveXMLFile",
         "loadXMLFile",
         "getXMLBool",
-        "getXMLInt"
+        "getXMLInt",
+        "fileExists"
     ]
 }

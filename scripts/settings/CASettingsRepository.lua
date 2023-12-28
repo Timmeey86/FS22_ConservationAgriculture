@@ -63,6 +63,11 @@ function CASettingsRepository.restoreSettings()
     local settings = g_currentMission.conservationAgricultureSettings
     if xmlPath == nil or settings == nil then return end
 
+    if not fileExists(xmlPath) then
+        print(MOD_NAME .. ": No settings found, using default settings")
+        return
+    end
+
     -- Load the XML if possible
     local settingsXmlId = loadXMLFile("CASettings", xmlPath)
     if settingsXmlId == 0 then return end
