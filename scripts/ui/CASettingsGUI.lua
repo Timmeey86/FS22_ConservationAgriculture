@@ -70,6 +70,9 @@ end
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
     if generalSettingsPage.conservationAgricultureInitialized then
+        -- Update the UI settings, e.g. in case values have changed or the player is now an admin
+        -- It would be better if the player wouldn't have to close and re-open the menu, but the other update function never gets called apparently
+        CASettingsGUI.updateUiElements(generalSettingsPage)
         return
     end
 
@@ -123,6 +126,15 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
             "onFertilizationBehaviorBaseGameChanged")
     end
 
+    generalSettingsPage.ca_all_controls =  {
+        generalSettingsPage.ca_enableRollerCrimping,
+        generalSettingsPage.ca_enableRollerMulchBonus,
+        generalSettingsPage.ca_enableSeederMulchBonus,
+        generalSettingsPage.ca_enableWeedSuppression,
+        generalSettingsPage.ca_enableDirectSeederFieldCreation,
+        generalSettingsPage.ca_fertilizationBehaviorBaseGame,
+        generalSettingsPage.ca_fertilizationBehaviorPF
+    }
 
     -- Apply the initial values
     CASettingsGUI.updateUiElements(generalSettingsPage)
@@ -130,9 +142,10 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
     generalSettingsPage.conservationAgricultureInitialized = true
 end
 
----This gets called every time the settings page gets updated
+---Not sure if this ever gets called, but other mods have it.
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.inj_updateGameSettings(generalSettingsPage)
+    print(MOD_NAME .. ": updateGameSettings was called")
     if generalSettingsPage.conservationAgricultureInitialized then
         CASettingsGUI.updateUiElement(generalSettingsPage)
     end
@@ -145,6 +158,8 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     if not settings then
         return
     end
+
+    -- Match the current settings in the UI
     generalSettingsPage.ca_enableRollerCrimping:setIsChecked(settings.rollerCrimpingIsEnabled)
     generalSettingsPage.ca_enableRollerMulchBonus:setIsChecked(settings.rollerMulchBonusIsEnabled)
     generalSettingsPage.ca_enableSeederMulchBonus:setIsChecked(settings.seederMulchBonusIsEnabled)
@@ -154,5 +169,11 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
         generalSettingsPage.ca_fertilizationBehaviorPF:setState(settings.fertilizationBehaviorPF)
     elseif generalSettingsPage.ca_fertilizationBehaviorBaseGame ~= nil then
         generalSettingsPage.ca_fertilizationBehaviorBaseGame:setState(settings.fertilizationBehaviorBaseGame)
+    end
+
+    -- Enable/disable based on admin state
+	local isAdmin = g_currentMission:getIsServer() or g_currentMission.isMasterUser
+    for _, uiControl in pairs(generalSettingsPage.ca_all_controls) do
+        uiControl:setDisabled(not isAdmin)
     end
 end
