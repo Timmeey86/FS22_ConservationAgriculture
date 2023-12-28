@@ -28,6 +28,26 @@ function SeederFertilizerSpecialization.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", SeederFertilizerSpecialization)
     SpecializationUtil.registerEventListener(vehicleType, "onStartWorkAreaProcessing", SeederFertilizerSpecialization)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", SeederFertilizerSpecialization)
+	SpecializationUtil.registerEventListener(vehicleType, "onReadStream", SeederFertilizerSpecialization)
+	SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", SeederFertilizerSpecialization)
+end
+
+--- Called on the client when connecting to a server. It will be called once for each seeder on the map
+---@param streamId any
+---@param connection any
+function SeederFertilizerSpecialization:onReadStream(streamId, connection)
+	print(MOD_NAME .. ": Receiving SeederFertilizerSpecialization settings from server")
+    -- Synchronize the initial "limit to field" setting, but don't send a new event
+    local suppressEvents = true
+    self:setLimitToField(streamReadBool(streamId), suppressEvents)
+end
+
+--- Called on the server when a client connects. It will be called once for each seeder on the map
+---@param streamId any
+---@param connection any
+function SeederFertilizerSpecialization:onWriteStream(streamId, connection)
+	print(MOD_NAME .. ": Sending SeederFertilizerSpecialization settings to client")
+    streamWriteBool(streamId, self.spec_CA_SeederSpecialization.limitToField)
 end
 
 --- Registers functions for setting or retrieving the "limit to field" state on seeders
@@ -146,23 +166,26 @@ function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
     if spec.limitToField ~= newValue then
         if noEventSend == nil or noEventSend == false then
             if g_server ~= nil then
+                -- The call came from the server in multiplayer or from the client in singleplayer.
+                -- Broadcast to all connected clients (will do nothing in singleplayer)
                 g_server:broadcastEvent(SowingMachineLimitToFieldEvent.new(self, newValue), nil, nil, self)
             else
+                -- We are a client. Send the event to the server so the server can broadcast it to all other clients
                 g_client:getServerConnection():sendEvent(SowingMachineLimitToFieldEvent.new(self, newValue))
             end
-            spec.limitToField = newValue
-
-            -- This is similar to what onUpdate does, but the Plow spec has it, so there is probably a reason for doing it here (e.g. update otherwise too late)
-            local actionEvent = spec.actionEvents[InputAction.IMPLEMENT_EXTRA4]
-            if actionEvent ~= nil then
-                local text
-                if spec.limitToField then
-                    text = spec.texts.allowCreateFields
-                else
-                    text = spec.texts.limitToFields
-                end
-                g_inputBinding:setActionEventText(actionEvent.actionEventId, text)
+        end
+        spec.limitToField = newValue
+        
+        -- This is similar to what onUpdate does, but the Plow spec has it, so there is probably a reason for doing it here (e.g. update otherwise too late)
+        local actionEvent = spec.actionEvents[InputAction.IMPLEMENT_EXTRA4]
+        if actionEvent ~= nil then
+            local text
+            if spec.limitToField then
+                text = spec.texts.allowCreateFields
+            else
+                text = spec.texts.limitToFields
             end
+            g_inputBinding:setActionEventText(actionEvent.actionEventId, text)
         end
     end
 end

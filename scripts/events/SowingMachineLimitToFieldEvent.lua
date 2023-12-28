@@ -24,32 +24,34 @@ function SowingMachineLimitToFieldEvent.new(sowingMachine, limitToField)
 	return self
 end
 
---- Reads information from the event sent by another game instance in the network.
+--- Reads event data on the server after receiving it from the client
+---Note: Most readStream implementations are documented as "Called on client side on join", but in my tests, this was only ever executed on the server.
 ---@param streamId any @The ID of the stream to read from.
 ---@param connection any @The connection to use.
 function SowingMachineLimitToFieldEvent:readStream(streamId, connection)
-	self.object = NetworkUtil.readNodeObject(streamId)
+	self.sowingMachine = NetworkUtil.readNodeObject(streamId)
 	self.limitToField = streamReadBool(streamId)
 	self:run(connection)
 end
 
---- Writes this event instance onto the network.
+--- Sends event data from the client to the server
 ---@param streamId any @The ID of the stream to write to.
 ---@param connection any @The connection to use.
 function SowingMachineLimitToFieldEvent:writeStream(streamId, connection)
-	NetworkUtil.writeNodeObject(streamId, self.object)
+	NetworkUtil.writeNodeObject(streamId, self.sowingMachine)
 	streamWriteBool(streamId, self.limitToField)
 end
 
---- Runs the event on the receiving side
+--- Runs the event on the receiving side (in this case the server)
 ---@param connection any @The connection to be used
 function SowingMachineLimitToFieldEvent:run(connection)
-	if self.object ~= nil and self.object:getIsSynchronized() then
-		self.object:setSowingMachineLimitToField(self.limitToField, true)
+	if self.sowingMachine ~= nil and self.sowingMachine:getIsSynchronized() then
+		self.sowingMachine:setLimitToField(self.limitToField, true)
 	end
 
-	if not connection:getIsServer() then
-		-- Not sure why the client would broadcast something again, but most events have this line right here
-		g_server:broadcastEvent(SowingMachineLimitToFieldEvent.new(self.object, self.limitToField), nil, connection, self.object)
+	local remoteEndOfTheConnectionIsAServer = connection:getIsServer()
+	if not remoteEndOfTheConnectionIsAServer then
+		-- We are the server. Broadcast the event to other players
+		g_server:broadcastEvent(SowingMachineLimitToFieldEvent.new(self.sowingMachine, self.limitToField), nil, connection, self.sowingMachine)
 	end
 end
