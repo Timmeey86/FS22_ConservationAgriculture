@@ -113,6 +113,7 @@ Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die
         <sourceFile filename="scripts/settings/CASettingsRepository.lua" />
         <sourceFile filename="scripts/settings/RollerCrimpingData.lua" />
         <sourceFile filename="scripts/specializations/CoverCropUtils.lua" />
+        <sourceFile filename="scripts/events/CASettingsChangeEvent.lua" />
         <sourceFile filename="scripts/events/SowingMachineLimitToFieldEvent.lua" />
         <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />

@@ -68,6 +68,7 @@ BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinishe
 -- Create (and cleanup) a global settings object
 Mission00.load = Utils.prependedFunction(Mission00.load, createModSettings)
 FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, destroyModSettings)
+FSBaseMission.onConnectionReady = Utils.appendedFunction(FSBaseMission.onConnectionReady, function(...) CASettings.publishNewSettings() end )
 
 -- Add elements to the settings UI
 InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.onFrameOpen, CASettingsGUI.inj_onFrameOpen)

@@ -16,7 +16,7 @@ end
 ---Creates a new event for the given seeder or planter.
 ---@param sowingMachine table @The direct seeder or planter related to the event.
 ---@param limitToField boolean @True if the seeder or planter shall only operate within field bounds.
----@return table
+---@return table @The new instance
 function SowingMachineLimitToFieldEvent.new(sowingMachine, limitToField)
 	local self = SowingMachineLimitToFieldEvent.emptyNew()
 	self.sowingMachine = sowingMachine
@@ -24,8 +24,7 @@ function SowingMachineLimitToFieldEvent.new(sowingMachine, limitToField)
 	return self
 end
 
----Reads event data on the server after receiving it from the client
----Note: Most readStream implementations are documented as "Called on client side on join", but in my tests, this was only ever executed on the server.
+---Reads event data which was sent by either the client which changed values or the server which distributes them
 ---@param streamId any @The ID of the stream to read from.
 ---@param connection any @The connection to use.
 function SowingMachineLimitToFieldEvent:readStream(streamId, connection)
@@ -34,7 +33,7 @@ function SowingMachineLimitToFieldEvent:readStream(streamId, connection)
 	self:run(connection)
 end
 
----Sends event data from the client to the server
+---Sends event data from the client to the server, or from the server to other clients
 ---@param streamId any @The ID of the stream to write to.
 ---@param connection any @The connection to use.
 function SowingMachineLimitToFieldEvent:writeStream(streamId, connection)
@@ -49,8 +48,8 @@ function SowingMachineLimitToFieldEvent:run(connection)
 		self.sowingMachine:setLimitToField(self.limitToField, true)
 	end
 
-	local remoteEndOfTheConnectionIsAServer = connection:getIsServer()
-	if not remoteEndOfTheConnectionIsAServer then
+	local eventWasSentByServer = connection:getIsServer()
+	if not eventWasSentByServer then
 		-- We are the server. Broadcast the event to other players
 		g_server:broadcastEvent(SowingMachineLimitToFieldEvent.new(self.sowingMachine, self.limitToField), nil, connection, self.sowingMachine)
 	end
