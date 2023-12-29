@@ -86,7 +86,7 @@ function SeederFertilizerSpecialization:onRegisterActionEvents(isActiveForInput,
         -- Add an event for toggling the "allow field creation" mode
         -- No idea what most of the bool flags do; settings are copied from what the Plow specialization does
         if isActiveForInputIgnoreSelection and basegameSpec.useDirectPlanting  then
-            local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.IMPLEMENT_EXTRA4, self, SeederFertilizerSpecialization.actionEventLimitToField, false, true, false, true, nil)
+            local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_PIPE, self, SeederFertilizerSpecialization.actionEventLimitToField, false, true, false, true, nil)
             g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_HIGH)
         end
     end
@@ -108,7 +108,7 @@ end
 ---@param implement table @Unused
 function SeederFertilizerSpecialization:onPreDetach(attacherVehicle, implement)
     local spec = self.spec_CA_SeederSpecialization
-    spec.limitToField = true
+    self:setLimitToField(true, false)
 end
 
 ---Allows field creation if it is turned on and the player has the permission for it (in multiplayer)
@@ -131,12 +131,11 @@ function SeederFertilizerSpecialization:onUpdate(dt, isActiveForInput, isActiveF
     if self.isClient then
         local spec = self.spec_CA_SeederSpecialization
         local basegameSpec = self.spec_sowingMachine
-        local limitToFieldEvent = spec.actionEvents[InputAction.IMPLEMENT_EXTRA4]
+        local limitToFieldEvent = spec.actionEvents[InputAction.TOGGLE_PIPE]
         if limitToFieldEvent ~= nil then
             if basegameSpec.useDirectPlanting and g_currentMission:getHasPlayerPermission("createFields", self:getOwner()) then
                 -- Allow the player to toggle the event
                 g_inputBinding:setActionEventActive(limitToFieldEvent.actionEventId, true)
-
                 -- Display a different text dependent on the state
                 if self:getLimitToField() then
                     g_inputBinding:setActionEventText(limitToFieldEvent.actionEventId, spec.texts.allowCreateFields)
@@ -177,7 +176,7 @@ function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
         spec.limitToField = newValue
 
         -- This is similar to what onUpdate does, but the Plow spec has it, so there is probably a reason for doing it here (e.g. update otherwise too late)
-        local actionEvent = spec.actionEvents[InputAction.IMPLEMENT_EXTRA4]
+        local actionEvent = spec.actionEvents[InputAction.TOGGLE_PIPE]
         if actionEvent ~= nil then
             local text
             if spec.limitToField then
