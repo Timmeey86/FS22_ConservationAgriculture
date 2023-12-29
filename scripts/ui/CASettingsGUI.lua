@@ -145,7 +145,6 @@ end
 ---Not sure if this ever gets called, but other mods have it.
 ---@param   generalSettingsPage     table   @The instance of the base game's general settings page
 function CASettingsGUI.inj_updateGameSettings(generalSettingsPage)
-    print(MOD_NAME .. ": updateGameSettings was called")
     if generalSettingsPage.conservationAgricultureInitialized then
         CASettingsGUI.updateUiElement(generalSettingsPage)
     end
