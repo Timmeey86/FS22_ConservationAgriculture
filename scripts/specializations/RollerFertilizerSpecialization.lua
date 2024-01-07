@@ -24,9 +24,10 @@ end
 ---@return  integer     @The amount of pixels in the work area
 function RollerFertilizerSpecialization:processRollerArea(superFunc, workArea, dt)
 
-    if g_currentMission.conservationAgricultureSettings.rollerCrimpingIsEnabled then
+    local settings = g_currentMission.conservationAgricultureSettings
+    if settings.rollerCrimpingIsEnabled then
         -- Mulch and fertilize any cover crops in the work area
-        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, g_currentMission.conservationAgricultureSettings.rollerMulchBonusIsEnabled)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(self.vehicle, workArea, settings.rollerMulchBonusIsEnabled, settings.grassDroppingIsEnabled)
     end
 
     -- Execute base game behavior

@@ -8,6 +8,7 @@ CASettingsRepository = {
     WEED_SUPPRESSION_KEY = "weedSuppression",
     SEEDER_FIELD_CREATION_KEY = "seederFieldCreation",
     FERTILIZATION_BEHAVIOR_KEY = "fertilizationBehavior",
+    GRASS_DROPPING_KEY = "grassDropping",
     BASE_GAME_KEY = "baseGame",
     PF_KEY = "precisionFarming",
     STATE_ATTRIBUTE = "state"
@@ -23,6 +24,7 @@ function CASettingsRepository.createXmlSchema()
     xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
     xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
     xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
+    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
@@ -47,6 +49,7 @@ function CASettingsRepository.storeSettings()
     setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY), settings.seederMulchBonusIsEnabled)
     setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY), settings.weedSuppressionIsEnabled)
     setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY), settings.directSeederFieldCreationIsEnabled)
+    setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY), settings.grassDroppingIsEnabled)
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
@@ -78,6 +81,12 @@ function CASettingsRepository.restoreSettings()
     settings.seederMulchBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
     settings.weedSuppressionIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
     settings.directSeederFieldCreationIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
+
+    -- This value was added in 0.7 so older save games might not have it
+    settings.grassDroppingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
+    if settings.grassDroppingIsEnabled == nil then
+        settings.grassDroppingIsEnabled = false
+    end
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 

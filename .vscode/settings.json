@@ -67,6 +67,9 @@
         "streamWriteInt8",
         "streamReadInt8",
         "g_messageCenter",
-        "PlayerPermissionsEvent"
+        "PlayerPermissionsEvent",
+        "DensityMapHeightUtil",
+        "FillType",
+        "MathUtil"
     ]
 }

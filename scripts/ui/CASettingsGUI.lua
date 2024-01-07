@@ -9,7 +9,8 @@ CASettingsGUI = {
         FERTILIZATION_BEHAVIOR_BASE_GAME = 'ca_fertilization_behavior_base_game',
         FERTILIZATION_BEHAVIOR_PF = 'ca_fertilization_behavior_pf',
         ENABLE_WEED_SUPPRESSION = 'ca_enable_weed_suppression',
-        ALLOW_DIRECT_SEEDER_FIELD_CREATION = 'ca_allow_direct_seeder_field_creation'
+        ALLOW_DIRECT_SEEDER_FIELD_CREATION = 'ca_allow_direct_seeder_field_creation',
+        ENABLE_GRASS_DROPPING = 'ca_enable_grass_dropping'
     },
     -- Order must correspond to the enum in CASettings. We can't reuse it unfortunately
     FERTILIZATION_BEHAVIOR_BASE_GAME_I18N_IDS = {
@@ -97,17 +98,22 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         generalSettingsPage,
         "ca_enableSeederMulchBonus",
         CASettingsGUI.I18N_IDS.ENABLE_SEEDER_MULCH_BONUS,
-        "onEnableSeederMulchBonus")
+        "onEnableSeederMulchBonusChanged")
     generalSettingsPage.ca_enableWeedSuppression = CASettingsGUI.createBoolElement(
         generalSettingsPage,
         "ca_enableWeedSuppression",
         CASettingsGUI.I18N_IDS.ENABLE_WEED_SUPPRESSION,
-        "onEnableWeedSuppression")
+        "onEnableWeedSuppressionChanged")
     generalSettingsPage.ca_enableDirectSeederFieldCreation = CASettingsGUI.createBoolElement(
         generalSettingsPage,
         "ca_enableDirectSeederFieldCreation",
         CASettingsGUI.I18N_IDS.ALLOW_DIRECT_SEEDER_FIELD_CREATION,
-        "onEnableDirectSeederFieldCreation")
+        "onEnableDirectSeederFieldCreationChanged")
+    generalSettingsPage.ca_enableGrassDropping = CASettingsGUI.createBoolElement(
+        generalSettingsPage,
+        "ca_enableGrassDropping",
+        CASettingsGUI.I18N_IDS.ENABLE_GRASS_DROPPING,
+        "onEnableGrassDroppingChanged")
 
     -- The list of active mods doesn't change in the same playthrough so it's enough to show either base game or precision farming
     if FS22_precisionFarming.g_precisionFarming then
@@ -132,6 +138,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         generalSettingsPage.ca_enableSeederMulchBonus,
         generalSettingsPage.ca_enableWeedSuppression,
         generalSettingsPage.ca_enableDirectSeederFieldCreation,
+        generalSettingsPage.ca_enableGrassDropping,
         generalSettingsPage.ca_fertilizationBehaviorBaseGame,
         generalSettingsPage.ca_fertilizationBehaviorPF
     }
@@ -164,6 +171,7 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     generalSettingsPage.ca_enableSeederMulchBonus:setIsChecked(settings.seederMulchBonusIsEnabled)
     generalSettingsPage.ca_enableWeedSuppression:setIsChecked(settings.weedSuppressionIsEnabled)
     generalSettingsPage.ca_enableDirectSeederFieldCreation:setIsChecked(settings.directSeederFieldCreationIsEnabled)
+    generalSettingsPage.ca_enableGrassDropping:setIsChecked(settings.grassDroppingIsEnabled)
     if generalSettingsPage.ca_fertilizationBehaviorPF ~= nil then
         generalSettingsPage.ca_fertilizationBehaviorPF:setState(settings.fertilizationBehaviorPF)
     elseif generalSettingsPage.ca_fertilizationBehaviorBaseGame ~= nil then

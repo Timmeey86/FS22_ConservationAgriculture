@@ -17,6 +17,7 @@ function CASettings.new()
     self.seederMulchBonusIsEnabled = false
     self.weedSuppressionIsEnabled = true
     self.directSeederFieldCreationIsEnabled = true
+    self.grassDroppingIsEnabled = false
     self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
     return self
@@ -39,16 +40,20 @@ function CASettings:onEnableRollerMulchBonusChanged(newState)
     self.rollerMulchBonusIsEnabled = CASettings.checkStateToBool(newState)
     CASettings.publishNewSettings()
 end
-function CASettings:onEnableSeederMulchBonus(newState)
+function CASettings:onEnableSeederMulchBonusChanged(newState)
     self.seederMulchBonusIsEnabled = CASettings.checkStateToBool(newState)
     CASettings.publishNewSettings()
 end
-function CASettings:onEnableWeedSuppression(newState)
+function CASettings:onEnableWeedSuppressionChanged(newState)
     self.weedSuppressionIsEnabled = CASettings.checkStateToBool(newState)
     CASettings.publishNewSettings()
 end
-function CASettings:onEnableDirectSeederFieldCreation(newState)
+function CASettings:onEnableDirectSeederFieldCreationChanged(newState)
     self.directSeederFieldCreationIsEnabled = CASettings.checkStateToBool(newState)
+    CASettings.publishNewSettings()
+end
+function CASettings:onEnableGrassDroppingChanged(newState)
+    self.grassDroppingIsEnabled = CASettings.checkStateToBool(newState)
     CASettings.publishNewSettings()
 end
 function CASettings:onFertilizationBehaviorPFChanged(newState)
@@ -57,6 +62,7 @@ function CASettings:onFertilizationBehaviorPFChanged(newState)
 end
 function CASettings:onFertilizationBehaviorBaseGameChanged(newState)
     self.fertilizationBehaviorBaseGame = newState
+    CASettings.publishNewSettings()
 end
 
 ---Sends the new settings to the server, or from the server to all other clients
@@ -81,9 +87,11 @@ function CASettings:onReadStream(streamId, connection)
     self.seederMulchBonusIsEnabled = streamReadBool(streamId)
     self.weedSuppressionIsEnabled = streamReadBool(streamId)
     self.directSeederFieldCreationIsEnabled = streamReadBool(streamId)
+    self.grassDroppingIsEnabled = streamReadBool(streamId)
     self.fertilizationBehaviorPF = streamReadInt8(streamId)
     self.fertilizationBehaviorBaseGame = streamReadInt8(streamId)
 end
+
 ---Sends the current settings to a client which is connecting to a multiplayer game
 ---@param streamId any @The ID of the stream to write to
 ---@param connection any @Unused
@@ -94,6 +102,7 @@ function CASettings:onWriteStream(streamId, connection)
     streamWriteBool(streamId, self.seederMulchBonusIsEnabled)
     streamWriteBool(streamId, self.weedSuppressionIsEnabled)
     streamWriteBool(streamId, self.directSeederFieldCreationIsEnabled)
+    streamWriteBool(streamId, self.grassDroppingIsEnabled)
     streamWriteInt8(streamId, self.fertilizationBehaviorPF)
     streamWriteInt8(streamId, self.fertilizationBehaviorBaseGame)
 end

@@ -25,7 +25,7 @@ end
 function MulcherFertilizerSpecialization:processMulcherArea(superFunc, workArea, dt)
 
     -- Mulch and fertilize any cover crops in the work area
-    CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, true)
+    CoverCropUtils.mulchAndFertilizeCoverCrops(self.vehicle, workArea, true, false)
 
     -- Execute base game behavior
     return superFunc(self, workArea, dt)

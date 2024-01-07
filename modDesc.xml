@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.6.0.0</version>
+    <version>0.7.0.0</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -53,7 +53,7 @@ This mod is compatible with the Precision Farming DLC and the Crop Rotation mod 
 
 In case of bugs, please create an issue at my GitHub repository.
 
-Special thanks to Matthias and FS Gentleman on the official discord server who greatly helped in making this possible.
+Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 ]]></en>
         <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unzufrieden mit dem Kosten/Nutzen Verhältnis von Ölrettich? Dann ist diese Mod für dich:
 
@@ -70,7 +70,7 @@ Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
 
 Darüber hinaus erhalten Direktsaatmaschinen eine Option zur Felderzeugung, damit ihr das Pflügen entgültig an den Nagel hängen könnt.
 
-Falls ihr nur ein Teil dieser Effekt möchtet, könnt ihr das Verhalten durch die Spieleinstellungen beinflussen
+Falls ihr nur ein Teil dieser Effekte möchtet, könnt ihr das Verhalten durch die Spieleinstellungen beinflussen
 
 Grundsätzlich versucht diese Mod, die drei Prinzipien von Conservation Agriculture (CA) lohnenswerter zu machen:
 
@@ -100,7 +100,7 @@ Für ein möglichst realitätsnahes Erlebnis wird der Precision Farming DLC und 
 
 Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 
-Besonderen Dank an Matthias und FS Gentleman vom offiziellen Discord Server, die viel dazu beigetragen haben, dass diese Mod möglich war.
+Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 ]]></de>
     </description>
     

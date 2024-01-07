@@ -193,16 +193,20 @@ end
 ---@param workArea table @the work area to be analyzed
 function SeederFertilizerSpecialization:createFieldArea(workArea)
     -- Retrieve world coordinates for the work area
-    local coords = CoverCropUtils.getWorldCoords(workArea)
+    local coordParts = CoverCropUtils.getWorldCoordParts(workArea)
 
-    -- Clear any deco stuff which is in the way
-    FSDensityMapUtil.clearDecoArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3)
+    -- Repeat for each part of the work area
+    for _, coords in pairs(coordParts) do
 
-    -- Set any ground which is not on the field to plowed. This is only temporary as that area will be seeded into right after
-    local groundTypeModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.GROUND_TYPE)
-    local notOnFieldFilter = DensityMapFilter.new(groundTypeModifier)
-    notOnFieldFilter:setValueCompareParams(DensityValueCompareType.EQUAL, 0)
-    groundTypeModifier:executeSet(g_currentMission.fieldGroundSystem:getFieldGroundValue(FieldGroundType.PLOWED), notOnFieldFilter)
+        -- Clear any deco stuff which is in the way
+        FSDensityMapUtil.clearDecoArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3)
+
+        -- Set any ground which is not on the field to plowed. This is only temporary as that area will be seeded into right after
+        local groundTypeModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.GROUND_TYPE)
+        local notOnFieldFilter = DensityMapFilter.new(groundTypeModifier)
+        notOnFieldFilter:setValueCompareParams(DensityValueCompareType.EQUAL, 0)
+        groundTypeModifier:executeSet(g_currentMission.fieldGroundSystem:getFieldGroundValue(FieldGroundType.PLOWED), notOnFieldFilter)
+    end
 end
 
 ---Adds fertilizer when sowing ready-to-harvest cover crops
@@ -236,7 +240,7 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
         -- Fertilize any cover crops in the work area, but do not set the "mulched" ground
         -- Otherwise, there would be no benefit of mulching/roller crimping before sowing
-        CoverCropUtils.mulchAndFertilizeCoverCrops(workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(self.vehicle, workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled, false)
     end
 
     -- Execute base game behavior
