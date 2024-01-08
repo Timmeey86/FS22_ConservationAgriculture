@@ -240,7 +240,7 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
         -- Fertilize any cover crops in the work area, but do not set the "mulched" ground
         -- Otherwise, there would be no benefit of mulching/roller crimping before sowing
-        CoverCropUtils.mulchAndFertilizeCoverCrops(self.vehicle, workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled, false)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled, false)
     end
 
     -- Execute base game behavior

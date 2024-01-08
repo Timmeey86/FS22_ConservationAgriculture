@@ -23,6 +23,6 @@
         <text name="ca_allow_direct_seeder_field_creation_short" text="Allow Seeder Field Creation"/>
         <text name="ca_allow_direct_seeder_field_creation_long" text="If enabled, direct seeders may be used for field creation. Field creation can be toggled for each seeder separately by using the 'Tool Function 4' keybind (default: 'Z')"/>
         <text name="ca_enable_grass_dropping_short" text="Roller Crimping drops grass"/>
-        <text name="ca_enable_grass_dropping_long" text="If enabled, roller crimping will drop grass on the ground in order to simulate the presence of biomatter. The grass will be automatically removed when seeding."/>
+        <text name="ca_enable_grass_dropping_long" text="If enabled, roller crimping and mulching will drop grass on the ground in order to simulate the presence of biomatter. The grass will be automatically removed when seeding."/>
     </texts>
 </l10n>

@@ -25,7 +25,8 @@ end
 function MulcherFertilizerSpecialization:processMulcherArea(superFunc, workArea, dt)
 
     -- Mulch and fertilize any cover crops in the work area
-    CoverCropUtils.mulchAndFertilizeCoverCrops(self.vehicle, workArea, true, false)
+    local settings = g_currentMission.conservationAgricultureSettings
+    CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, true, settings.grassDroppingIsEnabled)
 
     -- Execute base game behavior
     return superFunc(self, workArea, dt)

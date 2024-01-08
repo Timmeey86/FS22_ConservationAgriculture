@@ -71,17 +71,87 @@ function CoverCropUtils.getWorldCoordParts(workArea)
     return workAreaCoordParts
 end
 
+--- Calculates a drop area behind the work area so that e.g. a mulcher does not instantly remove dropped grass again
+---@param implement table @The current implement which called this code
+---@param coords table @The coordinates of the work area (or part)
+---@param shiftingFactor integer @The factor to shift the work area by, where + means towards the back and - means towards the front
+---@return table @The coordinate parts shifted in accordance with the factor
+function CoverCropUtils.getSafeDropArea(implement, coords, shiftingFactor)
+
+    if shiftingFactor == 0 then
+        return coords
+    end
+
+    local xDiffFrontBack = coords.x3 - coords.x1
+    local yDiffFrontBack = coords.y3 - coords.y1
+    local zDiffFrontBack = coords.z3 - coords.z1
+
+    local xOffset = shiftingFactor * xDiffFrontBack
+    local yOffset = shiftingFactor * yDiffFrontBack
+    local zOffset = shiftingFactor * zDiffFrontBack
+
+
+    return {
+        x1 = coords.x1 - xOffset,
+        x2 = coords.x2 - xOffset,
+        x3 = coords.x3 - xOffset,
+        y1 = coords.y1 - yOffset,
+        y2 = coords.y2 - yOffset,
+        y3 = coords.y3 - yOffset,
+        z1 = coords.z1 - zOffset,
+        z2 = coords.z2 - zOffset,
+        z3 = coords.z3 - zOffset
+    }
+end
+
+---Retrieves a directional factor for the drop area which can be used to shift the drop area so that it always drops "behind" the implement
+---Dependent on the current direction of the vehicle, and the fact if the implement is attached to the front or back, this can mean a shift in 
+---positive or negative direction.
+---@param implement table @The implement (roller, mulcher, ...) which called this code
+---@param coordPart table @Any part of the work area
+---@return integer @A factor which can be used for shifting the work area, or 0 if it shall not be moved
+function CoverCropUtils.getDirectionalFactorForDropArea(implement, coordPart)
+
+    local factor = 0
+    if implement.lastSpeedReal > 0.001 then
+
+        -- Invert the direction when going backwards
+        if implement.lastSignedSpeedReal > 0 then
+            factor = 2.0
+        else
+            factor = -2.0
+        end
+
+        local _, _, zFrontLocal = worldToLocal(implement.components[1].node, coordPart.x1, coordPart.y1, coordPart.z1)
+        local _, _, zBackLocal = worldToLocal(implement.components[1].node, coordPart.x3, coordPart.y3, coordPart.z3)
+
+        if zFrontLocal > zBackLocal then
+            -- This is an implement which is meant to be attached to the front. Directions will be inverted for this one
+            factor = factor * -1
+        end
+    end
+    return factor
+end
+
 ---Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
----@param   vehicle     table   @The vehicle which is currently being operated
+---@param   implement   table   @The implement which is currently being used (the "self" instance within a specialization)
 ---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
 ---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
 ---@param   grassShallBeDropped     boolean     @True if grass shall be dropped to simulate terminated biomatter
-function CoverCropUtils.mulchAndFertilizeCoverCrops(vehicle, workArea, groundShallBeMulched, grassShallBeDropped)
+function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundShallBeMulched, grassShallBeDropped)
 
     local settings = g_currentMission.conservationAgricultureSettings
 
     -- Translate work area coordinates to world coordinates
     local coordParts = CoverCropUtils.getWorldCoordParts(workArea)
+
+    -- Get a factor required for a safe drop area
+    local directionalFactor
+    if grassShallBeDropped then
+        directionalFactor = CoverCropUtils.getDirectionalFactorForDropArea(implement, coordParts[0])
+    else
+        directionalFactor = 0 -- No benefit in calculating that in this case
+    end
 
     -- Repeat the following for each part of the work area
     for _, coords in pairs(coordParts) do
@@ -113,6 +183,9 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(vehicle, workArea, groundSha
             FruitType.OLIVE,
             FruitType.POPLAR
         }
+
+        -- Determine a safe drop area which won't get caught by the mulcher again
+        local dropArea = CoverCropUtils.getSafeDropArea(implement, coords, directionalFactor)
 
         -- For every possible fruit:
         for fruitTypeIndex, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
@@ -157,8 +230,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(vehicle, workArea, groundSha
                         local amount = 10
                         local lineOffset = 0
                         local radius = 10
-                        DensityMapHeightUtil.tipToGroundAroundLine(vehicle, amount, FillType.GRASS_WINDROW,
-                            coords.x1, coords.y1, coords.z1, coords.x2, coords.y2, coords.z2,
+                        DensityMapHeightUtil.tipToGroundAroundLine(implement, amount, FillType.GRASS_WINDROW,
+                            dropArea.x1, dropArea.y1, dropArea.z1, dropArea.x2, dropArea.y2, dropArea.z2,
                             radius, nil, lineOffset, false, nil, false)
                     end
 

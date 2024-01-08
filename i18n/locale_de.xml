@@ -23,6 +23,6 @@
         <text name="ca_allow_direct_seeder_field_creation_short" text="Erlaube Felderzeugung mit Sämaschinen"/>
         <text name="ca_allow_direct_seeder_field_creation_long" text="Wenn aktiv, können Direktsaatmaschinen zur Felderzeugung genutzt werden. Diese Funktion lässt sich zusätzlich für jedes Gerät separat ein-oder ausschalten (Werkzeugfunktion 4. Default: 'Y')"/>
         <text name="ca_enable_grass_dropping_short" text="'Roller Crimping' erzeugt Gras"/>
-        <text name="ca_enable_grass_dropping_long" text="Wenn aktiv, wird beim 'Roller Crimping' etwas Gras auf den Boden geworfen um das Vorhandensein von Biomasse zu simulieren. Das Gras wird beim Säen automatisch entfernt."/>
+        <text name="ca_enable_grass_dropping_long" text="Wenn aktiv, wird beim 'Roller Crimping' und Mulchen etwas Gras auf den Boden geworfen um das Vorhandensein von Biomasse zu simulieren. Das Gras wird beim Säen automatisch entfernt."/>
     </texts>
 </l10n>

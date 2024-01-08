@@ -70,6 +70,8 @@
         "PlayerPermissionsEvent",
         "DensityMapHeightUtil",
         "FillType",
-        "MathUtil"
+        "MathUtil",
+        "DebugUtil",
+        "worldToLocal"
     ]
 }
