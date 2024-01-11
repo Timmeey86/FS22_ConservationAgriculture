@@ -22,24 +22,28 @@ end
 
 ---Registers the "create field" action (which will only be available for direct seeders)
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
-function SeederFertilizerSpecialization.registerEventListeners(vehicleType)	
-    SpecializationUtil.registerEventListener(vehicleType, "onLoad", SeederFertilizerSpecialization)
-    SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", SeederFertilizerSpecialization)
-    SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", SeederFertilizerSpecialization)
-    SpecializationUtil.registerEventListener(vehicleType, "onStartWorkAreaProcessing", SeederFertilizerSpecialization)
-    SpecializationUtil.registerEventListener(vehicleType, "onUpdate", SeederFertilizerSpecialization)
-	SpecializationUtil.registerEventListener(vehicleType, "onReadStream", SeederFertilizerSpecialization)
-	SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", SeederFertilizerSpecialization)
+function SeederFertilizerSpecialization.registerEventListeners(vehicleType)
+    if not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
+        SpecializationUtil.registerEventListener(vehicleType, "onLoad", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onStartWorkAreaProcessing", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onUpdate", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onReadStream", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", SeederFertilizerSpecialization)
+    end
 end
 
 ---Called on the client when connecting to a server. It will be called once for each seeder on the map
 ---@param streamId any
 ---@param connection any
 function SeederFertilizerSpecialization:onReadStream(streamId, connection)
-	print(MOD_NAME .. ": Receiving SeederFertilizerSpecialization settings from server")
-    -- Synchronize the initial "limit to field" setting, but don't send a new event
-    local suppressEvents = true
-    self:setLimitToField(streamReadBool(streamId), suppressEvents)
+    if not self.cultivatorsHaveFieldCreation then
+	    print(MOD_NAME .. ": Receiving SeederFertilizerSpecialization settings from server")
+        -- Synchronize the initial "limit to field" setting, but don't send a new event
+        local suppressEvents = true
+        self:setLimitToField(streamReadBool(streamId), suppressEvents)
+    end
 end
 
 ---Called on the server when a client connects. It will be called once for each seeder on the map
@@ -53,8 +57,13 @@ end
 ---Registers functions for setting or retrieving the "limit to field" state on seeders
 ---@param vehicleType table @The vehicle which shall receive the functions
 function SeederFertilizerSpecialization.registerFunctions(vehicleType)
-    SpecializationUtil.registerFunction(vehicleType, "setLimitToField", SeederFertilizerSpecialization.setLimitToField)
-    SpecializationUtil.registerFunction(vehicleType, "getLimitToField", SeederFertilizerSpecialization.getLimitToField)
+    if not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
+        print(MOD_NAME .. ": Registering field creation for seeder type " .. tostring(vehicleType.name))
+        SpecializationUtil.registerFunction(vehicleType, "setLimitToField", SeederFertilizerSpecialization.setLimitToField)
+        SpecializationUtil.registerFunction(vehicleType, "getLimitToField", SeederFertilizerSpecialization.getLimitToField)
+    else
+        print(MOD_NAME .. ": Skipping field creation for seeder type " .. tostring(vehicleType.name) .. " since CultivatorFieldCreator mod is already active")
+    end
 end
 
 ---One-time initialization of this specialization
@@ -234,7 +243,7 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
     if not skipSpecialization then
         -- In case of direct seeders/planters, create fields where necessary if that feature is turned on
-        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and not spec.workAreaParameters.limitToField then
+        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and spec ~= nil and spec.workAreaParameters.limitToField then
             SeederFertilizerSpecialization:createFieldArea(workArea)
         end
 

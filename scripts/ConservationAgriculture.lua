@@ -9,6 +9,7 @@ source(modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.l
 ---Registers the specializations for this mod
 ---@param   manager     table       the specialization manager
 local function registerSpecialization(manager)
+
     if manager.typeName == "vehicle" then
 
         -- Register the specialization types in the specialization manager (this also allows other mods to extend them)
