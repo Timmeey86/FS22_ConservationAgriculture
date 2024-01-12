@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.1</version>
+    <version>1.0.0.2</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -57,7 +57,7 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 
-v1.0.0.1:
+v1.0.0.2:
 - Fixed compatibility issues with "Cultivator Field Creator" mod
 ]]></en>
         <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unzufrieden mit dem Kosten/Nutzen Verhältnis von Ölrettich? Dann ist diese Mod für dich:
@@ -109,7 +109,7 @@ Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, du
 
 Changelog:
 
-v1.0.0.1:
+v1.0.0.2:
 - Kompatibilitätsprobleme mit der "Grubber Felderstellung" Mod behoben
 ]]></de>
     </description>

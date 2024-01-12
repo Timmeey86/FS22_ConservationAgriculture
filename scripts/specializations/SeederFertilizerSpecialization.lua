@@ -23,7 +23,7 @@ end
 ---Registers the "create field" action (which will only be available for direct seeders)
 ---@param   vehicleType     table     @Provides information about the current vehicle (or rather implement) type.
 function SeederFertilizerSpecialization.registerEventListeners(vehicleType)
-    if not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
+    if not FS22_cultivatorFieldCreator or not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
         SpecializationUtil.registerEventListener(vehicleType, "onLoad", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", SeederFertilizerSpecialization)
@@ -57,7 +57,7 @@ end
 ---Registers functions for setting or retrieving the "limit to field" state on seeders
 ---@param vehicleType table @The vehicle which shall receive the functions
 function SeederFertilizerSpecialization.registerFunctions(vehicleType)
-    if not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
+    if not FS22_cultivatorFieldCreator or not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
         print(MOD_NAME .. ": Registering field creation for seeder type " .. tostring(vehicleType.name))
         SpecializationUtil.registerFunction(vehicleType, "setLimitToField", SeederFertilizerSpecialization.setLimitToField)
         SpecializationUtil.registerFunction(vehicleType, "getLimitToField", SeederFertilizerSpecialization.getLimitToField)
