@@ -210,11 +210,9 @@ function SeederFertilizerSpecialization:createFieldArea(workArea)
         -- Clear any deco stuff which is in the way
         FSDensityMapUtil.clearDecoArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3)
 
-        -- Set any ground which is not on the field to plowed. This is only temporary as that area will be seeded into right after
+        -- Set any ground which is touched to plowed. This is only temporary as that area will be seeded into right after
         local groundTypeModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.GROUND_TYPE)
-        local notOnFieldFilter = DensityMapFilter.new(groundTypeModifier)
-        notOnFieldFilter:setValueCompareParams(DensityValueCompareType.EQUAL, 0)
-        groundTypeModifier:executeSet(g_currentMission.fieldGroundSystem:getFieldGroundValue(FieldGroundType.PLOWED), notOnFieldFilter)
+        groundTypeModifier:executeSet(g_currentMission.fieldGroundSystem:getFieldGroundValue(FieldGroundType.PLOWED))
     end
 end
 
