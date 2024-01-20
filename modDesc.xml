@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.3</version>
+    <version>1.0.0.4</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -57,6 +57,10 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 
+v1.0.0.4:
+- Fixed an error which would occur when precision farming was not in the mod folder
+- Renamed "set/getLimitToField" to "set/getLimitSeederToField" to reduce likelyhood of mod conflicts
+
 v1.0.0.3:
 - Fixed an issue where field creation would not work on meadows
 
@@ -111,6 +115,10 @@ Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+
+v1.0.0.4:
+- Fehler behoben, der auftrat, wenn Precision Farming nicht im Mod Ordner war
+- Method "set/getLimitToField" nach "set/getLimitSeederToField" umbenannt, um die Wahrscheinlichkeit für Mod Konflikte zu reduzieren
 
 v1.0.0.3:
 - Problem behoben, durch das die Funktion zur Felderzeugung nicht in Wiesen funktioniert

@@ -45,7 +45,7 @@ end
 ---@param connection any @The connection to be used
 function SowingMachineLimitToFieldEvent:run(connection)
 	if self.sowingMachine ~= nil and self.sowingMachine:getIsSynchronized() then
-		self.sowingMachine:setLimitToField(self.limitToField, true)
+		self.sowingMachine:setLimitSeederToField(self.limitToField, true)
 	end
 
 	local eventWasSentByServer = connection:getIsServer()

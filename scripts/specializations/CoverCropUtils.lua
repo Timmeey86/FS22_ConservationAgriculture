@@ -250,8 +250,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                     end
 
                     -- precision farming: modify the nitrogen map
-                    local precisionFarming = FS22_precisionFarming.g_precisionFarming
-                    if precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+                    if FS22_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+                        local precisionFarming = FS22_precisionFarming.g_precisionFarming
                         local nitrogenMap = precisionFarming.nitrogenMap
                         local soilMap = precisionFarming.soilMap
                         local sprayAuto = true
@@ -260,8 +260,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                         -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
                         -- We only check if at least one corner is on sampled soil to not make the check too expensive
                         if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
-                           soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
-                           soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
+                        soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
+                        soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
 
                             -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
                             -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type

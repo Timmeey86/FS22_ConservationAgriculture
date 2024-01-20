@@ -42,7 +42,7 @@ function SeederFertilizerSpecialization:onReadStream(streamId, connection)
 	    print(MOD_NAME .. ": Receiving SeederFertilizerSpecialization settings from server")
         -- Synchronize the initial "limit to field" setting, but don't send a new event
         local suppressEvents = true
-        self:setLimitToField(streamReadBool(streamId), suppressEvents)
+        self:setLimitSeederToField(streamReadBool(streamId), suppressEvents)
     end
 end
 
@@ -59,8 +59,8 @@ end
 function SeederFertilizerSpecialization.registerFunctions(vehicleType)
     if not FS22_cultivatorFieldCreator or not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
         print(MOD_NAME .. ": Registering field creation for seeder type " .. tostring(vehicleType.name))
-        SpecializationUtil.registerFunction(vehicleType, "setLimitToField", SeederFertilizerSpecialization.setLimitToField)
-        SpecializationUtil.registerFunction(vehicleType, "getLimitToField", SeederFertilizerSpecialization.getLimitToField)
+        SpecializationUtil.registerFunction(vehicleType, "setLimitSeederToField", SeederFertilizerSpecialization.setLimitSeederToField)
+        SpecializationUtil.registerFunction(vehicleType, "getLimitSeederToField", SeederFertilizerSpecialization.getLimitSeederToField)
     else
         print(MOD_NAME .. ": Skipping field creation for seeder type " .. tostring(vehicleType.name) .. " since CultivatorFieldCreator mod is already active")
     end
@@ -109,7 +109,7 @@ end
 ---@param isAnalog any @Unused
 function SeederFertilizerSpecialization:actionEventLimitToField(actionName, inputValue, callbackState, isAnalog)
     local spec = self.spec_CA_SeederSpecialization
-    self:setLimitToField(not spec.limitToField, false)
+    self:setLimitSeederToField(not spec.limitToField, false)
 end
 
 ---Turns of field creation before detaching the implement
@@ -117,7 +117,7 @@ end
 ---@param implement table @Unused
 function SeederFertilizerSpecialization:onPreDetach(attacherVehicle, implement)
     local spec = self.spec_CA_SeederSpecialization
-    self:setLimitToField(true, false)
+    self:setLimitSeederToField(true, false)
 end
 
 ---Allows field creation if it is turned on and the player has the permission for it (in multiplayer)
@@ -146,7 +146,7 @@ function SeederFertilizerSpecialization:onUpdate(dt, isActiveForInput, isActiveF
                 -- Allow the player to toggle the event
                 g_inputBinding:setActionEventActive(limitToFieldEvent.actionEventId, true)
                 -- Display a different text dependent on the state
-                if self:getLimitToField() then
+                if self:getLimitSeederToField() then
                     g_inputBinding:setActionEventText(limitToFieldEvent.actionEventId, spec.texts.allowCreateFields)
                 else
                     g_inputBinding:setActionEventText(limitToFieldEvent.actionEventId, spec.texts.limitToField)
@@ -161,14 +161,14 @@ end
 
 ---Checks whether or not the direct seeder may only seed within existing field bounds
 ---@return boolean @True if the seeder may only operate within the field
-function SeederFertilizerSpecialization:getLimitToField()
+function SeederFertilizerSpecialization:getLimitSeederToField()
     return self.spec_CA_SeederSpecialization.limitToField
 end
 
 ---Enables or disables field creation for direct seeders
 ---@param newValue boolean @The new "limit to field" value.
 ---@param noEventSend boolean @True if no event shall be sent.
-function SeederFertilizerSpecialization:setLimitToField(newValue, noEventSend)
+function SeederFertilizerSpecialization:setLimitSeederToField(newValue, noEventSend)
     local spec = self.spec_CA_SeederSpecialization
 
     if spec.limitToField ~= newValue then
