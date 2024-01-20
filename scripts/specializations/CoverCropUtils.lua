@@ -250,7 +250,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                     end
 
                     -- precision farming: modify the nitrogen map
-                    if FS22_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+                    if FS22_precisionFarming ~= nil and FS22_precisionFarming.g_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
                         local precisionFarming = FS22_precisionFarming.g_precisionFarming
                         local nitrogenMap = precisionFarming.nitrogenMap
                         local soilMap = precisionFarming.soilMap

@@ -116,7 +116,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         "onEnableGrassDroppingChanged")
 
     -- The list of active mods doesn't change in the same playthrough so it's enough to show either base game or precision farming
-    if FS22_precisionFarming ~= nil then
+    if FS22_precisionFarming ~= nil and FS22_precisionFarming.g_precisionFarming ~= nil then
         generalSettingsPage.ca_fertilizationBehaviorPF = CASettingsGUI.createChoiceElement(
             generalSettingsPage,
             "ca_fertilizationBehaviorPF",
