@@ -241,7 +241,7 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
     if not skipSpecialization then
         -- In case of direct seeders/planters, create fields where necessary if that feature is turned on
-        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and spec ~= nil and spec.workAreaParameters.limitToField then
+        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and spec ~= nil and not spec.workAreaParameters.limitToField then
             SeederFertilizerSpecialization:createFieldArea(workArea)
         end
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.4</version>
+    <version>1.0.0.5</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -56,6 +56,9 @@ In case of bugs, please create an issue at my GitHub repository.
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
+
+v1.0.0.5:
+- Fixed an issue where seeder field creation would work the wrong way round
 
 v1.0.0.4:
 - Fixed an error which would occur when precision farming was not in the mod folder
@@ -115,6 +118,9 @@ Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+
+v1.0.0.5:
+- Fehler behoben, durch den die Felderzeugung mit Direktsaatmaschinen falsch herum funktionierte
 
 v1.0.0.4:
 - Fehler behoben, der auftrat, wenn Precision Farming nicht im Mod Ordner war
