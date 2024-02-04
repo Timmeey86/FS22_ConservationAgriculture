@@ -218,8 +218,14 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                     end
 
                     if settings.weedSuppressionIsEnabled then
-                        -- prevent weeds
-                        FSDensityMapUtil.setWeedBlockingState(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, fruitFilter, onFieldFilter)
+                        local weedSystem = g_currentMission.weedSystem
+                        if weedSystem:getMapHasWeed() then
+                            -- Fake the usage of a hoe weeder
+                            local hoeWeeder = true
+                            FSDensityMapUtil.updateWeederArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, hoeWeeder)
+                            -- prevent future weeds until the next harvest
+                            FSDensityMapUtil.setWeedBlockingState(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, fruitFilter, onFieldFilter)
+                        end
                     end
 
                     -- "Spray" straw on the ground

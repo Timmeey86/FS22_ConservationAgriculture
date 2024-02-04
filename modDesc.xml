@@ -57,6 +57,9 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 
+v1.0.0.6:
+- Weed suppression should now work properly. Previously, the visual appearance was correct, but the weed map was not
+
 v1.0.0.5:
 - Fixed an issue where seeder field creation would work the wrong way round
 
@@ -118,6 +121,9 @@ Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+
+v1.0.0.6:
+- Unkraut-Unterdrückung sollte nun korrekt funktionieren. Bisher waren zwar keine Unkräuter sichtbar, aber die Unkraut-Ansicht in der Karte hat noch welche angezeigt.
 
 v1.0.0.5:
 - Fehler behoben, durch den die Felderzeugung mit Direktsaatmaschinen falsch herum funktionierte
