@@ -244,15 +244,21 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                     -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
                     -- so we execute this even with Precision Farming active.)
                     if settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
-                        for i = 1, maxSprayLevel - 1 do
-                            local targetSprayLevel = maxSprayLevel - i
-                            local currentSprayLevel = targetSprayLevel - 1
+                        -- Set every unfertilized plot to 1
+                        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, 0)
+                        sprayLevelModifier:executeSet(1, sprayLevelFilter, fruitFilter, onFieldFilter)
+                    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
+                        -- Set everything to max which isn't max already
+                        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
+                        sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
+                    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE then
+                        -- Increase one below max to max, two below max to one below max and so on (in case maps can ever have more than two stages)
+                        for i = maxSprayLevel - 1, 0, -1 do
+                            local targetSprayLevel = i + 1
+                            local currentSprayLevel = i
                             sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
                             sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
                         end
-                    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
-                        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
-                        sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
                     end
 
                     -- precision farming: modify the nitrogen map

@@ -14,6 +14,7 @@
         <text name="ca_fertilization_behavior_base_game_off" text="No fertilization"/>
         <text name="ca_fertilization_behavior_base_game_first" text="First Fertilizer Stage"/>
         <text name="ca_fertilization_behavior_base_game_full" text="Full Fertilization"/>
+        <text name="ca_fertilization_behavior_base_game_add_one" text="Add one stage"/>
         <text name="ca_fertilization_behavior_pf_short" text="Fertilization Behavior (Precision Farming)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Sets the fertilization strategy when roller crimping, mulching or direct seeding into cover crops with the Precision Farming DLC active."/>
         <text name="ca_fertilization_behavior_pf_off" text="No fertilization"/>

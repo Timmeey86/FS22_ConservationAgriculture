@@ -2,6 +2,7 @@ CASettings = {
     FERTILIZATION_BEHAVIOR_BASE_GAME_OFF = 1,
     FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST = 2,
     FERTILIZATION_BEHAVIOR_BASE_GAME_FULL = 3,
+    FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE = 4,
     FERTILIZATION_BEHAVIOR_PF_OFF = 1,
     FERTILIZATION_BEHAVIOR_PF_MIN_AUTO = 2,
 }
@@ -18,7 +19,7 @@ function CASettings.new()
     self.weedSuppressionIsEnabled = true
     self.directSeederFieldCreationIsEnabled = true
     self.grassDroppingIsEnabled = false
-    self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST
+    self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
     return self
 end

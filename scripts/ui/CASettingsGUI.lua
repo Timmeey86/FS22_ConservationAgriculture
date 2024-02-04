@@ -16,7 +16,8 @@ CASettingsGUI = {
     FERTILIZATION_BEHAVIOR_BASE_GAME_I18N_IDS = {
         { index = 1, i18nTextId = 'ca_fertilization_behavior_base_game_off' },
         { index = 2, i18nTextId = 'ca_fertilization_behavior_base_game_first' },
-        { index = 3, i18nTextId = 'ca_fertilization_behavior_base_game_full' }
+        { index = 3, i18nTextId = 'ca_fertilization_behavior_base_game_full' },
+        { index = 4, i18nTextId = 'ca_fertilization_behavior_base_game_add_one' }
     },
     FERTILIZATION_BEHAVIOR_PF_I18N_IDS = {
         { index = 1, i18nTextId = 'ca_fertilization_behavior_pf_off' },
