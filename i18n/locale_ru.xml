@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>nagor</translationContributors>
+    <texts>
+        <text name="ca_group_title" text="Почвозащитное и ресурсосберегающее земледелие"/>
+        <text name="ca_enable_roller_crimping_short" text="Сжатие прикатыванием"/>
+        <text name="ca_enable_roller_crimping_long" text="Если включено, прикатывание покровных культур сжимает их, чтобы остановить их рост и создать почвенный покров."/>
+        <text name="ca_enable_roller_mulch_bonus_short" text="Мульчирование при прикатывании"/>
+        <text name="ca_enable_roller_mulch_bonus_long" text="Если включено, прикатывание покровных культур даст дополнительный эффект мульчирования."/>
+        <text name="ca_enable_seeder_mulch_bonus_short" text="Мульчирование при посеве"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="Если включено, прямой посев в покровные культуры даст дополнительный эффект мульчирования."/>
+        <text name="ca_fertilization_behavior_base_game_short" text="Удобрение при обработке (Основная игра)"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Устанавливает стратегию внесения удобрений при прикатывании катком, мульчировании или прямом посеве в покровные культуры."/>
+        <text name="ca_fertilization_behavior_base_game_off" text="Не удобрять"/>
+        <text name="ca_fertilization_behavior_base_game_first" text="Первая стадия удобрения"/>
+        <text name="ca_fertilization_behavior_base_game_full" text="Полное внесение удобрений"/>
+        <text name="ca_fertilization_behavior_pf_short" text="Удобрение при обработке (Precision Farming DLC)"/>
+        <text name="ca_fertilization_behavior_pf_long" text="Устанавливает стратегию внесения удобрений при прикатывании катком, мульчировании или прямом посеве в покровные культуры при активированном Precision Farming DLC."/>
+        <text name="ca_fertilization_behavior_pf_off" text="Не удобрять"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Среднее внесение удобрений"/>
+        <text name="ca_enable_weed_suppression_short" text="Удаление сорняков"/>
+        <text name="ca_enable_weed_suppression_long" text="Если включено, сорняки не будут расти после прямого посева в покровные культуры или посева в прикатанные/мульчированные покровные культуры."/>
+        <text name="ca_allow_direct_seeder_field_creation_short" text="Разрешить создание поля сеялкой"/>
+        <text name="ca_allow_direct_seeder_field_creation_long" text="Если включено, сеялки прямого посева можно использовать для создания полей. Создание поля можно переключать для каждой сеялки отдельно с помощью клавиши 'Toggle pipe' (по умолчанию: 'o')."/>
+        <text name="ca_enable_grass_dropping_short" text="Катки срывают траву"/>
+        <text name="ca_enable_grass_dropping_long" text="Если включено, прикатывание и мульчирование приведёт к падению травы на землю, имитируя присутствие биоматериала. Трава будет автоматически удалена при посеве."/>
+    </texts>
+</l10n>
