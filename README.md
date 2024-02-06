@@ -2,9 +2,11 @@
 
 ## Mod description
 
+Make cover crops useful again!
+
 This mod for Farming Simulator 22 strives to allow the player to respect the three [Conservation Agriculture principles](https://www.fao.org/conservation-agriculture/en/) (you can click on each principle to read about it) while at the same time getting a benefit in doing so. The general idea is to never leave your fields barren, but seed oilseed radish, grass or even grain or root crops directly after harvesting your cash crop and mulch them in the spring instead of harvesting them in order to get a mulching and fertilizing boost for your new cash crop.
 
-Read the description in the [mod desc xml](modDesc.xml) for more information.
+### Feature Overview
 
 Roller crimping cover crops and direct seeding straight into them:
 ![Screen 1](screenshots/Screenshot1.png)
@@ -20,6 +22,10 @@ Precision Farming support:
 
 Many configuration options to adjust to what you think is realistic:
 ![Screen 5](screenshots/Screenshot5.png)
+
+### Mod review and explanation by ArgsyGaming
+
+[![Mod review by ArgsyGaming](screenshots/ArgsyModReview.png)](https://www.youtube.com/watch?v=-7Tr6MRu4XQ)
 
 ## How to install
 
