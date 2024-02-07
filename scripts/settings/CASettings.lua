@@ -20,6 +20,9 @@ function CASettings.new()
     self.grassDroppingIsEnabled = false
     self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
+
+    -- Required to avoid mod conflicts
+    self.preventWeeding = false
     return self
 end
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.5</version>
+    <version>1.0.0.6</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -10,6 +10,8 @@
     
     <description>
         <en><![CDATA[Tired of tilling the ground for hours? Worried by the work/benefit ratio of oilseed radish? This mod is for you:
+
+The general idea of this mod is to make cover crops more useful and improve playstyles where you would never leave your fields barren (more on that later):
 
 - Roller crimping of cover crops is now possible and will provide a mulching and fertilization bonus
 - Mulching cover crops will provide the same effect as rolling them
@@ -60,6 +62,7 @@ Changelog:
 
 v1.0.0.6:
 - Weed suppression should now work properly. Previously, the visual appearance was correct, but the weed map was not
+- Fixed a mod conflict with LFHA ForageOptima Standard and disabled weed suppression if it's enabled since that mod causes lua errors with weeders in general
 
 v1.0.0.5:
 - Fixed an issue where seeder field creation would work the wrong way round
@@ -75,6 +78,8 @@ v1.0.0.2:
 - Fixed compatibility issues with "Cultivator Field Creator" mod
 ]]></en>
         <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unzufrieden mit dem Kosten/Nutzen Verhältnis von Ölrettich? Dann ist diese Mod für dich:
+
+Die grundsätzliche Idee der Mod ist es, Zwischenfrüchte nützlicher zu machen und Spielweisen zu verbessern, bei denen immer etwas auf dem Feld wächst (mehr dazu später):
 
 - Zwischenfrüchte können nun mit einer Walze umgeknickt werden (engl. "roller crimping") und geben Mulch- und Düngeboni
 - Der selbe Effekt wird mit Mulchern erzielt
@@ -125,6 +130,7 @@ Changelog:
 
 v1.0.0.6:
 - Unkraut-Unterdrückung sollte nun korrekt funktionieren. Bisher waren zwar keine Unkräuter sichtbar, aber die Unkraut-Ansicht in der Karte hat noch welche angezeigt.
+- Mod Konflikt mit LFHA ForageOptima Standard behoben. Wenn diese Mod benutzt wird, wird jedoch Unkrautunterdrückung abgeschaltet, da die Mod allgemein lua Fehler beim Beseitigen von Unkraut auslöst.
 
 v1.0.0.5:
 - Fehler behoben, durch den die Felderzeugung mit Direktsaatmaschinen falsch herum funktionierte

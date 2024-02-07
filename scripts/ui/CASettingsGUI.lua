@@ -183,4 +183,10 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     for _, uiControl in pairs(generalSettingsPage.ca_all_controls) do
         uiControl:setDisabled(not isAdmin)
     end
+
+    -- Disable weed suppression in case of certain mod conflicts
+    if settings.preventWeeding then
+        generalSettingsPage.ca_enableWeedSuppression:setDisabled(true)
+        generalSettingsPage.ca_enableWeedSuppression.elements[6]:setText("Disabled because LFHA ForageOptima Standard was detected (it breaks weeders)")
+    end
 end

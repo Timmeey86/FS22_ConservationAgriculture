@@ -92,6 +92,12 @@ function CASettingsRepository.restoreSettings()
 
     settings.fertilizationBehaviorBaseGame = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
     settings.fertilizationBehaviorPF = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
+
+    -- LFHA ForageOptima Standard breaks weeders, so weed suppression will cause lua errors
+    if g_modIsLoaded['FS22_ForageOptima'] then
+        settings.weedSuppressionIsEnabled = false
+        settings.preventWeeding = true
+    end
 end
 
 

@@ -183,6 +183,12 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
             FruitType.OLIVE,
             FruitType.POPLAR
         }
+        -- Avoid mod conflicts with mods which add fruit types without adding density maps
+        for _, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
+            if desc.terrainDataPlaneId == nil or desc.startStateChannel == nil or desc.numStateChannels == nil then
+                excludedFruitTypes[desc.index] = true
+            end
+        end
 
         -- Determine a safe drop area which won't get caught by the mulcher again
         local dropArea = CoverCropUtils.getSafeDropArea(implement, coords, directionalFactor)
