@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.6</version>
+    <version>1.0.0.7</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -60,9 +60,11 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 
+v1.0.0.7:
+- Fixed a mod conflict with LFHA ForageOptima Standard and disabled weed suppression if it's enabled since that mod causes lua errors with weeders in general
+
 v1.0.0.6:
 - Weed suppression should now work properly. Previously, the visual appearance was correct, but the weed map was not
-- Fixed a mod conflict with LFHA ForageOptima Standard and disabled weed suppression if it's enabled since that mod causes lua errors with weeders in general
 
 v1.0.0.5:
 - Fixed an issue where seeder field creation would work the wrong way round
@@ -128,9 +130,11 @@ Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, du
 
 Changelog:
 
+v1.0.0.7:
+- Mod Konflikt mit LFHA ForageOptima Standard behoben. Wenn diese Mod benutzt wird, wird jedoch Unkrautunterdrückung abgeschaltet, da die Mod allgemein lua Fehler beim Beseitigen von Unkraut auslöst.
+
 v1.0.0.6:
 - Unkraut-Unterdrückung sollte nun korrekt funktionieren. Bisher waren zwar keine Unkräuter sichtbar, aber die Unkraut-Ansicht in der Karte hat noch welche angezeigt.
-- Mod Konflikt mit LFHA ForageOptima Standard behoben. Wenn diese Mod benutzt wird, wird jedoch Unkrautunterdrückung abgeschaltet, da die Mod allgemein lua Fehler beim Beseitigen von Unkraut auslöst.
 
 v1.0.0.5:
 - Fehler behoben, durch den die Felderzeugung mit Direktsaatmaschinen falsch herum funktionierte
