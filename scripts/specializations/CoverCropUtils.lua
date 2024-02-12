@@ -28,10 +28,16 @@ end
 ---We can't be too restrictive, as otherwise some things like wheat or barley would never be ready in time for the next crop.
 ---@param fruitFilter table @the fruit filter to be modifeid
 ---@param fruitTypeIndex integer @the index of the fruit type in the global list of fruit types
+---@return boolean @True if the filter could be set up properly, false if for example the fruit was added through a script and is missing density information
 function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
     local rollerCrimpingGrowthStates = g_rollerCrimpingData:getForageableStates(fruitTypeIndex)
 
-    fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max)
+    if rollerCrimpingGrowthStates.min ~= nil and rollerCrimpingGrowthStates.max ~= nil then
+        fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max)
+        return true
+    else
+        return false
+    end
 end
 
 ---Retrieves the world coordinates for the given work area, split into ten parts
@@ -203,7 +209,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                 fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
                 fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
 
-                CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
+                local fruitFilterCouldBeConstructed = CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
 
                 -- if possible, use the mulched fruit state, otherwise use the cut state
                 local mulchedFruitState = desc.cutState or 0
@@ -212,7 +218,10 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                 end
 
                 -- Cut (mulch) any pixels which match the fruit type (including growth stage) and haven't had their stubble level set to max
-                local _, numPixelsAffected, _ = fruitModifier:executeSet(mulchedFruitState, fruitFilter, onFieldFilter)
+                local numPixelsAffected = 0
+                if fruitFilterCouldBeConstructed then
+                    _, numPixelsAffected, _ = fruitModifier:executeSet(mulchedFruitState, fruitFilter, onFieldFilter)
+                end
                 if numPixelsAffected > 0 then
 
                     -- since we cut the ground, we need to filter for a cut fruit now

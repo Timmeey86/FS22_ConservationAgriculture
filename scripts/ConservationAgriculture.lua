@@ -62,7 +62,6 @@ TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, r
 -- Do one-time calculations when the map is about to finish loading, and allow global access to the results
 g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
-        g_rollerCrimpingData:init(g_fruitTypeManager:getFruitTypes())
         CASettingsRepository.restoreSettings()
     end)
 

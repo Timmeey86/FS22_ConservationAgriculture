@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.7</version>
+    <version>1.0.0.8</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -59,6 +59,9 @@ In case of bugs, please create an issue at my GitHub repository.
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
+
+v1.0.0.8:
+- Fixed an issue where seed usage would be extremely high with certain map/mod combinations
 
 v1.0.0.7:
 - Fixed a mod conflict with LFHA ForageOptima Standard and disabled weed suppression if it's enabled since that mod causes lua errors with weeders in general
@@ -129,6 +132,9 @@ Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+
+v1.0.0.8:
+- Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.
 
 v1.0.0.7:
 - Mod Konflikt mit LFHA ForageOptima Standard behoben. Wenn diese Mod benutzt wird, wird jedoch Unkrautunterdrückung abgeschaltet, da die Mod allgemein lua Fehler beim Beseitigen von Unkraut auslöst.

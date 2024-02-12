@@ -7,6 +7,7 @@ local RollerCrimpingData_mt = Class(RollerCrimpingData)
 ---@return table @A new class instance
 function RollerCrimpingData.new()
     local self = setmetatable({}, RollerCrimpingData_mt)
+    self.isInitialized = false
     return self
 end
 
@@ -39,5 +40,11 @@ end
 ---@param fruitTypeIndex integer @The index of the fruit type in the global list of fruit types
 ---@return table @A pair of minimum and maximum growth states indexed by "min" and "max"
 function RollerCrimpingData:getForageableStates(fruitTypeIndex)
-    return self.forageableStatesPerFruit[fruitTypeIndex] or { min = 0, max = 0 }
+    if not self.isInitialized then
+        -- Perform a one-time initialization the first time it is required. This makes sure mods which come much later in the alphabet have 
+        -- already registered all their fruit types
+        self:init(g_fruitTypeManager:getFruitTypes())
+        self.isInitialized = true
+    end
+    return self.forageableStatesPerFruit[fruitTypeIndex] or { min = nil, max = nil }
 end
