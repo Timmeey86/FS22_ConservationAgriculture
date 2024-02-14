@@ -10,7 +10,9 @@ CASettingsGUI = {
         FERTILIZATION_BEHAVIOR_PF = 'ca_fertilization_behavior_pf',
         ENABLE_WEED_SUPPRESSION = 'ca_enable_weed_suppression',
         ALLOW_DIRECT_SEEDER_FIELD_CREATION = 'ca_allow_direct_seeder_field_creation',
-        ENABLE_GRASS_DROPPING = 'ca_enable_grass_dropping'
+        ENABLE_GRASS_DROPPING = 'ca_enable_grass_dropping',
+        ENABLE_STRAW_CHOPPING_BONUS = 'ca_enable_straw_chopping_bonus',
+        ENABLE_CULTIVATOR_BONUS = 'ca_enable_cultivator_bonus'
     },
     -- Order must correspond to the enum in CASettings. We can't reuse it unfortunately
     FERTILIZATION_BEHAVIOR_BASE_GAME_I18N_IDS = {
@@ -99,6 +101,16 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         "ca_enableSeederMulchBonus",
         CASettingsGUI.I18N_IDS.ENABLE_SEEDER_MULCH_BONUS,
         "onEnableSeederMulchBonusChanged")
+    generalSettingsPage.ca_enableStrawChoppingBonus = CASettingsGUI.createBoolElement(
+        generalSettingsPage,
+        "ca_enableStrawChoppingBonus",
+        CASettingsGUI.I18N_IDS.ENABLE_STRAW_CHOPPING_BONUS,
+        "onEnableStrawChoppingBonusChanged")
+    generalSettingsPage.ca_enableCultivatorBonus = CASettingsGUI.createBoolElement(
+        generalSettingsPage,
+        "ca_enableCultivatorBonus",
+        CASettingsGUI.I18N_IDS.ENABLE_CULTIVATOR_BONUS,
+        "onEnableCultivatorBonusChanged")
     generalSettingsPage.ca_enableWeedSuppression = CASettingsGUI.createBoolElement(
         generalSettingsPage,
         "ca_enableWeedSuppression",
@@ -136,6 +148,8 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         generalSettingsPage.ca_enableRollerCrimping,
         generalSettingsPage.ca_enableRollerMulchBonus,
         generalSettingsPage.ca_enableSeederMulchBonus,
+        generalSettingsPage.ca_enableStrawChoppingBonus,
+        generalSettingsPage.ca_enable_cultivator_bonus,
         generalSettingsPage.ca_enableWeedSuppression,
         generalSettingsPage.ca_enableDirectSeederFieldCreation,
         generalSettingsPage.ca_enableGrassDropping,
@@ -169,6 +183,9 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     generalSettingsPage.ca_enableRollerCrimping:setIsChecked(settings.rollerCrimpingIsEnabled)
     generalSettingsPage.ca_enableRollerMulchBonus:setIsChecked(settings.rollerMulchBonusIsEnabled)
     generalSettingsPage.ca_enableSeederMulchBonus:setIsChecked(settings.seederMulchBonusIsEnabled)
+    generalSettingsPage.ca_enableWeedSuppression:setIsChecked(settings.weedSuppressionIsEnabled)
+    generalSettingsPage.ca_enableStrawChoppingBonus:setIsChecked(settings.strawChoppingBonusIsEnabled)
+    generalSettingsPage.ca_enableCultivatorBonus:setIsChecked(settings.cultivatorBonusIsEnabled)
     generalSettingsPage.ca_enableWeedSuppression:setIsChecked(settings.weedSuppressionIsEnabled)
     generalSettingsPage.ca_enableDirectSeederFieldCreation:setIsChecked(settings.directSeederFieldCreationIsEnabled)
     generalSettingsPage.ca_enableGrassDropping:setIsChecked(settings.grassDroppingIsEnabled)

@@ -11,7 +11,9 @@ CASettingsRepository = {
     GRASS_DROPPING_KEY = "grassDropping",
     BASE_GAME_KEY = "baseGame",
     PF_KEY = "precisionFarming",
-    STATE_ATTRIBUTE = "state"
+    STATE_ATTRIBUTE = "state",
+    STRAW_CHOPPING_KEY = "strawChopping",
+    CULTIVATOR_BONUS_KEY = "cultivatorBonus"
 }
 
 ---Creates and returns an XML schema for the settings.
@@ -56,6 +58,10 @@ function CASettingsRepository.storeSettings()
     setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath), settings.fertilizationBehaviorBaseGame)
     setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath), settings.fertilizationBehaviorPF)
 
+    -- v 1.0.0.9+
+    setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY), settings.strawChoppingBonusIsEnabled)
+    setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY), settings.cultivatorBonusIsEnabled)
+
     -- Write the XML file to the disk
     saveXMLFile(settingsXmlId)
 end
@@ -83,15 +89,16 @@ function CASettingsRepository.restoreSettings()
     settings.directSeederFieldCreationIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
 
     -- This value was added in 0.7 so older save games might not have it
-    settings.grassDroppingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
-    if settings.grassDroppingIsEnabled == nil then
-        settings.grassDroppingIsEnabled = false
-    end
+    settings.grassDroppingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY)) or false
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
     settings.fertilizationBehaviorBaseGame = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
     settings.fertilizationBehaviorPF = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
+
+    -- 1.0.0.9+
+    settings.strawChoppingBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY)) or true
+    settings.cultivatorBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY)) or false
 
     -- LFHA ForageOptima Standard breaks weeders, so weed suppression will cause lua errors
     if g_modIsLoaded['FS22_ForageOptima'] then

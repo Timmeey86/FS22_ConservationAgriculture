@@ -26,6 +26,7 @@ function SeederFertilizerSpecialization.registerEventListeners(vehicleType)
     if not FS22_cultivatorFieldCreator or not SpecializationUtil.hasSpecialization(FS22_cultivatorFieldCreator.CultivatorFieldCreator, vehicleType.specializations) then
         SpecializationUtil.registerEventListener(vehicleType, "onLoad", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", SeederFertilizerSpecialization)
+        SpecializationUtil.registerEventListener(vehicleType, "onPreAttach", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onPreDetach", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onStartWorkAreaProcessing", SeederFertilizerSpecialization)
         SpecializationUtil.registerEventListener(vehicleType, "onUpdate", SeederFertilizerSpecialization)
@@ -73,6 +74,7 @@ function SeederFertilizerSpecialization:onLoad(savegame)
     local spec = self.spec_CA_SeederSpecialization
 
     -- Prepare the possibility to toggle field creation.
+    print("Loading SeederFertilizerSpecialization. Setting limitToField to true")
     spec.limitToField = true
     spec.texts = {}
     -- Reuse the basegame texts for plows
@@ -112,11 +114,17 @@ function SeederFertilizerSpecialization:actionEventLimitToField(actionName, inpu
     self:setLimitSeederToField(not spec.limitToField, false)
 end
 
----Turns of field creation before detaching the implement
+---Turns off field creation before detaching the implement
 ---@param attacherVehicle table @Unusued
 ---@param implement table @Unused
 function SeederFertilizerSpecialization:onPreDetach(attacherVehicle, implement)
-    local spec = self.spec_CA_SeederSpecialization
+    self:setLimitSeederToField(true, false)
+end
+
+---Turns off field creation before attaching the implement in order to avoid accidental field creation.
+---@param attacherVehicle table @Unusued
+---@param implement table @Unused
+function SeederFertilizerSpecialization:onPreAttach(attacherVehicle, implement)
     self:setLimitSeederToField(true, false)
 end
 
@@ -171,6 +179,7 @@ end
 function SeederFertilizerSpecialization:setLimitSeederToField(newValue, noEventSend)
     local spec = self.spec_CA_SeederSpecialization
 
+    print(MOD_NAME .. (": Setting limitToField from %s to %s"):format(tostring(spec.limitToField), tostring(newValue)))
     if spec.limitToField ~= newValue then
         if noEventSend == nil or noEventSend == false then
             if g_server ~= nil then

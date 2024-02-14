@@ -20,6 +20,9 @@ function CASettings.new()
     self.grassDroppingIsEnabled = false
     self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
+    -- v1.0.0.9+
+    self.strawChoppingBonusIsEnabled = true
+    self.cultivatorBonusIsEnabled = false
 
     -- Required to avoid mod conflicts
     self.preventWeeding = false
@@ -67,6 +70,14 @@ function CASettings:onFertilizationBehaviorBaseGameChanged(newState)
     self.fertilizationBehaviorBaseGame = newState
     CASettings.publishNewSettings()
 end
+function CASettings:onEnableStrawChoppingBonusChanged(newState)
+    self.strawChoppingBonusIsEnabled = newState
+    CASettings.publishNewSettings()
+end
+function CASettings:onEnableCultivatorBonusChanged(newState)
+    self.cultivatorBonusIsEnabled = newState
+    CASettings.publishNewSettings()
+end
 
 ---Sends the new settings to the server, or from the server to all other clients
 function CASettings.publishNewSettings()
@@ -93,6 +104,8 @@ function CASettings:onReadStream(streamId, connection)
     self.grassDroppingIsEnabled = streamReadBool(streamId)
     self.fertilizationBehaviorPF = streamReadInt8(streamId)
     self.fertilizationBehaviorBaseGame = streamReadInt8(streamId)
+    self.strawChoppingBonusIsEnabled = streamReadBool(streamId)
+    self.cultivatorBonusIsEnabled = streamReadBool(streamId)
 end
 
 ---Sends the current settings to a client which is connecting to a multiplayer game
@@ -108,4 +121,6 @@ function CASettings:onWriteStream(streamId, connection)
     streamWriteBool(streamId, self.grassDroppingIsEnabled)
     streamWriteInt8(streamId, self.fertilizationBehaviorPF)
     streamWriteInt8(streamId, self.fertilizationBehaviorBaseGame)
+    streamWriteBool(streamId, self.strawChoppingBonusIsEnabled)
+    streamWriteBool(streamId, self.cultivatorBonusIsEnabled)
 end
