@@ -22,7 +22,7 @@ function CASettings.new()
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
     -- v1.0.0.9+
     self.strawChoppingBonusIsEnabled = true
-    self.cultivatorBonusIsEnabled = false
+    self.cultivatorBonusIsEnabled = true
 
     -- Required to avoid mod conflicts
     self.preventWeeding = false
