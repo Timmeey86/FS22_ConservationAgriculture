@@ -6,6 +6,7 @@ source(modDirectory .. "scripts/specializations/MulcherFertilizerSpecialization.
 source(modDirectory .. "scripts/specializations/RollerFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua")
+source(modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua")
 
 ---Registers the specializations for this mod
 ---@param   manager     table       the specialization manager
@@ -22,6 +23,8 @@ local function registerSpecialization(manager)
             "CA_SeederSpecialization", "SeederFertilizerSpecialization", modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
             "CA_CultivatorSpecialization", "CultivatorFertilizerSpecialization", modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua", nil)
+        g_specializationManager:addSpecialization(
+            "CA_ChopperSpecialization", "ChopperFertilizerSpecialization", modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua", nil)
 
         -- Add the specializations to vehicles based on which kind of specializations they already have
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
@@ -42,6 +45,10 @@ local function registerSpecialization(manager)
                 -- Allow any cultivator to mulch cover crops
                 if SpecializationUtil.hasSpecialization(Cultivator, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_CultivatorSpecialization")
+                end
+                -- Extend combines so straw chopping can fertilize the field if desired
+                if SpecializationUtil.hasSpecialization(Combine, typeEntry.specializations) then
+                    g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_ChopperSpecialization")
                 end
             end
         end

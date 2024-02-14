@@ -139,6 +139,55 @@ function CoverCropUtils.getDirectionalFactorForDropArea(implement, coordPart)
     return factor
 end
 
+---Applies fertilizer to the given coordinates 
+---@param coords table @The coordinates to use. Only used for precision farming.
+---@param sprayLevelModifier table @The density map modifier for the spray level. Must be limited to the coordinates already
+---@param sprayLevelFilter table @The spray level filter to be used. Create this as DensityMapFilter.new(sprayLevelModifier) and reuse on every call
+---@param filter2 table @An optional second filter like onFieldFilter
+---@param filter3 table @An optional third filter, for example for the fruit type
+function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFilter, filter2, filter3)
+    local settings = g_currentMission.conservationAgricultureSettings
+    local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
+
+    -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
+    -- so we execute this even with Precision Farming active.)
+    if settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
+        for i = 1, maxSprayLevel - 1 do
+            local targetSprayLevel = maxSprayLevel - i
+            local currentSprayLevel = targetSprayLevel - 1
+            sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
+            sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, filter2, filter3)
+        end
+    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
+        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
+        sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, filter2, filter3)
+    end
+
+    -- precision farming: modify the nitrogen map
+    if FS22_precisionFarming ~= nil and FS22_precisionFarming.g_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+        local precisionFarming = FS22_precisionFarming.g_precisionFarming
+        local nitrogenMap = precisionFarming.nitrogenMap
+        local soilMap = precisionFarming.soilMap
+        local sprayAuto = true
+        local defaultNitrogenRequirementIndex = 1
+
+        -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
+        -- We only check if at least one corner is on sampled soil to not make the check too expensive
+        if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
+            soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
+            soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
+
+            -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
+            -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
+            -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
+            -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
+            nitrogenMap:updateSprayArea(
+                coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+        end
+    end
+end
+
 ---Mulches the area at the given coordinates in case there is a crop which matches the supplied ground filter
 ---@param   implement   table   @The implement which is currently being used (the "self" instance within a specialization)
 ---@param   workArea    table   @A rectangle defined through three points which determines the area to be processed
@@ -175,7 +224,6 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
 
         -- Allow modifying the fertilization amount
         local sprayLevelModifier = CoverCropUtils.getDensityMapModifier(coords, FieldDensityMap.SPRAY_LEVEL)
-        local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
         local sprayLevelFilter = DensityMapFilter.new(sprayLevelModifier)
 
         -- Allow setting to a mulched state (by setting the stubble shred flag and "spraying" straw across the ground)
@@ -256,43 +304,8 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                             radius, nil, lineOffset, false, nil, false)
                     end
 
-                    -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
-                    -- so we execute this even with Precision Farming active.)
-                    if settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
-                        for i = 1, maxSprayLevel - 1 do
-                            local targetSprayLevel = maxSprayLevel - i
-                            local currentSprayLevel = targetSprayLevel - 1
-                            sprayLevelFilter:setValueCompareParams(DensityValueCompareType.EQUAL, currentSprayLevel)
-                            sprayLevelModifier:executeSet(targetSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
-                        end
-                    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
-                        sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
-                        sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, fruitFilter, onFieldFilter)
-                    end
-
-                    -- precision farming: modify the nitrogen map
-                    if FS22_precisionFarming ~= nil and FS22_precisionFarming.g_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
-                        local precisionFarming = FS22_precisionFarming.g_precisionFarming
-                        local nitrogenMap = precisionFarming.nitrogenMap
-                        local soilMap = precisionFarming.soilMap
-                        local sprayAuto = true
-                        local defaultNitrogenRequirementIndex = 1
-
-                        -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
-                        -- We only check if at least one corner is on sampled soil to not make the check too expensive
-                        if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
-                        soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
-                        soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
-
-                            -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
-                            -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
-                            -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
-                            -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
-                            nitrogenMap:updateSprayArea(
-                                coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
-                                SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
-                        end
-                    end
+                    -- Fertilize the field in accordance with the settings
+                    CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFilter, fruitFilter, onFieldFilter)
                 end
             end
         end
