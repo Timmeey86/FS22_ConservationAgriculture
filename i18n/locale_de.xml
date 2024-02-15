@@ -14,6 +14,7 @@
         <text name="ca_fertilization_behavior_base_game_off" text="Kein Düngebonus"/>
         <text name="ca_fertilization_behavior_base_game_first" text="Erste Düngestufe"/>
         <text name="ca_fertilization_behavior_base_game_full" text="Zweite Düngestufe"/>
+        <text name="ca_fertilization_behavior_base_game_add_one" text="Eine Düngestufe mehr"/>
         <text name="ca_fertilization_behavior_pf_short" text="Düngeverhalten (Precision Farming)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim 'Roller Crimping', Mulchen oder Direktsäen in Zwischenfrüchte, wenn der Precision Farming DLC aktiv ist."/>
         <text name="ca_fertilization_behavior_pf_off" text="Kein Düngebonus"/>

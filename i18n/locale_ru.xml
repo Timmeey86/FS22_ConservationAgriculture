@@ -14,6 +14,7 @@
         <text name="ca_fertilization_behavior_base_game_off" text="Не удобрять"/>
         <text name="ca_fertilization_behavior_base_game_first" text="Первая стадия удобрения"/>
         <text name="ca_fertilization_behavior_base_game_full" text="Полное внесение удобрений"/>
+        <text name="ca_fertilization_behavior_base_game_add_one" text="Additional Fertilizer Stage"/>
         <text name="ca_fertilization_behavior_pf_short" text="Удобрение при обработке (Precision Farming DLC)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Устанавливает стратегию внесения удобрений при прикатывании катком, мульчировании или прямом посеве в покровные культуры при активированном Precision Farming DLC."/>
         <text name="ca_fertilization_behavior_pf_off" text="Не удобрять"/>

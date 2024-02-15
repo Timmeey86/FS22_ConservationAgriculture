@@ -61,8 +61,12 @@ function ChopperFertilizerSpecialization:processCombineChopperArea(superFunc, wo
             local onFieldFilter = DensityMapFilter.new(CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.GROUND_TYPE))
             onFieldFilter:setValueCompareParams(DensityValueCompareType.GREATER, 0)
 
-            -- Fertilize the work area which was sprayed
-            CoverCropUtils.applyFertilizer(workAreaCoords, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil)
+            -- Add the first fertilizer stage as long as it wasn't there
+            CoverCropUtils.applyFertilizer(workAreaCoords, FieldSprayType.MANURE, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil, true)
+
+            if g_modIsLoaded['FS22_precisionFarming'] then
+                -- TODO: Apply fixed amount
+            end
         end
     end
 

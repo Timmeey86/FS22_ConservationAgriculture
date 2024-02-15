@@ -141,17 +141,19 @@ end
 
 ---Applies fertilizer to the given coordinates 
 ---@param coords table @The coordinates to use. Only used for precision farming.
+---@param sprayType number @The spray type to be used
 ---@param sprayLevelModifier table @The density map modifier for the spray level. Must be limited to the coordinates already
 ---@param sprayLevelFilter table @The spray level filter to be used. Create this as DensityMapFilter.new(sprayLevelModifier) and reuse on every call
 ---@param filter2 table @An optional second filter like onFieldFilter
 ---@param filter3 table @An optional third filter, for example for the fruit type
-function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFilter, filter2, filter3)
+---@param forceLevelOne boolean @Set to true in order to use the "FIRST" strategy independent of the current setting
+function CoverCropUtils.applyFertilizer(coords, sprayType, sprayLevelModifier, sprayLevelFilter, filter2, filter3, forceLevelOne)
     local settings = g_currentMission.conservationAgricultureSettings
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
 
     -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
     -- so we execute this even with Precision Farming active.)
-    if settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
+    if forceLevelOne or settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
         for i = 1, maxSprayLevel - 1 do
             local targetSprayLevel = maxSprayLevel - i
             local currentSprayLevel = targetSprayLevel - 1
@@ -161,10 +163,13 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
     elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FULL then
         sprayLevelFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 0, maxSprayLevel - 1)
         sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, filter2, filter3)
+    elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE then
+        -- Just pretend we're a fertilizer spreader (which sprays straw)
+        FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType, 1)
     end
 
     -- precision farming: modify the nitrogen map
-    if FS22_precisionFarming ~= nil and FS22_precisionFarming.g_precisionFarming ~= nil and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+    if g_modIsLoaded['FS22_precisionFarming'] and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
         local precisionFarming = FS22_precisionFarming.g_precisionFarming
         local nitrogenMap = precisionFarming.nitrogenMap
         local soilMap = precisionFarming.soilMap
@@ -291,8 +296,9 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                         end
                     end
 
-                    -- "Spray" straw on the ground
-                    sprayTypeModifier:executeSet(strawSprayType, fruitFilter, onFieldFilter)
+                    -- Fertilize the field
+                    -- This will also set the ground type to straw
+                    CoverCropUtils.applyFertilizer(coords, strawSprayType, sprayLevelModifier, sprayLevelFilter, fruitFilter, onFieldFilter)
 
                     if grassShallBeDropped then
                         -- Add a thin layer of grass
@@ -303,9 +309,6 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                             dropArea.x1, dropArea.y1, dropArea.z1, dropArea.x2, dropArea.y2, dropArea.z2,
                             radius, nil, lineOffset, false, nil, false)
                     end
-
-                    -- Fertilize the field in accordance with the settings
-                    CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFilter, fruitFilter, onFieldFilter)
                 end
             end
         end
