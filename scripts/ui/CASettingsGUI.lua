@@ -23,8 +23,8 @@ CASettingsGUI = {
     },
     FERTILIZATION_BEHAVIOR_PF_I18N_IDS = {
         { index = 1, i18nTextId = 'ca_fertilization_behavior_pf_off' },
-        { index = 2, i18nTextId = 'ca_fertilization_behavior_pf_min_auto' }
-        -- This could be extended by "fixed value" if we can get it to work
+        { index = 2, i18nTextId = 'ca_fertilization_behavior_pf_min_auto' },
+        { index = 3, i18nTextId = 'ca_fertilization_behavior_pf_fixed_amount' }
     }
 }
 

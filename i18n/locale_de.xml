@@ -18,7 +18,8 @@
         <text name="ca_fertilization_behavior_pf_short" text="Düngeverhalten (Precision Farming)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim 'Roller Crimping', Mulchen oder Direktsäen in Zwischenfrüchte, wenn der Precision Farming DLC aktiv ist."/>
         <text name="ca_fertilization_behavior_pf_off" text="Kein Düngebonus"/>
-        <text name="ca_fertilization_behavior_pf_min_auto" text="Mittlerer Düngebonus"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Sonnenblumen"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Feste Menge"/>
         <text name="ca_enable_weed_suppression_short" text="Unkrautunterdrückung"/>
         <text name="ca_enable_weed_suppression_long" text="Wenn aktiv, wachsen nach dem Direktsäen in Zwischenfrüchte oder dem Säen in gewalzte/gemulchte Zwischenfrüchte keine Unkräuter"/>
         <text name="ca_allow_direct_seeder_field_creation_short" text="Erlaube Felderzeugung mit Sämaschinen"/>

@@ -18,7 +18,8 @@
         <text name="ca_fertilization_behavior_pf_short" text="Fertilization Behavior (Precision Farming)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Sets the fertilization strategy when roller crimping, mulching or direct seeding into cover crops with the Precision Farming DLC active."/>
         <text name="ca_fertilization_behavior_pf_off" text="No fertilization"/>
-        <text name="ca_fertilization_behavior_pf_min_auto" text="Medium fertilization"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Sunflowers"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Fixed amount"/>
         <text name="ca_enable_weed_suppression_short" text="Weed Suppression"/>
         <text name="ca_enable_weed_suppression_long" text="If enabled, weeds will not grow after direct seeding into cover crops or seeding into roller crimped/mulched cover crops."/>
         <text name="ca_allow_direct_seeder_field_creation_short" text="Allow Seeder Field Creation"/>

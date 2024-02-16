@@ -18,7 +18,8 @@
         <text name="ca_fertilization_behavior_pf_short" text="Удобрение при обработке (Precision Farming DLC)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Устанавливает стратегию внесения удобрений при прикатывании катком, мульчировании или прямом посеве в покровные культуры при активированном Precision Farming DLC."/>
         <text name="ca_fertilization_behavior_pf_off" text="Не удобрять"/>
-        <text name="ca_fertilization_behavior_pf_min_auto" text="Среднее внесение удобрений"/>
+        <text name="ca_fertilization_behavior_pf_min_auto" text="Sunflowers"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Fixed amount"/>
         <text name="ca_enable_weed_suppression_short" text="Удаление сорняков"/>
         <text name="ca_enable_weed_suppression_long" text="Если включено, сорняки не будут расти после прямого посева в покровные культуры или посева в прикатанные/мульчированные покровные культуры."/>
         <text name="ca_allow_direct_seeder_field_creation_short" text="Разрешить создание поля сеялкой"/>

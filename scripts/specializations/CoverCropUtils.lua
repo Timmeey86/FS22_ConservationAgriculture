@@ -151,6 +151,42 @@ function CoverCropUtils.applyFertilizer(coords, sprayType, sprayLevelModifier, s
     local settings = g_currentMission.conservationAgricultureSettings
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
 
+    local sprayAuto = true
+    local defaultNitrogenRequirementIndex = 1
+    local sprayManual = false
+    local sprayAmountManual = 5
+
+    -- precision farming: modify the nitrogen map
+    if g_modIsLoaded['FS22_precisionFarming'] then
+        local precisionFarming = FS22_precisionFarming.g_precisionFarming
+        local nitrogenMap = precisionFarming.nitrogenMap
+        local soilMap = precisionFarming.soilMap
+
+        -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
+        -- We only check if at least one corner is on sampled soil to not make the check too expensive
+        if soilMap:getTypeIndexAtWorldPos(coords.x1, coords.z1) > 0 or
+            soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
+            soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
+
+            if settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+                -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
+                -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
+                -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
+                -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
+                nitrogenMap:updateSprayArea(
+                    coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                    FieldSprayType.FERTILIZER, FieldSprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+            elseif settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT then
+                local numPixelsChanged, autoFruitTypeIndex, autoSoilTypeIndex, foundLevel, targetLevel, changeLevel, _ = nitrogenMap:updateSprayArea(
+                    coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                    sprayType, FieldSprayType.FERTILIZER, sprayManual, sprayAmountManual, nil, 0, defaultNitrogenRequirementIndex)
+                print(("pixels: %d, autoFruit: %d, autoSoil: %d, found: %.1f, target: %.1f, change: %.1f"):format(
+                    numPixelsChanged, autoFruitTypeIndex, autoSoilTypeIndex, foundLevel, targetLevel, changeLevel
+                ))
+            end
+        end
+    end
+
     -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
     -- so we execute this even with Precision Farming active.)
     if forceLevelOne or settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_FIRST then
@@ -169,12 +205,10 @@ function CoverCropUtils.applyFertilizer(coords, sprayType, sprayLevelModifier, s
     end
 
     -- precision farming: modify the nitrogen map
-    if g_modIsLoaded['FS22_precisionFarming'] and settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+    if g_modIsLoaded['FS22_precisionFarming'] then
         local precisionFarming = FS22_precisionFarming.g_precisionFarming
         local nitrogenMap = precisionFarming.nitrogenMap
         local soilMap = precisionFarming.soilMap
-        local sprayAuto = true
-        local defaultNitrogenRequirementIndex = 1
 
         -- Fertilize only if soil sampling has been done. Otherwise the player would end up with max nitrogen level every time
         -- We only check if at least one corner is on sampled soil to not make the check too expensive
@@ -182,13 +216,15 @@ function CoverCropUtils.applyFertilizer(coords, sprayType, sprayLevelModifier, s
             soilMap:getTypeIndexAtWorldPos(coords.x2, coords.z2) > 0 or
             soilMap:getTypeIndexAtWorldPos(coords.x3, coords.z3) > 0 then
 
-            -- The nitrogen map has a 2m x 2m resolution, while mulching can occur multiple times within each cell
-            -- Therefore, we simply fertilize the whole work area to the target level of sunflowers on the current soil type
-            -- This way, the player will never overshoot fertilization, no matter what is planted afterwards, since sunflower has the lowest requirements
-            -- We need to use FERTILIZER rather than MANURE here since the automode wouldn't work otherwise
-            nitrogenMap:updateSprayArea(
-                coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
-                SprayType.FERTILIZER, SprayType.FERTILIZER, sprayAuto, 0, FruitType.SUNFLOWER, 0, defaultNitrogenRequirementIndex)
+            if settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO then
+                nitrogenMap:postUpdateSprayArea(
+                    coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                    FieldSprayType.FERTILIZER, FieldSprayType.FERTILIZER, sprayAuto, 0)
+            elseif settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT then
+                nitrogenMap:postUpdateSprayArea(
+                    coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
+                    sprayType, FieldSprayType.FERTILIZER, sprayManual, sprayAmountManual)
+            end
         end
     end
 end
