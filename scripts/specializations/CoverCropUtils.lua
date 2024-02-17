@@ -298,7 +298,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
 
                     -- Fertilize the field
                     -- This will also set the ground type to straw
-                    CoverCropUtils.applyFertilizer(coords, strawSprayType, sprayLevelModifier, sprayLevelFilter, fruitFilter, onFieldFilter)
+                    CoverCropUtils.applyFertilizer(coords, strawSprayType, sprayLevelModifier, sprayLevelFilter, fruitFilter, onFieldFilter, false)
 
                     if grassShallBeDropped then
                         -- Add a thin layer of grass
