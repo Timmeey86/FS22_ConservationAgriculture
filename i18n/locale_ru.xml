@@ -25,9 +25,9 @@
         <text name="ca_allow_direct_seeder_field_creation_long" text="Если включено, сеялки прямого посева можно использовать для создания полей. Создание поля можно переключать для каждой сеялки отдельно с помощью клавиши 'Toggle pipe' (по умолчанию: 'o')."/>
         <text name="ca_enable_grass_dropping_short" text="Катки срывают траву"/>
         <text name="ca_enable_grass_dropping_long" text="Если включено, прикатывание и мульчирование приведёт к падению травы на землю, имитируя присутствие биоматериала. Трава будет автоматически удалена при посеве."/>
-        <text name="ca_enable_straw_chopping_bonus_short" text = "Chopped Straw Fertilizes"/>
-        <text name="ca_enable_straw_chopping_bonus_long" text = "If enabled, chopping straw (instead of swathing it) will fertilize the field."/>
-        <text name="ca_enable_cultivator_bonus_short" text = "Cultivator Incorporation"/>
+        <text name="ca_enable_straw_chopping_bonus_short" text="Chopped Straw Fertilizes"/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="If enabled, chopping straw (instead of swathing it) will fertilize the field."/>
+        <text name="ca_enable_cultivator_bonus_short" text="Cultivator Incorporation"/>
         <text name="ca_enable_cultivator_bonus_long" text="If enabled, cultivating cover crops will have the same effects as roller crimping."/>
     </texts>
 </l10n>

@@ -25,9 +25,9 @@
         <text name="ca_allow_direct_seeder_field_creation_long" text="Wenn aktiv, können Direktsaatmaschinen zur Felderzeugung genutzt werden. Diese Funktion lässt sich zusätzlich für jedes Gerät separat ein-oder ausschalten (Funktion 'Rohr ein-/ausklappen', Taste 'o')"/>
         <text name="ca_enable_grass_dropping_short" text="'Roller Crimping' erzeugt Gras"/>
         <text name="ca_enable_grass_dropping_long" text="Wenn aktiv, wird beim 'Roller Crimping' und Mulchen etwas Gras auf den Boden geworfen um das Vorhandensein von Biomasse zu simulieren. Das Gras wird beim Säen automatisch entfernt."/>
-        <text name="ca_enable_straw_chopping_bonus_short" text = "Gehäckseltes Stroh düngt"/>
-        <text name="ca_enable_straw_chopping_bonus_long" text = "Wenn aktiv, wird beim Häckeln von Stroh (anstelle des Schwadens) das Feld gedüngt."/>
-        <text name="ca_enable_cultivator_bonus_short" text = "Grubber-Einarbeitung"/>
+        <text name="ca_enable_straw_chopping_bonus_short" text="Gehäckseltes Stroh düngt"/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="Wenn aktiv, wird beim Häckeln von Stroh (anstelle des Schwadens) das Feld gedüngt."/>
+        <text name="ca_enable_cultivator_bonus_short" text="Grubber-Einarbeitung"/>
         <text name="ca_enable_cultivator_bonus_long" text="Wenn aktiv, hat das Grubbern von Zwischenfrüchten die gleichen Effekte wie 'Roller Crimping'"/>
     </texts>
 </l10n>
