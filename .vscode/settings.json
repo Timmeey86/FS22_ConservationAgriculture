@@ -74,6 +74,8 @@
         "DebugUtil",
         "worldToLocal",
         "g_modIsLoaded",
-        "FS22_cultivatorFieldCreator"
+        "FS22_cultivatorFieldCreator",
+        "Cultivator",
+        "Combine"
     ]
 }

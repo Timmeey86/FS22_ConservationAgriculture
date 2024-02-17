@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.0.8</version>
+    <version>1.0.1.0</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -9,56 +9,43 @@
     </title>
     
     <description>
-        <en><![CDATA[Tired of tilling the ground for hours? Worried by the work/benefit ratio of oilseed radish? This mod is for you:
+        <en><![CDATA[This mod makes regenerative farming practices more beneficial.
 
-The general idea of this mod is to make cover crops more useful and improve playstyles where you would never leave your fields barren (more on that later):
+It adds the following features:
+- Grass crops, grain crops and root crops can be used as cover crops now.
+- If cover crops have grown enough, they can be terminated with rollers, mulchers, cultivators and direct seeders.
+- Terminating cover crops will fertilize the field (Precision Farming is supported, too) and prevent weeding until after the next harvest.
+- Rolling or mulching cover crops will also grant a mulch bonus.
+- When terminating cover crops, a thin layer of grass can be added to simulate the presence of biomatter (visual effect only, disabled by default).
+- Chopping straw while harvesting will fertilize the field, so it is a more meaningful alternative to baling.
+- Direct seeders get an option to allow field creation.
+- Many modded crops are supported automatically.
+- Most effects can be turned on or off in the settings (only admins can do this in multiplayer).
+- Different fertilization strategies can be selected in the settings.
 
-- Roller crimping of cover crops is now possible and will provide a mulching and fertilization bonus
-- Mulching cover crops will provide the same effect as rolling them
-- Direct seeding into cover crops with Precision Farming grants more nitrogen now
-- Weeds will no longer appear when seeding into growing, mulched or roller crimped cover crops (until after the next harvest)
-
-The effects described above will be applied in the following cases:
-- Grass, Meadow and Oilseed Radish: In any "ready for harvest" states
-- Everything else: After being half grown until just before "ready for harvest"
-- Root crops: Like above, but also in the "remove foliage" state
-- Most modded crops will behave accordingly, for example alfalfa and clover behave like grass
-
-Additionally, direct seeders get an option to allow field creation so you can get rid of your plow for good.
-
-If you only want a part of these features, you can affect the behavior through the in-game settings.
-
-In general, this mod tries to make the three principles of Conservation Agriculture (CA) more viable:
+In real life, Conservation Agriculture is based on the following three principles:
 
 1. Minimum mechanical soil disturbance (i.e. no tillage)
 2. Permanent soil organic cover (with crop residues and/or cover crops)
 3. Species diversification (through proper crop rotation)    
 (Source: Food and Agriculture Organization of the United Nations)
 
-The theory is that respecting these three principles will improve the overall soil quality which prevents soil erosion, nutrient runoff and other issues while at the same time improving the ecosystem in and above the soil.
+The theory is that any system which respects these three principles is sustainable long-term, since it builds soil over time.
+The approach has the potential to solve soil erosion and nutrient runoff issues which in turn leads to less additional fertilizer being required.
+Regenerative farming is a complex topic, however, and there are many variations and factors which need to be considered, so it can't be easily translated into a simulation game.
 
-Farming Simulator 2022 already provides the following things for these principles:
-- Direct seeders and direct planters
-- Oilseed radish as pure cover crop
-- One fertilizer stage (base game) or 25kg/ha nitrogen (Precision Farming DLC) when direct seeding into or cultivating growing crops
+This mod therefore uses nitrogen levels and the mulching bonus in order to provide at least some kind of reward to the player for maintaining these principles.
+It also tries to offer many configuration options so everyone can adjust it to what they believe is most realistic.
 
-This is already a good start, but it's not possible to get both the mulching and fertilizing bonus from oilseed radish, and the fertilizing bonus doesn't offset the fuel, repair and seed costs for planting cover crops, at least with the Precision Farming DLC active.
-This mod therefore introduces mulching or roller crimping of cover crops with a large enough fertilization bonus.
-Note that with precision farming, nitrogen will be set to the lowest requirement of any base game crop, which is sunflowers (soybeans completely ignore nitrogen). While this means you still have to apply chemical fertilizer for most crops, you will never have to deal with planting into an overfertilized field afterwards. You need to have valid soil samples for the effect to be applied.
-
-This allows field work loops like the following:
-
-Harvest crop -> Apply lime -> direct seed cover crop -> roll or mulch when ready (this also fertilizes) ->  direct seed/plant different crop -> handle weeds and remaining nitrogen -> rinse and repeat
-
-It is recommended to turn periodic plowing off; field stones can be left on since no tillage equipment is being used.
-
-This mod is compatible with the Precision Farming DLC and the Crop Rotation mod (available on github). 
-
-In case of bugs, please create an issue at my GitHub repository.
+The mod uses measures to reduce the likelyhood of mod conflicts, but these can never be fully excluded.
+If you do find issues or weird behaviour, please create an issue at my GitHub repository.
 
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
+v1.0.1.0:
+- Chopping straw while harvesting will now fertilize the field, but only to the first level
+- Cultivators an be used on cover crops in order to receive a fertilizer bonus (but no mulching bonus)
 
 v1.0.0.8:
 - Fixed an issue where seed usage would be extremely high with certain map/mod combinations
@@ -82,56 +69,42 @@ v1.0.0.3:
 v1.0.0.2:
 - Fixed compatibility issues with "Cultivator Field Creator" mod
 ]]></en>
-        <de><![CDATA[Müde von der stundenlangen Bodenbearbeitung? Unzufrieden mit dem Kosten/Nutzen Verhältnis von Ölrettich? Dann ist diese Mod für dich:
+        <de><![CDATA[Diese Mod macht regenerative Anbaumethoden lukrativer.
 
-Die grundsätzliche Idee der Mod ist es, Zwischenfrüchte nützlicher zu machen und Spielweisen zu verbessern, bei denen immer etwas auf dem Feld wächst (mehr dazu später):
+Sie fügt die folgenden Funktionen hinzu:
+- Gras-ähnliche Früchte, Getreide und Wurzelgemüse kann nun als Zwischenfrucht verwendet werden.
+- Wenn Zwischenfrüchte ausreichend gewachsen sind, können sie mit Walzen, Mulchern, Grubbern und Direktsaatmaschinen terminiert werden.
+- Wenn Zwischenfrüchte terminiert werden, wird das Feld gedüngt (funktioniert auch mit Precision Farming), und Unkraut wächst bis zur nächsten Ernte nicht mehr.
+- Walzen oder Mulchen von Zwischenfrüchten gibt zusätzlich einen Mulchbonus.
+- Wenn Zwischenfrüchte terminiert werden, kann optional eine dünne Grasschicht auf das Feld geworfen werden, um das Vorhandensein von Biomasse zu simulieren (nur visuell, standardmäßig ausgeschaltet).
+- Wenn Stroh bei der Ernte gehäckselt wird, düngt es das Feld, sodass es eine lohnenswerte Alternative zum Ballen machen sein kann.
+- Direktsägeräte haben eine Funktion zur Felderzeugung.
+- Viele gemoddete Früchte sind automatisch unterstützt.
+- Die meisten Effekte können an- und ausgeschaltet werden (im Mehrspieler dürfen das nur Admins).
+- Verschiedene Dünge-Strategien können eingestellt werden.
 
-- Zwischenfrüchte können nun mit einer Walze umgeknickt werden (engl. "roller crimping") und geben Mulch- und Düngeboni
-- Der selbe Effekt wird mit Mulchern erzielt
-- Beim Direktsäen in Zwischenfrüchte mit dem Precision Farming DLC wird mehr Stickstoff bereitgestellt
-- Nach dem Säen in wachsende, gewalzte oder gemulchte Zwischenfrüchte wächst kein Unkraut (bis nach der nächsten Ernte)
+In der realen Landwirschaft basiert "Conservation Agriculture" (konservierende Landwirtschaft, CA) auf den folgenden drei Prinzipien:
+1. Minimale Bodenbewegung (d.h. möglichst keine Bodenbearbeitung)
+2. Permanente Bodenbedekcung (durch Rückstände und/oder Zwischenfruchtmischungen)
+3. Biodiversität (durch geeignete Fruchtfolgen usw.)
+(Quelle: FAO, Organisation für Ernährung und Landwirtschaft der vereinten Nationen)
 
-Die beschriebenen Effekte werden in den folgenden Fällen angewendet:
-- Gras, Wiese und Ölrettich: In jedem erntereifen Zustand
-- Alles andere: Ab der Hälfte der Wachstumsstufen, aber vor der Erntezeit
-- Wurzelgemüse: Wie oben, aber auch im Zustand "Kraut entfernen"
-- Die meisten Mod-Früchte verhalten sich analog, zum Beispiel sind Luzerne und Klee ähnlich wie Gras
+Die Theorie dabei ist, dass jedes System, das diese drei Grundprinzipien verfolgt, langfristig nachhaltig ist, da es Humus aufbaut.
+Der Ansatz hat das Potenzial, Probleme mit Bodenerosion und Nährstoffauswaschung zu beheben, was wiederum dazu führt, dass weniger Nährstoffe in den Boden gegeben werden müssen.
+Regenerative Landwirtschaft ist jedoch ein komplexes Thema, und es gibt viele Variationen und Faktoren, die berücksichtigt werden müssen, sodass es nicht leicht in einem Simulations-Spiel abgebildet werden kann.
 
-Darüber hinaus erhalten Direktsaatmaschinen eine Option zur Felderzeugung, damit ihr das Pflügen entgültig an den Nagel hängen könnt.
+Die Mod verwendet daher Düngestufen und den Mulchbonus, um dem Spieler zumindest irgend eine Belohnung für das Befolgen der Prinzipien zu geben.
+Sie versucht ebenso, viele Dinge einstellbar zu machen, sodass jeder es so einstellen kann, wie es aus eigener Sicht am realistischsten ist.
 
-Falls ihr nur einen Teil dieser Effekte möchtet, könnt ihr das Verhalten durch die Spieleinstellungen beinflussen.
-
-Grundsätzlich versucht diese Mod, die drei Prinzipien von Conservation Agriculture (CA) lohnenswerter zu machen:
-
-1. Minimale mechanische Bodenbewegung (Kein Einsatz von Pflügen, Grubbern, Eggen, ...)
-2. Permanente Bodenbedeckung (durch Pflanzenrückstände und/oder Zwischenfrüchte/Gründüngung)
-3. Einhaltung von passenden Fruchtfolgen
-(Quelle: Food and Agriculture Organization der Vereinten Nationen)
-
-Die Theorie dabei ist, dass bei Einhaltung dieser drei Prinzipien in der realen Welt die Qualität des Bodens verbessert wird, wodurch Erosion, Nährstoffauswaschung und andere Probleme vermieden werden. Gleichzeitig soll das Ökosystem im und über dem Boden verbessert werden.
-
-Der Landwirtschaftssimulator 2022 bietet bereits die folgenden Dinge für diese Prinzipien:
-- Direktsaat-Sämaschinen (auch Einzelkornsämaschinen für Direktsaat)
-- Ölrettich als reine Zwischenfrucht
-- Eine Düngestufe (Base game) oder 25kg/ha Stickstoff (Precision Farming DLC) beim Direktsäen in oder Grubbern von Zwischenfrüchten
-
-Dies ist bereits ein guter Anfang, aber es ist nicht möglich, gleichzeitig den Mulchbonus und den Düngebonus von Ölrettich zu erhalten, und der Düngebonus deckt die Kosten für Sprit, Reparatur und Saatgut für die Zwischenfrucht nicht ab, zumindest mit dem Precision Farming DLC.
-Diese Mod führt erlaubt daher das Mulchen oder Walzen (mit Mulcheffekt) von Zwischenfrüchten mit einem ausreichend großen Düngebonus.
-Wenn Precision Farming aktiv ist, wird der Stickstoff auf die benötigte Menge der sparsamsten Frucht im base game gesetzt: Sonnenblumen (Sojabohnen ignorieren Stickstoff komplett). Auch wenn das bedeutet, dass meistens noch nachgedüngt werden muss, muss man sich dagegen nicht damit rumschlagen, in ein überdüngtes Feld zu säen. Der Effekt wird nur angewendet, wenn gültige Bodenproben vorhanden sind.
-
-Dadurch werden Feldbearbeitungszyklen wie der folgende ermöglicht:
-
-Ernten -> Kalk streuen -> Zwischenfrucht per Direktsaat ausbringen -> Walzen/mulchen (was auch düngt) -> die nächste Frucht direktsäen/-pflanzen -> sich um Unkraut und restlichen Dünger kümmern -> und so weiter
-
-Es wird empfohlen, regelmäßiges Pflügen auszuschalten; Steine können aktiviert bleiben, da keine Bodenbearbeitungsgeräte verwendet werden.
-
-Für ein möglichst realitätsnahes Erlebnis wird der Precision Farming DLC und die Mod "Crop Rotation" (verfügbar auf Github) empfohlen.
-
-Falls Bugs auftreten, erstellt bitte ein Ticket in meinem GitHub repository.
+Die Mod trifft Maßnahmen, mit denen die Wahrscheinlichkeit von Modkonflikten reduziert wird, diese können aber niemals ganz ausgeschlossen werden.
+Wenn du Probleme oder seltsames Verhalten feststellst, berichte das Problem bitte in meinem Github Repository, gerne auch auf Deutsch.
 
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+v1.0.1.0:
+- Wenn Stroh bei der Ernte gehäckselt wird, düngt das jetzt auch das Feld
+- Wenn Grubber auf Zwischenfrüchte angewendet werden, wird das Feld ebenfalls gedüngt (aber nicht gemulcht).
 
 v1.0.0.8:
 - Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.
