@@ -25,7 +25,7 @@ end
 function CultivatorFertilizerSpecialization:processCultivatorArea(superFunc, workArea, dt)
 
     local settings = g_currentMission.conservationAgricultureSettings
-    if settings.cultivatorBonusIsEnabled then
+    if settings.cultivatorBonusIsEnabled and not g_modIsLoaded["FS22_precisionFarming"] then
         -- Fertilize any cover crops in the work area, but don't mulch them (since the soil is effectively uncovered)
         CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, false, false)
     end

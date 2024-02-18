@@ -151,7 +151,6 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
     local settings = g_currentMission.conservationAgricultureSettings
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
     local sprayType = FieldSprayType.FERTILIZER
-    local strawSprayType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
 
 
     if not g_modIsLoaded['FS22_precisionFarming'] then
@@ -170,6 +169,11 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
         elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE then
             -- Just pretend we're a fertilizer spreader (which sprays straw)
             FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType, 1)
+        end
+
+        -- make the ground look fertilized in all base game cases
+        if settings.fertilizationBehaviorBaseGame ~= CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_OFF then
+            FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
         end
     else
         -- precision farming: modify the nitrogen map instead
@@ -202,19 +206,17 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
             -- Change the nitrogen levels
             local numPixelsChanged, _, _, _, _, _, _  = nitrogenMap:updateSprayArea(
                 coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
-                strawSprayType, strawSprayType, automaticApplication, sprayAmount, forcedFruitType, 0, defaultNitrogenRequirementIndex)
+                sprayType, sprayType, automaticApplication, sprayAmount, forcedFruitType, 0, defaultNitrogenRequirementIndex)
+
             -- Change the ground type
             if numPixelsChanged > 0 then
-                FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawSprayType, 1)
-                local sprayDesc = g_sprayTypeManager:getSprayTypeByIndex(strawSprayType)
-                if sprayDesc ~= nil then
-                    FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawSprayType)
-                end
+                FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType, 1)
+                FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
             end
-            -- Set lock bits based on the current ground type to not spary the same area twice
+            -- Set lock bits based on the current ground type to not spray the same area twice
             nitrogenMap:postUpdateSprayArea(
                 coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3,
-                strawSprayType, strawSprayType, automaticApplication, sprayAmount)
+                sprayType, sprayType, automaticApplication, sprayAmount)
         end
     end
 end

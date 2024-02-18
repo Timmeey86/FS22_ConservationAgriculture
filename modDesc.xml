@@ -14,10 +14,10 @@
 It adds the following features:
 - Grass crops, grain crops and root crops can be used as cover crops now.
 - If cover crops have grown enough, they can be terminated with rollers, mulchers, cultivators and direct seeders.
-- Terminating cover crops will fertilize the field (Precision Farming is supported, too) and prevent weeding until after the next harvest.
+- Terminating cover crops will fertilize the field (Precision Farming is supported, too, except for cultivators) and prevent weeding until after the next harvest.
 - Rolling or mulching cover crops will also grant a mulch bonus.
 - When terminating cover crops, a thin layer of grass can be added to simulate the presence of biomatter (visual effect only, disabled by default).
-- Chopping straw while harvesting will fertilize the field, so it is a more meaningful alternative to baling.
+- Chopping straw while harvesting will fertilize the field, so it is a more meaningful alternative to baling (No Precision Farming support yet).
 - Direct seeders get an option to allow field creation.
 - Many modded crops are supported automatically.
 - Most effects can be turned on or off in the settings (only admins can do this in multiplayer).
@@ -46,8 +46,12 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 v1.0.1.0:
-- Chopping straw while harvesting will now fertilize the field, but only to the first level
-- Cultivators an be used on cover crops in order to receive a fertilizer bonus (but no mulching bonus)
+- Chopping straw while harvesting will now fertilize the field in base game, but only to the first level
+- Cultivators an be used on cover crops in order to receive a fertilizer bonus in base game (but no mulching bonus)
+- Added "Additional fertilizer level" strategy for base game
+- Added "Fixed nitrogen amount" strategy for precision farming
+- Terminating cover crops no longer creates a straw ground since it interferes with Precision Farming Nitrogen levels too much
+- Grass dropping is now on by default
 
 v1.0.0.8:
 - Fixed an issue where seed usage would be extremely high with certain map/mod combinations
@@ -107,8 +111,12 @@ Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, du
 
 Changelog:
 v1.0.1.0:
-- Wenn Stroh bei der Ernte gehäckselt wird, düngt das jetzt auch das Feld
-- Wenn Grubber auf Zwischenfrüchte angewendet werden, wird das Feld ebenfalls gedüngt (aber nicht gemulcht).
+- Wenn Stroh bei der Ernte gehäckselt wird, düngt das jetzt auch das Feld, aber nur die erste Stufe (funktioniert noch nicht mit Precision Farming)
+- Wenn Grubber auf Zwischenfrüchte angewendet werden, wird das Feld ebenfalls gedüngt (aber nicht gemulcht; funktioniert noch nicht mit Precision Farming)
+- Dünge-Strategie "Ein zusätzliches Level" für das Base Game hinzugefügt
+- Dünge-Strategie "Konstante Stickstoffmenge" für Precision Farming hinzugefügt
+- Beim Terminieren von Zwischenfrüchten wird kein Stroh-Effekt mehr auf dem Boden dargestellt, da es zu arg mit den Stickstoff-Berechnungen von Precision Farming im Konflikt steht.
+- Die Einstellung, dass Gras auf den Boden geworfen wird, ist stattdessen jetzt standardmäßig an.
 
 v1.0.0.8:
 - Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.

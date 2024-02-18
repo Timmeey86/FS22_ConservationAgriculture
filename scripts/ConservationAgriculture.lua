@@ -55,20 +55,6 @@ local function registerSpecialization(manager)
     end
 end
 
----Registers straw as an additional spray type for precision farming, so we can fertilize the ground by applying straw
-local function registerStrawAsPrecisionFarmingSprayType(nitrogenMap)
-    if nitrogenMap ~= nil then
-        -- Act as if the following values were in the precision farming XML:
-        local strawApplicationRate = {
-            fillTypeIndex = g_fillTypeManager:getFillTypeIndexByName("STRAW"),
-            autoAdjustToFruit = false,
-            regularRate = 40,
-            ratesBySoilType = { { 1, 40 }, { 2, 40 }, { 3, 40 }, { 4, 40 } } -- fixed ratio on all soils
-        }
-        table.insert(nitrogenMap.applicationRates, strawApplicationRate)
-    end
-end
-
 ---Creates a settings object which can be accessed from the UI and the rest of the code
 ---@param   mission     table   @The object which is later available as g_currentMission
 local function createModSettings(mission)
@@ -91,15 +77,6 @@ TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, r
 g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
         CASettingsRepository.restoreSettings()
-        -- for some reason the nitrogen map isn't loaded when loading the map has finished, so we register an override now 
-        -- that we can at least be sure that precision farming was loaded        
-        if g_modIsLoaded["FS22_precisionFarming"] then
-            FS22_precisionFarming.NitrogenMap.loadFromXML = Utils.overwrittenFunction(FS22_precisionFarming.NitrogenMap.loadFromXML, function(nitrogenMap, superFunc, ...)
-                local result = superFunc(nitrogenMap, ...)
-                registerStrawAsPrecisionFarmingSprayType(nitrogenMap)
-                return result
-            end)
-        end
     end)
 
 -- Create (and cleanup) a global settings object

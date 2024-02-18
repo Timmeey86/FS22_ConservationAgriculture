@@ -19,14 +19,14 @@ function CASettings.new()
     self.seederMulchBonusIsEnabled = false
     self.weedSuppressionIsEnabled = true
     self.directSeederFieldCreationIsEnabled = true
-    self.grassDroppingIsEnabled = false
+    self.grassDroppingIsEnabled = true
     self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE
     self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
     -- v1.0.0.9+
     self.strawChoppingBonusIsEnabled = true
     self.cultivatorBonusIsEnabled = true
 
-    -- Required to avoid mod conflicts
+    -- Required to work around mod conflicts
     self.preventWeeding = false
     return self
 end

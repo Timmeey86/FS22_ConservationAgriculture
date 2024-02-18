@@ -207,4 +207,10 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
         generalSettingsPage.ca_enableWeedSuppression:setDisabled(true)
         generalSettingsPage.ca_enableWeedSuppression.elements[6]:setText("Disabled because LFHA ForageOptima Standard was detected (it breaks weeders)")
     end
+
+    -- Disable straw chopping and cultivator bonus in case of precision farming (not functional yet)
+    if g_modIsLoaded["FS22_precisionFarming"] then
+        generalSettingsPage.ca_enableStrawChoppingBonus:setDisabled(true)
+        generalSettingsPage.ca_enableCultivatorBonus:setDisabled(true)
+    end
 end

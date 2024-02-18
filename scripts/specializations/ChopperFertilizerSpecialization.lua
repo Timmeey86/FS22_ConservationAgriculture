@@ -39,7 +39,7 @@ function ChopperFertilizerSpecialization:processCombineChopperArea(superFunc, wo
     if not combineSpec.isSwathActive and strawGroundType ~= nil then
         --- Find out the current number of pixels which are straw
         workAreaCoords = toCoords(workArea)
-        sprayTypeModifier = CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.SPRAY_TYPE) -- straw is actually a spray type
+        sprayTypeModifier = CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.SPRAY_TYPE)
         sprayTypeFilter = DensityMapFilter.new(sprayTypeModifier)
         sprayTypeFilter:setValueCompareParams(DensityValueCompareType.EQUAL, strawGroundType)
         _, numPixelsBefore = sprayTypeModifier:executeGet(sprayTypeFilter)
@@ -48,7 +48,9 @@ function ChopperFertilizerSpecialization:processCombineChopperArea(superFunc, wo
     -- Execute base game behavior
     local lastRealArea, lastArea = superFunc(self, workArea)
 
-    if numPixelsBefore ~= nil then
+    local caSettings = g_currentMission.conservationAgricultureSettings
+    -- Precision farming doesn't work, it always fertilizes up to max level, even with auto mode and sunflower strategy
+    if caSettings.strawChoppingBonusIsEnabled and numPixelsBefore ~= nil and not g_modIsLoaded["FS22_precisionFarming"] then
         -- Find out if there are more straw pixels now
         local _, numPixelsAfter = sprayTypeModifier:executeGet(sprayTypeFilter)
 
@@ -61,8 +63,8 @@ function ChopperFertilizerSpecialization:processCombineChopperArea(superFunc, wo
             local onFieldFilter = DensityMapFilter.new(CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.GROUND_TYPE))
             onFieldFilter:setValueCompareParams(DensityValueCompareType.GREATER, 0)
 
-            -- Add 25kg/ha of nitrogen (or one level in base game)
-            CoverCropUtils.applyFertilizer(workAreaCoords, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil, true, 25)
+            -- Fertilize to the first level in case of base game
+            CoverCropUtils.applyFertilizer(workAreaCoords, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil, true, 1)
         end
     end
 
