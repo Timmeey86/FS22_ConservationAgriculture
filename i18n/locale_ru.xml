@@ -18,7 +18,6 @@
         <text name="ca_fertilization_behavior_pf_short" text="Удобрение при обработке (Precision Farming DLC)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Устанавливает стратегию внесения удобрений при прикатывании катком, мульчировании или прямом посеве в покровные культуры при активированном Precision Farming DLC."/>
         <text name="ca_fertilization_behavior_pf_off" text="Не удобрять"/>
-        <text name="ca_fertilization_behavior_pf_min_auto" text="Sunflowers"/>
         <text name="ca_fertilization_behavior_pf_fixed_amount" text="Fixed amount"/>
         <text name="ca_enable_weed_suppression_short" text="Удаление сорняков"/>
         <text name="ca_enable_weed_suppression_long" text="Если включено, сорняки не будут расти после прямого посева в покровные культуры или посева в прикатанные/мульчированные покровные культуры."/>
@@ -26,9 +25,17 @@
         <text name="ca_allow_direct_seeder_field_creation_long" text="Если включено, сеялки прямого посева можно использовать для создания полей. Создание поля можно переключать для каждой сеялки отдельно с помощью клавиши 'Toggle pipe' (по умолчанию: 'o')."/>
         <text name="ca_enable_grass_dropping_short" text="Катки срывают траву"/>
         <text name="ca_enable_grass_dropping_long" text="Если включено, прикатывание и мульчирование приведёт к падению травы на землю, имитируя присутствие биоматериала. Трава будет автоматически удалена при посеве."/>
-        <text name="ca_enable_straw_chopping_bonus_short" text = "Chopped Straw Fertilizes"/>
-        <text name="ca_enable_straw_chopping_bonus_long" text = "If enabled, chopping straw (instead of swathing it) will fertilize the field. Does not work for Precision Farming, yet."/>
-        <text name="ca_enable_cultivator_bonus_short" text = "Cultivator Incorporation"/>
-        <text name="ca_enable_cultivator_bonus_long" text="If enabled, cultivating cover crops will have the same effects as roller crimping. Does not work for Precision Farming, yet."/>
+        <text name="ca_enable_straw_chopping_bonus_short" text="Chopped Straw Fertilizes"/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="If enabled, chopping straw (instead of swathing it) will fertilize the field. Precision Farming does this already, but the amount will be adjustable."/>
+        <text name="ca_enable_cultivator_bonus_short" text="Cultivator Incorporation"/>
+        <text name="ca_enable_cultivator_bonus_long" text="If enabled, cultivating cover crops will have the same effects as roller crimping. Precision Farming does this already, but the amount will be adjustable."/>
+        <text name="ca_nitrogen_amount_roller_crimping_short" text="Nitrogen bonus (roller crimping)"/>
+        <text name="ca_nitrogen_amount_roller_crimping_long" text="Defines the kg/ha of nitrogen you get when roller crimping or mulching cover crops."/>
+        <text name="ca_nitrogen_amount_direct_seeding_short" text="Nitrogen bonus (direct seeding)"/>
+        <text name="ca_nitrogen_amount_direct_seeding_long" text="Defines the kg/ha of nitrogen you get when direct seeding into cover crops."/>
+        <text name="ca_nitrogen_amount_straw_chopping_short" text="Nitrogen bonus (straw chopping)"/>
+        <text name="ca_nitrogen_amount_straw_chopping_long" text="Defines the kg/ha of nitrogen you get when chopping straw with a harvester (instead of swathing it)."/>
+        <text name="ca_nitrogen_amount_cultivating_short" text="Nitrogen bonus (cultivating)"/>
+        <text name="ca_nitrogen_amount_cultivating_long" text="Defines the kg/ha of nitrogen you get when incorporating cover crops into the soil with a cultivator."/>
     </texts>
 </l10n>

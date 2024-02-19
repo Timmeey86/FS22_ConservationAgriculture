@@ -26,7 +26,11 @@ function MulcherFertilizerSpecialization:processMulcherArea(superFunc, workArea,
 
     -- Mulch and fertilize any cover crops in the work area
     local settings = g_currentMission.conservationAgricultureSettings
-    CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, true, settings.grassDroppingIsEnabled)
+    local nitrogenValue = 0
+    if settings.rollerCrimpingIsEnabled then
+        nitrogenValue = settings:getRollerCrimpingNitrogenValue()
+    end
+    CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, true, settings.grassDroppingIsEnabled, nitrogenValue)
 
     -- Execute base game behavior
     return superFunc(self, workArea, dt)

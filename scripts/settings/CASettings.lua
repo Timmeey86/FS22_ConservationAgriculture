@@ -4,8 +4,10 @@ CASettings = {
     FERTILIZATION_BEHAVIOR_BASE_GAME_FULL = 3,
     FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE = 4,
     FERTILIZATION_BEHAVIOR_PF_OFF = 1,
-    FERTILIZATION_BEHAVIOR_PF_MIN_AUTO = 2,
-    FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT = 3,
+    FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT = 2, -- replaces "SUNFLOWERS" strategy
+    NITROGEN_MIN = 0,
+    NITROGEN_MAX = 100,
+    NITROGEN_STEP = 10
 }
 local CASettings_mt = Class(CASettings)
 
@@ -19,12 +21,17 @@ function CASettings.new()
     self.seederMulchBonusIsEnabled = false
     self.weedSuppressionIsEnabled = true
     self.directSeederFieldCreationIsEnabled = true
-    self.grassDroppingIsEnabled = true
+    self.grassDroppingIsEnabled = false
     self.fertilizationBehaviorBaseGame = CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE
-    self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_MIN_AUTO
-    -- v1.0.0.9+
+    self.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT
+    -- v1.0.0.9+ (basegame only settings)
     self.strawChoppingBonusIsEnabled = true
     self.cultivatorBonusIsEnabled = true
+    -- v1.0.1.0+ (precision farming only settings)
+    self.strawChoppingNitrogenBonus = 50 / CASettings.NITROGEN_STEP -- kg/ha
+    self.cultivatorNitrogenBonus = 50 / CASettings.NITROGEN_STEP -- kg/ha
+    self.rollerCrimpingNitrogenBonus = 80 / CASettings.NITROGEN_STEP -- kg/ha
+    self.directSeedingNitrogenBonus = 60 / CASettings.NITROGEN_STEP -- kg/ha
 
     -- Required to work around mod conflicts
     self.preventWeeding = false
@@ -76,10 +83,46 @@ function CASettings:onEnableStrawChoppingBonusChanged(newState)
     self.strawChoppingBonusIsEnabled = newState
     CASettings.publishNewSettings()
 end
-function CASettings:onEnableCultivatorBonusChanged(newState)
-    self.cultivatorBonusIsEnabled = newState
+function CASettings:onStrawChoppingNitrogenBonusChanged(newState)
+    self.strawChoppingNitrogenBonus = newState
     CASettings.publishNewSettings()
 end
+function CASettings:onCultivatorNitrogenBonusChanged(newState)
+    self.cultivatorNitrogenBonus = newState
+    CASettings.publishNewSettings()
+end
+function CASettings:onRollerCrimpingNitrogenBonusChanged(newState)
+    self.rollerCrimpingNitrogenBonus = newState
+    CASettings.publishNewSettings()
+end
+function CASettings:onDirectSeedingNitrogenBonusChanged(newState)
+    self.directSeedingNitrogenBonus = newState
+    CASettings.publishNewSettings()
+end
+
+---Retrieves the amount of nitrogen to be applied, as internal precision farming units
+---@return number @The nitrogen amount
+function CASettings:getStrawChoppingNitrogenValue()
+    return self.strawChoppingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+end
+---Retrieves the amount of nitrogen to be applied, as internal precision farming units
+---@return number @The nitrogen amount
+function CASettings:getCultivatorNitrogenValue()
+    return self.cultivatorNitrogenBonus * CASettings.NITROGEN_STEP / 5
+end
+
+---Retrieves the amount of nitrogen to be applied, as internal precision farming units
+---@return number @The nitrogen amount
+function CASettings:getRollerCrimpingNitrogenValue()
+    return self.rollerCrimpingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+end
+
+---Retrieves the amount of nitrogen to be applied, as internal precision farming units
+---@return number @The nitrogen amount
+function CASettings:getDirectSeedingNitrogenValue()
+    return self.directSeedingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+end
+
 
 ---Sends the new settings to the server, or from the server to all other clients
 function CASettings.publishNewSettings()
@@ -106,8 +149,14 @@ function CASettings:onReadStream(streamId, connection)
     self.grassDroppingIsEnabled = streamReadBool(streamId)
     self.fertilizationBehaviorPF = streamReadInt8(streamId)
     self.fertilizationBehaviorBaseGame = streamReadInt8(streamId)
+    -- v1.0.9.0+
     self.strawChoppingBonusIsEnabled = streamReadBool(streamId)
     self.cultivatorBonusIsEnabled = streamReadBool(streamId)
+    -- v1.0.1.0+
+    self.strawChoppingNitrogenBonus = streamReadInt8(streamId)
+    self.cultivatorNitrogenBonus = streamReadInt8(streamId)
+    self.rollerCrimpingNitrogenBonus = streamReadInt8(streamId)
+    self.directSeedingNitrogenBonus = streamReadInt8(streamId)
 end
 
 ---Sends the current settings to a client which is connecting to a multiplayer game
@@ -123,6 +172,12 @@ function CASettings:onWriteStream(streamId, connection)
     streamWriteBool(streamId, self.grassDroppingIsEnabled)
     streamWriteInt8(streamId, self.fertilizationBehaviorPF)
     streamWriteInt8(streamId, self.fertilizationBehaviorBaseGame)
+    -- v1.0.9.0+
     streamWriteBool(streamId, self.strawChoppingBonusIsEnabled)
     streamWriteBool(streamId, self.cultivatorBonusIsEnabled)
+    -- v1.0.1.0+
+    streamWriteInt8(streamId, self.strawChoppingNitrogenBonus)
+    streamWriteInt8(streamId, self.cultivatorNitrogenBonus)
+    streamWriteInt8(streamId, self.rollerCrimpingNitrogenBonus)
+    streamWriteInt8(streamId, self.directSeedingNitrogenBonus)
 end

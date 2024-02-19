@@ -13,7 +13,11 @@ CASettingsRepository = {
     PF_KEY = "precisionFarming",
     STATE_ATTRIBUTE = "state",
     STRAW_CHOPPING_KEY = "strawChopping",
-    CULTIVATOR_BONUS_KEY = "cultivatorBonus"
+    CULTIVATOR_BONUS_KEY = "cultivatorBonus",
+    NITROGEN_AMOUNT_STRAW_CHOPPING = "strawChoppingNitrogen",
+    NITROGEN_AMOUNT_CULTIVATING = "cultivatorNitrogen",
+    NITROGEN_AMOUNT_ROLLER_CRIMPING = "rollerCrimpingNitrogen",
+    NITROGEN_AMOUNT_DIRECT_SEEDING = "nitrogenAmountDirectSeeding"
 }
 
 ---Creates and returns an XML schema for the settings.
@@ -62,6 +66,12 @@ function CASettingsRepository.storeSettings()
     setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY), settings.strawChoppingBonusIsEnabled)
     setXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY), settings.cultivatorBonusIsEnabled)
 
+    -- v 1.0.1.0+
+    setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING ), settings.strawChoppingNitrogenBonus)
+    setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING ), settings.cultivatorNitrogenBonus)
+    setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING ), settings.rollerCrimpingNitrogenBonus)
+    setXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING ), settings.directSeedingNitrogenBonus)
+
     -- Write the XML file to the disk
     saveXMLFile(settingsXmlId)
 end
@@ -89,16 +99,25 @@ function CASettingsRepository.restoreSettings()
     settings.directSeederFieldCreationIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
 
     -- This value was added in 0.7 so older save games might not have it
-    settings.grassDroppingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY)) or false
+    settings.grassDroppingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY)) or settings.grassDroppingIsEnabled
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
     settings.fertilizationBehaviorBaseGame = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
     settings.fertilizationBehaviorPF = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
-
+    -- fix for those who used the development branch version which had three strategies temporarily
+    if settings.fertilizationBehaviorPF == 3 then
+        settings.fertilizationBehaviorPF = CASettings.FERTILIZATION_BEHAVIOR_PF_FIXED_AMOUNT
+    end
     -- 1.0.0.9+
-    settings.strawChoppingBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY)) or true
-    settings.cultivatorBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY)) or false
+    settings.strawChoppingBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY)) or settings.strawChoppingBonusIsEnabled
+    settings.cultivatorBonusIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY)) or settings.cultivatorBonusIsEnabled
+
+    -- 1.0.1.0+    
+    settings.strawChoppingNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING )) or settings.strawChoppingNitrogenBonus
+    settings.cultivatorNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING )) or settings.cultivatorNitrogenBonus
+    settings.rollerCrimpingNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING )) or settings.rollerCrimpingNitrogenBonus
+    settings.directSeedingNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING )) or settings.directSeedingNitrogenBonus
 
     -- LFHA ForageOptima Standard breaks weeders, so weed suppression will cause lua errors
     if g_modIsLoaded['FS22_ForageOptima'] then

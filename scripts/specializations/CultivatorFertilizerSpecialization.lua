@@ -24,12 +24,30 @@ end
 ---@return  integer     @The amount of pixels in the work area
 function CultivatorFertilizerSpecialization:processCultivatorArea(superFunc, workArea, dt)
 
-    local settings = g_currentMission.conservationAgricultureSettings
-    if settings.cultivatorBonusIsEnabled and not g_modIsLoaded["FS22_precisionFarming"] then
-        -- Fertilize any cover crops in the work area, but don't mulch them (since the soil is effectively uncovered)
-        CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, false, false)
+    local caSettings = g_currentMission.conservationAgricultureSettings
+    local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
+
+    local cultivatorBonusBefore = nil
+    local nitrogenMap = nil
+    if caSettings.cultivatorBonusIsEnabled then
+        if not precisionFarmingIsActive then
+            -- Fertilize any cover crops in the work area, but don't mulch them (since the soil is effectively uncovered)
+            CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, false, false, 0)
+        else
+            -- Precision Farming alraedy has a logic for this, but we can change the amount
+            nitrogenMap = FS22_precisionFarming.g_precisionFarming.nitrogenMap
+            cultivatorBonusBefore = nitrogenMap.catchCropsStateChange
+            nitrogenMap.catchCropsStateChange = caSettings:getCultivatorNitrogenValue()
+        end
     end
 
-    -- Execute base game behavior
-    return superFunc(self, workArea, dt)
+    -- Execute base game behavior. In case of precision farming, this fertilizes the field now, but only for shallow cultivators
+    local realArea, area = superFunc(self, workArea, dt)
+
+    -- Set the nitrogen map catch crops state change value back to normal if required
+    if nitrogenMap ~= nil then
+        nitrogenMap.catchCropsStateChange = cultivatorBonusBefore
+    end
+
+    return realArea, area
 end

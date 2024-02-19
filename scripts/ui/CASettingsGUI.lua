@@ -12,7 +12,11 @@ CASettingsGUI = {
         ALLOW_DIRECT_SEEDER_FIELD_CREATION = 'ca_allow_direct_seeder_field_creation',
         ENABLE_GRASS_DROPPING = 'ca_enable_grass_dropping',
         ENABLE_STRAW_CHOPPING_BONUS = 'ca_enable_straw_chopping_bonus',
-        ENABLE_CULTIVATOR_BONUS = 'ca_enable_cultivator_bonus'
+        ENABLE_CULTIVATOR_BONUS = 'ca_enable_cultivator_bonus',
+        NITROGEN_AMOUNT_ROLLER_CRIMPING = 'ca_nitrogen_amount_roller_crimping',
+        NITROGEN_AMOUNT_DIRECT_SEEDING = 'ca_nitrogen_amount_direct_seeding',
+        NITROGEN_AMOUNT_STRAW_CHOPPING = 'ca_nitrogen_amount_straw_chopping',
+        NITROGEN_AMOUNT_CULTIVATING = 'ca_nitrogen_amount_cultivating',
     },
     -- Order must correspond to the enum in CASettings. We can't reuse it unfortunately
     FERTILIZATION_BEHAVIOR_BASE_GAME_I18N_IDS = {
@@ -23,8 +27,7 @@ CASettingsGUI = {
     },
     FERTILIZATION_BEHAVIOR_PF_I18N_IDS = {
         { index = 1, i18nTextId = 'ca_fertilization_behavior_pf_off' },
-        { index = 2, i18nTextId = 'ca_fertilization_behavior_pf_min_auto' },
-        { index = 3, i18nTextId = 'ca_fertilization_behavior_pf_fixed_amount' }
+        { index = 2, i18nTextId = 'ca_fertilization_behavior_pf_fixed_amount' }
     }
 }
 
@@ -50,7 +53,7 @@ function CASettingsGUI.createBoolElement(generalSettingsPage, id, i18nTextId, ca
     return boolElement
 end
 
----Creates an element which allows choosing one out of several values
+---Creates an element which allows choosing one out of several text values
 ---@param generalSettingsPage   table       @The base game object for the settings page
 ---@param id                    string      @The unique ID of the new element
 ---@param i18nTextId            string      @The key in the internationalization XML (must be two keys with a _short and _long suffix)
@@ -68,6 +71,28 @@ function CASettingsGUI.createChoiceElement(generalSettingsPage, id, i18nTextId, 
     choiceElement:setTexts(texts)
 
     return choiceElement
+end
+
+---Creates an element which allows choosing one out of several integer values
+---@param generalSettingsPage   table       @The base game object for the settings page
+---@param id                    string      @The unique ID of the new element
+---@param i18nTextId            string      @The key in the internationalization XML (must be two keys with a _short and _long suffix)
+---@param minValue              integer     @The first value which can be selected
+---@param maxValue              integer     @The last value which can be selected
+---@param step                  integer     @The difference between any two values. Make sure this matches max value
+---@param callbackFunc          string      @The name of the function to call when the value changes
+---@return                      table       @The created object
+function CASettingsGUI.createRangeElement(generalSettingsPage, id, i18nTextId, minValue, maxValue, step, callbackFunc)
+    -- Create a bool element and then change its values
+    local rangeElement = CASettingsGUI.createBoolElement(generalSettingsPage, id, i18nTextId, callbackFunc)
+
+    local texts = {}
+    for i = minValue, maxValue, step do
+        table.insert(texts, tostring(i))
+    end
+    rangeElement:setTexts(texts)
+
+    return rangeElement
 end
 
 ---This gets called every time the settings page gets opened
@@ -136,6 +161,31 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
             CASettingsGUI.I18N_IDS.FERTILIZATION_BEHAVIOR_PF,
             CASettingsGUI.FERTILIZATION_BEHAVIOR_PF_I18N_IDS,
             "onFertilizationBehaviorPFChanged")
+        generalSettingsPage.ca_nitrogenAmountRollerCrimping = CASettingsGUI.createRangeElement(
+            generalSettingsPage,
+            "ca_nitrogenAmountRollerCrimping",
+            CASettingsGUI.I18N_IDS.NITROGEN_AMOUNT_ROLLER_CRIMPING,
+            CASettings.NITROGEN_MIN, CASettings.NITROGEN_MAX, CASettings.NITROGEN_STEP,
+            "onRollerCrimpingNitrogenBonusChanged")
+        generalSettingsPage.ca_nitrogenAmountDirectSeeding = CASettingsGUI.createRangeElement(
+            generalSettingsPage,
+            "ca_nitrogenAmountDirectSeeding",
+            CASettingsGUI.I18N_IDS.NITROGEN_AMOUNT_DIRECT_SEEDING,
+            CASettings.NITROGEN_MIN, CASettings.NITROGEN_MAX, CASettings.NITROGEN_STEP,
+            "onDirectSeedingNitrogenBonusChanged")
+        generalSettingsPage.ca_nitrogenAmountStrawChopping = CASettingsGUI.createRangeElement(
+            generalSettingsPage,
+            "ca_nitrogenAmountStrawChopping",
+            CASettingsGUI.I18N_IDS.NITROGEN_AMOUNT_STRAW_CHOPPING,
+            CASettings.NITROGEN_MIN, CASettings.NITROGEN_MAX, CASettings.NITROGEN_STEP,
+            "onStrawChoppingNitrogenBonusChanged")
+        generalSettingsPage.ca_nitrogenAmountCultivating = CASettingsGUI.createRangeElement(
+            generalSettingsPage,
+            "ca_nitrogenAmountCultivating",
+            CASettingsGUI.I18N_IDS.NITROGEN_AMOUNT_CULTIVATING,
+            CASettings.NITROGEN_MIN, CASettings.NITROGEN_MAX, CASettings.NITROGEN_STEP,
+            "onCultivatorNitrogenBonusChanged")
+
     else
         generalSettingsPage.ca_fertilizationBehaviorBaseGame = CASettingsGUI.createChoiceElement(
             generalSettingsPage,
@@ -144,6 +194,8 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
             CASettingsGUI.FERTILIZATION_BEHAVIOR_BASE_GAME_I18N_IDS,
             "onFertilizationBehaviorBaseGameChanged")
     end
+
+
 
     generalSettingsPage.ca_all_controls =  {
         generalSettingsPage.ca_enableRollerCrimping,
@@ -155,7 +207,11 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         generalSettingsPage.ca_enableDirectSeederFieldCreation,
         generalSettingsPage.ca_enableGrassDropping,
         generalSettingsPage.ca_fertilizationBehaviorBaseGame,
-        generalSettingsPage.ca_fertilizationBehaviorPF
+        generalSettingsPage.ca_fertilizationBehaviorPF,
+        generalSettingsPage.ca_nitrogenAmountRollerCrimping,
+        generalSettingsPage.ca_nitrogenAmountDirectSeeding,
+        generalSettingsPage.ca_nitrogenAmountStrawChopping,
+        generalSettingsPage.ca_nitrogenAmountCultivating,
     }
 
     -- Apply the initial values
@@ -192,6 +248,10 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     generalSettingsPage.ca_enableGrassDropping:setIsChecked(settings.grassDroppingIsEnabled)
     if generalSettingsPage.ca_fertilizationBehaviorPF ~= nil then
         generalSettingsPage.ca_fertilizationBehaviorPF:setState(settings.fertilizationBehaviorPF)
+        generalSettingsPage.ca_nitrogenAmountRollerCrimping:setState(settings.rollerCrimpingNitrogenBonus)
+        generalSettingsPage.ca_nitrogenAmountDirectSeeding:setState(settings.directSeedingNitrogenBonus)
+        generalSettingsPage.ca_nitrogenAmountStrawChopping:setState(settings.strawChoppingNitrogenBonus)
+        generalSettingsPage.ca_nitrogenAmountCultivating:setState(settings.cultivatorNitrogenBonus)
     elseif generalSettingsPage.ca_fertilizationBehaviorBaseGame ~= nil then
         generalSettingsPage.ca_fertilizationBehaviorBaseGame:setState(settings.fertilizationBehaviorBaseGame)
     end
@@ -202,15 +262,25 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
         uiControl:setDisabled(not isAdmin)
     end
 
+    -- Disable dependent fields
+    -- Doesn't work until updateUiElements gets called after every change
+    --[[
+    if generalSettingsPage.ca_fertilizationBehaviorPF ~= nil then
+        if not settings.strawChoppingBonusIsEnabled then
+            generalSettingsPage.ca_nitrogenAmountStrawChopping:setDisabled(true)
+        end
+        if not settings.cultivatorBonusIsEnabled then
+            generalSettingsPage.ca_nitrogenAmountCultivating:setDisabled(true)
+        end
+        if not settings.rollerCrimpingIsEnabled then
+            generalSettingsPage.ca_nitrogenAmountRollerCrimping:setDisabled(true)
+        end
+    end
+    ]]
+
     -- Disable weed suppression in case of certain mod conflicts
     if settings.preventWeeding then
         generalSettingsPage.ca_enableWeedSuppression:setDisabled(true)
         generalSettingsPage.ca_enableWeedSuppression.elements[6]:setText("Disabled because LFHA ForageOptima Standard was detected (it breaks weeders)")
-    end
-
-    -- Disable straw chopping and cultivator bonus in case of precision farming (not functional yet)
-    if g_modIsLoaded["FS22_precisionFarming"] then
-        generalSettingsPage.ca_enableStrawChoppingBonus:setDisabled(true)
-        generalSettingsPage.ca_enableCultivatorBonus:setDisabled(true)
     end
 end
