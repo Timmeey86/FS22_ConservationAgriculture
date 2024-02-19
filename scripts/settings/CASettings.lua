@@ -100,27 +100,34 @@ function CASettings:onDirectSeedingNitrogenBonusChanged(newState)
     CASettings.publishNewSettings()
 end
 
+---Converts the index of a UI control to a nitrogen bonus value for precision farming
+---@param nitrogenBonusIndex number @The index in the UI control
+---@return number @The precision farming nitrogen value
+local function convertToNitrogenValue(nitrogenBonusIndex)
+    -- Convert to kg/ha, then divide by 5 since 5 kg/ha = 1 precision farming unit
+    return (nitrogenBonusIndex - 1) * CASettings.NITROGEN_STEP / 5
+end
 ---Retrieves the amount of nitrogen to be applied, as internal precision farming units
 ---@return number @The nitrogen amount
 function CASettings:getStrawChoppingNitrogenValue()
-    return self.strawChoppingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+    return convertToNitrogenValue(self.strawChoppingNitrogenBonus)
 end
 ---Retrieves the amount of nitrogen to be applied, as internal precision farming units
 ---@return number @The nitrogen amount
 function CASettings:getCultivatorNitrogenValue()
-    return self.cultivatorNitrogenBonus * CASettings.NITROGEN_STEP / 5
+    return convertToNitrogenValue(self.cultivatorNitrogenBonus)
 end
 
 ---Retrieves the amount of nitrogen to be applied, as internal precision farming units
 ---@return number @The nitrogen amount
 function CASettings:getRollerCrimpingNitrogenValue()
-    return self.rollerCrimpingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+    return convertToNitrogenValue(self.rollerCrimpingNitrogenBonus)
 end
 
 ---Retrieves the amount of nitrogen to be applied, as internal precision farming units
 ---@return number @The nitrogen amount
 function CASettings:getDirectSeedingNitrogenValue()
-    return self.directSeedingNitrogenBonus * CASettings.NITROGEN_STEP / 5
+    return convertToNitrogenValue(self.directSeedingNitrogenBonus)
 end
 
 
