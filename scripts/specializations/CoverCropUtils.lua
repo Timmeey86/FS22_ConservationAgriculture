@@ -198,6 +198,7 @@ end
 ---@param   groundShallBeMulched    boolean     @True if a mulching bonus shall be applied to the ground
 ---@param   grassShallBeDropped     boolean     @True if grass shall be dropped to simulate terminated biomatter
 ---@param   pfNitrogenValue         integer     @The amount of nitrogen to be applied in case of precision farming
+---@return  table   @A list of rectangles which were processed by the method
 function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundShallBeMulched, grassShallBeDropped, pfNitrogenValue)
 
     local settings = g_currentMission.conservationAgricultureSettings
@@ -213,6 +214,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
         directionalFactor = 0 -- No benefit in calculating that in this case
     end
 
+    local processedCoordParts = {}
     -- Repeat the following for each part of the work area
     for _, coords in pairs(coordParts) do
 
@@ -273,6 +275,9 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                 end
                 if numPixelsAffected > 0 then
 
+                    -- Remember that we processed this part of the work area
+                    table.insert(processedCoordParts, coords)
+
                     -- since we cut the ground, we need to filter for a cut fruit now
                     fruitFilter:setValueCompareParams(DensityValueCompareType.EQUAL, mulchedFruitState)
 
@@ -308,4 +313,6 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
             end
         end
     end
+
+    return processedCoordParts
 end
