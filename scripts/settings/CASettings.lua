@@ -80,7 +80,11 @@ function CASettings:onFertilizationBehaviorBaseGameChanged(newState)
     CASettings.publishNewSettings()
 end
 function CASettings:onEnableStrawChoppingBonusChanged(newState)
-    self.strawChoppingBonusIsEnabled = newState
+    self.strawChoppingBonusIsEnabled = CASettings.checkStateToBool(newState)
+    CASettings.publishNewSettings()
+end
+function CASettings:onEnableCultivatorBonusChanged(newState)
+    self.cultivatorBonusIsEnabled = CASettings.checkStateToBool(newState)
     CASettings.publishNewSettings()
 end
 function CASettings:onStrawChoppingNitrogenBonusChanged(newState)

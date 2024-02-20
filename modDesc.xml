@@ -23,7 +23,7 @@ It adds the following features:
 - Most effects can be turned on or off in the settings (only admins can do this in multiplayer).
 - Different fertilization strategies for base game and different fertilization amounts for Precision Farming.
 
-Note: When using a direct seeder or a cultivator with this mod, the ground will always look like chopped straw with Precision Farming.
+Note: When using a direct seeder or a cultivator with this mod, the ground will always look like chopped straw.
 The current implementation of the configurable nitrogen bonus unfortunately requires it to be this way for the time being.
 
 The mod is related to real life farming in the following ways:
@@ -91,7 +91,7 @@ Sie fügt die folgenden Funktionen hinzu:
 - Die meisten Effekte können an- und ausgeschaltet werden (im Mehrspieler dürfen das nur Admins).
 - Verschiedene Dünge-Strategien für das Base Game und verschiedene Düngermengen für Precision Farming.
 
-Hinweis: Wenn man mit dieser Mod einen Grubber oder eine Direktsaatmaschine mit Precision Farming benutzt, sieht der Boden immer so aus, als ob Stroh drauf läge.
+Hinweis: Wenn man mit dieser Mod einen Grubber oder eine Direktsaatmaschine benutzt, sieht der Boden immer so aus, als ob Stroh drauf läge.
 Die aktuelle Programmierung des konfigurierbaren Stickstoffbonus erzwingt dies leider, bis ein anderer Weg gefunden wurde.
 
 Die Mod hat folgende Zusammenhänge zur realen Landwirtschaft:

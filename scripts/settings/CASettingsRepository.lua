@@ -37,6 +37,16 @@ function CASettingsRepository.createXmlSchema()
     xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
     xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
 
+    -- v 1.0.0.9+
+    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY))
+    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY))
+
+    -- v 1.0.1.0+
+    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING))
+    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING))
+    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING))
+    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING))
+
     return xmlSchema
 end
 

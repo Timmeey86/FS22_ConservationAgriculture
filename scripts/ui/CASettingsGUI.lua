@@ -202,7 +202,7 @@ function CASettingsGUI.inj_onFrameOpen(generalSettingsPage)
         generalSettingsPage.ca_enableRollerMulchBonus,
         generalSettingsPage.ca_enableSeederMulchBonus,
         generalSettingsPage.ca_enableStrawChoppingBonus,
-        generalSettingsPage.ca_enable_cultivator_bonus,
+        generalSettingsPage.ca_enableCultivatorBonus,
         generalSettingsPage.ca_enableWeedSuppression,
         generalSettingsPage.ca_enableDirectSeederFieldCreation,
         generalSettingsPage.ca_enableGrassDropping,
