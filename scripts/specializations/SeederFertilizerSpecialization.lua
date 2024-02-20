@@ -264,7 +264,8 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
     -- Execute base game behavior
     local area, totalArea = superFunc(self, workArea, dt)
 
-    if not skipSpecialization then
+    local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
+    if not skipSpecialization and precisionFarmingIsActive then
         -- Change the ground type to chopper straw again; otherwise, precision farming doesn't know we handled the ground already.
         --[[ 
             Note:   Currently, this always changes the ground when using a direct seeder, even when not seeding into cover crops.

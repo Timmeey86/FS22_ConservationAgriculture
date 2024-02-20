@@ -26,28 +26,30 @@ function CultivatorFertilizerSpecialization:processCultivatorArea(superFunc, wor
 
     local caSettings = g_currentMission.conservationAgricultureSettings
     local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
-
-    local cultivatorBonusBefore = nil
-    local nitrogenMap = nil
     if caSettings.cultivatorBonusIsEnabled then
-        if not precisionFarmingIsActive then
-            -- Fertilize any cover crops in the work area, but don't mulch them (since the soil is effectively uncovered)
-            CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, false, false, 0)
-        else
-            -- Precision Farming alraedy has a logic for this, but we can change the amount
-            nitrogenMap = FS22_precisionFarming.g_precisionFarming.nitrogenMap
-            cultivatorBonusBefore = nitrogenMap.catchCropsStateChange
-            nitrogenMap.catchCropsStateChange = caSettings:getCultivatorNitrogenValue()
-        end
+        -- Fertilize any cover crops in the work area, but don't mulch them (since the soil is effectively uncovered)
+        CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, false, false, caSettings:getCultivatorNitrogenValue())
     end
 
     -- Execute base game behavior. In case of precision farming, this fertilizes the field now, but only for shallow cultivators
-    local realArea, area = superFunc(self, workArea, dt)
+    local area, totalArea = superFunc(self, workArea, dt)
 
-    -- Set the nitrogen map catch crops state change value back to normal if required
-    if nitrogenMap ~= nil then
-        nitrogenMap.catchCropsStateChange = cultivatorBonusBefore
+    if caSettings.cultivatorBonusIsEnabled and precisionFarmingIsActive then
+        -- Change the ground type to chopper straw again; otherwise, precision farming doesn't know we handled the ground already.
+        --[[ 
+            Note:   Currently, this always changes the ground when using a cultivator, even when not seeding into cover crops.
+                    Unfortunately, this is the only way to get a stable nitrogen application.
+                    The following alternatives have been tried but failed:
+                    - Setting the whole work area to straw only if cover crops have been terminated somewhere
+                    - Setting only those work area parts to straw which have had cover crops terminated
+                    This would always lead to too much fertilizer in parts, probably because of the mismatch of the map grid and the PF nitrogen map size
+        ]]
+        local startX,_,startZ = getWorldTranslation(workArea.start)
+        local widthX,_,widthZ = getWorldTranslation(workArea.width)
+        local heightX,_,heightZ = getWorldTranslation(workArea.height)
+        local strawGroundType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
+        FSDensityMapUtil.setGroundTypeLayerArea(startX, startZ, widthX, widthZ, heightX, heightZ, strawGroundType)
     end
 
-    return realArea, area
+    return area, totalArea
 end
