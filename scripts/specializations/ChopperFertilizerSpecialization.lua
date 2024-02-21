@@ -35,38 +35,50 @@ function ChopperFertilizerSpecialization:processCombineChopperArea(superFunc, wo
 
     local numPixelsBefore = nil
     local workAreaCoords, sprayTypeModifier, sprayTypeFilter
+    local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
 
-    if not combineSpec.isSwathActive and strawGroundType ~= nil then
+    if not combineSpec.isSwathActive and strawGroundType ~= nil and not precisionFarmingIsActive then
         --- Find out the current number of pixels which are straw
         workAreaCoords = toCoords(workArea)
-        sprayTypeModifier = CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.SPRAY_TYPE) -- straw is actually a spray type
+        sprayTypeModifier = CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.SPRAY_TYPE)
         sprayTypeFilter = DensityMapFilter.new(sprayTypeModifier)
         sprayTypeFilter:setValueCompareParams(DensityValueCompareType.EQUAL, strawGroundType)
         _, numPixelsBefore = sprayTypeModifier:executeGet(sprayTypeFilter)
     end
 
+    local strawChoppingBonusBefore = nil
+    local nitrogenMap = nil
+    local caSettings = g_currentMission.conservationAgricultureSettings
+    if precisionFarmingIsActive and caSettings.strawChoppingBonusIsEnabled then
+        nitrogenMap = FS22_precisionFarming.g_precisionFarming.nitrogenMap
+
+        -- Remember the default value used by PF for applying nitrogen
+        strawChoppingBonusBefore = nitrogenMap.choppedStrawStateChange
+        nitrogenMap.choppedStrawStateChange = caSettings:getStrawChoppingNitrogenValue()
+    end
+
     -- Execute base game behavior
+    -- In case of precision farming, this already fertilizes the field
     local lastRealArea, lastArea = superFunc(self, workArea)
 
-    if numPixelsBefore ~= nil then
-        -- Find out if there are more straw pixels now
+    if strawChoppingBonusBefore ~= nil and nitrogenMap ~= nil then
+        nitrogenMap.choppedStrawStateChange = strawChoppingBonusBefore
+    end
+
+    if caSettings.strawChoppingBonusIsEnabled and numPixelsBefore ~= nil and not precisionFarmingIsActive then
+        -- Base game: Find out if there are more straw pixels now
         local _, numPixelsAfter = sprayTypeModifier:executeGet(sprayTypeFilter)
 
         if numPixelsAfter > numPixelsBefore then
             -- Fertilize the field
             local sprayLevelModifier = CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.SPRAY_LEVEL)
             local sprayLevelFilter = DensityMapFilter.new(sprayLevelModifier)
-
-            -- Don't modify anything outside of fields
             local onFieldFilter = DensityMapFilter.new(CoverCropUtils.getDensityMapModifier(workAreaCoords, FieldDensityMap.GROUND_TYPE))
             onFieldFilter:setValueCompareParams(DensityValueCompareType.GREATER, 0)
 
-            -- Add the first fertilizer stage as long as it wasn't there
-            CoverCropUtils.applyFertilizer(workAreaCoords, FieldSprayType.MANURE, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil, true)
-
-            if g_modIsLoaded['FS22_precisionFarming'] then
-                -- TODO: Apply fixed amount
-            end
+            -- Fertilize to the first level in case of base game, independent of the fertilization strategy
+            -- Usually, the field has zero nitrogen after harvest anyway
+            CoverCropUtils.applyFertilizer(workAreaCoords, sprayLevelModifier, sprayLevelFilter, onFieldFilter, nil, true, nil)
         end
     end
 

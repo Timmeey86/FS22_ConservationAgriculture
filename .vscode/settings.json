@@ -76,6 +76,8 @@
         "g_modIsLoaded",
         "FS22_cultivatorFieldCreator",
         "Cultivator",
-        "Combine"
+        "Combine",
+        "g_sprayTypeManager",
+        "g_fillTypeManager"
     ]
 }

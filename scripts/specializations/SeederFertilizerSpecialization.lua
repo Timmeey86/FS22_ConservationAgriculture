@@ -248,17 +248,39 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
         not basegameSpec.workAreaParameters.canFruitBePlanted or
         (basegameSpec.workAreaParameters.seedsVehicle == nil and (not self:getIsAIActive() or not g_currentMission.missionInfo.helperBuySeeds))
 
+    local processedCoordParts = nil
     if not skipSpecialization then
+        local caSettings = g_currentMission.conservationAgricultureSettings
         -- In case of direct seeders/planters, create fields where necessary if that feature is turned on
-        if g_currentMission.conservationAgricultureSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and spec ~= nil and not spec.workAreaParameters.limitToField then
+        if caSettings.directSeederFieldCreationIsEnabled and basegameSpec.useDirectPlanting and spec ~= nil and not spec.workAreaParameters.limitToField then
             SeederFertilizerSpecialization:createFieldArea(workArea)
         end
 
         -- Fertilize any cover crops in the work area, but do not set the "mulched" ground
         -- Otherwise, there would be no benefit of mulching/roller crimping before sowing
-        CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, g_currentMission.conservationAgricultureSettings.seederMulchBonusIsEnabled, false)
+        processedCoordParts = CoverCropUtils.mulchAndFertilizeCoverCrops(self, workArea, caSettings.seederMulchBonusIsEnabled, false, caSettings:getDirectSeedingNitrogenValue())
     end
 
     -- Execute base game behavior
-    return superFunc(self, workArea, dt)
+    local area, totalArea = superFunc(self, workArea, dt)
+
+    local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
+    if not skipSpecialization and precisionFarmingIsActive then
+        -- Change the ground type to chopper straw again; otherwise, precision farming doesn't know we handled the ground already.
+        --[[ 
+            Note:   Currently, this always changes the ground when using a direct seeder, even when not seeding into cover crops.
+                    Unfortunately, this is the only way to get a stable nitrogen application.
+                    The following alternatives have been tried but failed:
+                    - Setting the whole work area to straw only if cover crops have been terminated somewhere
+                    - Setting only those work area parts to straw which have had cover crops terminated
+                    This would always lead to too much fertilizer in parts, probably because of the mismatch of the map grid and the PF nitrogen map size
+        ]]
+        local startX,_,startZ = getWorldTranslation(workArea.start)
+        local widthX,_,widthZ = getWorldTranslation(workArea.width)
+        local heightX,_,heightZ = getWorldTranslation(workArea.height)
+        local strawGroundType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
+        FSDensityMapUtil.setGroundTypeLayerArea(startX, startZ, widthX, widthZ, heightX, heightZ, strawGroundType)
+    end
+
+    return area, totalArea
 end

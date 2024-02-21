@@ -18,7 +18,7 @@
         <text name="ca_fertilization_behavior_pf_short" text="Düngeverhalten (Precision Farming)"/>
         <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim 'Roller Crimping', Mulchen oder Direktsäen in Zwischenfrüchte, wenn der Precision Farming DLC aktiv ist."/>
         <text name="ca_fertilization_behavior_pf_off" text="Kein Düngebonus"/>
-        <text name="ca_fertilization_behavior_pf_min_auto" text="Mittlerer Düngebonus"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Feste Menge"/>
         <text name="ca_enable_weed_suppression_short" text="Unkrautunterdrückung"/>
         <text name="ca_enable_weed_suppression_long" text="Wenn aktiv, wachsen nach dem Direktsäen in Zwischenfrüchte oder dem Säen in gewalzte/gemulchte Zwischenfrüchte keine Unkräuter"/>
         <text name="ca_allow_direct_seeder_field_creation_short" text="Erlaube Felderzeugung mit Sämaschinen"/>
@@ -26,8 +26,16 @@
         <text name="ca_enable_grass_dropping_short" text="'Roller Crimping' erzeugt Gras"/>
         <text name="ca_enable_grass_dropping_long" text="Wenn aktiv, wird beim 'Roller Crimping' und Mulchen etwas Gras auf den Boden geworfen um das Vorhandensein von Biomasse zu simulieren. Das Gras wird beim Säen automatisch entfernt."/>
         <text name="ca_enable_straw_chopping_bonus_short" text="Gehäckseltes Stroh düngt"/>
-        <text name="ca_enable_straw_chopping_bonus_long" text="Wenn aktiv, wird beim Häckeln von Stroh (anstelle des Schwadens) das Feld gedüngt."/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="Wenn aktiv, wird beim Häckeln von Stroh (anstelle des Schwadens) das Feld gedüngt. Precision Farming tut dies bereits, aber dort ist jetzt die Menge einstellbar."/>
         <text name="ca_enable_cultivator_bonus_short" text="Grubber-Einarbeitung"/>
-        <text name="ca_enable_cultivator_bonus_long" text="Wenn aktiv, hat das Grubbern von Zwischenfrüchten die gleichen Effekte wie 'Roller Crimping'"/>
+        <text name="ca_enable_cultivator_bonus_long" text="Wenn aktiv, hat das Grubbern von Zwischenfrüchten die gleichen Effekte wie 'Roller Crimping'. Precision Farming tut dies bereits, aber dort ist jetzt die Menge einstellbar."/>
+        <text name="ca_nitrogen_amount_roller_crimping_short" text="Stickstoffmenge (roller crimping)"/>
+        <text name="ca_nitrogen_amount_roller_crimping_long" text="Gibt die kg/ha Stickstoff an, die man beim 'Roller Crimping' von Zwischenfrüchten bekommt."/>
+        <text name="ca_nitrogen_amount_direct_seeding_short" text="Stickstoffmenge (Direktsaat)"/>
+        <text name="ca_nitrogen_amount_direct_seeding_long" text="Gibt die kg/ha Stickstoff an, die man beim Direktsäen in Zwischenfrüchte bekommt."/>
+        <text name="ca_nitrogen_amount_straw_chopping_short" text="Stickstoffmenge (Stroh häckseln)"/>
+        <text name="ca_nitrogen_amount_straw_chopping_long" text="Gibt die kg/ha Stickstoff an, die man beim Stroh Häckseln bekommt."/>
+        <text name="ca_nitrogen_amount_cultivating_short" text="Stickstoffmenge (Grubbern)"/>
+        <text name="ca_nitrogen_amount_cultivating_long" text="Gibt die kg/ha Stickstoff an, die man bekommt, wenn man Zwischenfrüchte mit einem Grubber in den Boden einarbeitet."/>
     </texts>
 </l10n>
