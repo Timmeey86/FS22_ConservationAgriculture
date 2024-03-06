@@ -266,20 +266,10 @@ function SeederFertilizerSpecialization:processSowingMachineArea(superFunc, work
 
     local precisionFarmingIsActive = g_modIsLoaded["FS22_precisionFarming"]
     if not skipSpecialization and precisionFarmingIsActive then
-        -- Change the ground type to chopper straw again; otherwise, precision farming doesn't know we handled the ground already.
-        --[[ 
-            Note:   Currently, this always changes the ground when using a direct seeder, even when not seeding into cover crops.
-                    Unfortunately, this is the only way to get a stable nitrogen application.
-                    The following alternatives have been tried but failed:
-                    - Setting the whole work area to straw only if cover crops have been terminated somewhere
-                    - Setting only those work area parts to straw which have had cover crops terminated
-                    This would always lead to too much fertilizer in parts, probably because of the mismatch of the map grid and the PF nitrogen map size
-        ]]
         local startX,_,startZ = getWorldTranslation(workArea.start)
         local widthX,_,widthZ = getWorldTranslation(workArea.width)
         local heightX,_,heightZ = getWorldTranslation(workArea.height)
-        local strawGroundType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
-        FSDensityMapUtil.setGroundTypeLayerArea(startX, startZ, widthX, widthZ, heightX, heightZ, strawGroundType)
+        FSDensityMapUtil.setGroundTypeLayerArea(startX, startZ, widthX, widthZ, heightX, heightZ, FieldSprayType.FERTILIZER)
     end
 
     return area, totalArea

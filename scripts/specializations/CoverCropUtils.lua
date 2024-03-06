@@ -150,7 +150,7 @@ end
 function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFilter, filter2, filter3, forceFixedAmount, pfNitrogenValue)
     local settings = g_currentMission.conservationAgricultureSettings
     local maxSprayLevel = g_currentMission.fieldGroundSystem:getMaxValue(FieldDensityMap.SPRAY_LEVEL)
-    local strawGroundType = g_currentMission.fieldGroundSystem:getChopperTypeValue(FieldChopperType.CHOPPER_STRAW)
+    local sprayType = FieldSprayType.FERTILIZER
 
     if not g_modIsLoaded['FS22_precisionFarming'] then
         -- Increase the spray level to one level below max (Note: It looks like Precision Farming calls base game fertilization methods as well
@@ -167,12 +167,12 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
             sprayLevelModifier:executeSet(maxSprayLevel, sprayLevelFilter, filter2, filter3)
         elseif settings.fertilizationBehaviorBaseGame == CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_ADD_ONE then
             -- Just pretend we're a fertilizer spreader (which sprays straw)
-            FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawGroundType, 1)
+            FSDensityMapUtil.updateFertilizerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType, 1)
         end
 
         -- make the ground look like straw in all base game cases
         if settings.fertilizationBehaviorBaseGame ~= CASettings.FERTILIZATION_BEHAVIOR_BASE_GAME_OFF then
-            FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawGroundType)
+            FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
         end
     else
         -- precision farming: modify the nitrogen map instead
@@ -185,9 +185,9 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
         end
         local choppedStrawValueBefore = nitrogenMap.choppedStrawStateChange
         nitrogenMap.choppedStrawStateChange = nitrogenValue
-        nitrogenMap:preUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawGroundType)
-        FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawGroundType)
-        nitrogenMap:postUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, strawGroundType)
+        nitrogenMap:preUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
+        FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
+        nitrogenMap:postUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
         nitrogenMap.choppedStrawStateChange = choppedStrawValueBefore
     end
 end
