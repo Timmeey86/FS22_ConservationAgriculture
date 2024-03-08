@@ -7,7 +7,11 @@ source(modDirectory .. "scripts/specializations/RollerFertilizerSpecialization.l
 source(modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua")
 source(modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua")
+source(modDirectory .. "scripts/specializations/FertilizingCultivatorSpecialization.lua")
 
+local function printSpecRegistration(typeName, specType)
+    print(("%s: Type %s will be handled by %s specialization"):format(MOD_NAME, typeName, specType))
+end
 ---Registers the specializations for this mod
 ---@param   manager     table       the specialization manager
 local function registerSpecialization(manager)
@@ -25,30 +29,53 @@ local function registerSpecialization(manager)
             "CA_CultivatorSpecialization", "CultivatorFertilizerSpecialization", modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
             "CA_ChopperSpecialization", "ChopperFertilizerSpecialization", modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua", nil)
+        g_specializationManager:addSpecialization(
+            "CA_FertilizingCultivatorSpecialization", "FertilizingCultivatorSpecialization", modDirectory .. "scripts/specializations/FertilizingCultivatorSpecialization.lua", nil)
 
         -- Add the specializations to vehicles based on which kind of specializations they already have
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
-			if typeEntry ~= nil then
+            if typeEntry ~= nil then
+                local specializationApplied = false
                 -- Allow any mulcher to mulch forageable crops
-				if SpecializationUtil.hasSpecialization(Mulcher, typeEntry.specializations)  then
-					g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_MulcherSpecialization")
-				end
+                if SpecializationUtil.hasSpecialization(Mulcher, typeEntry.specializations)  then
+                    g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_MulcherSpecialization")
+                    printSpecRegistration(typeName, "Mulcher")
+                    specializationApplied = true
+                end
                 -- Allow any roller to mulch forageable crops, except for "FertilizingRollerCultivator"
                 if SpecializationUtil.hasSpecialization(Roller, typeEntry.specializations) and
                     not SpecializationUtil.hasSpecialization(Sprayer, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_RollerSpecialization")
+                    printSpecRegistration(typeName, "Roller")
+                    specializationApplied = true
                 end
                 -- Modify any sowing machine (including ExtendedSowingMachine) to adapt the nitrogen behavior when seeding into cover crops
                 if SpecializationUtil.hasSpecialization(SowingMachine, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_SeederSpecialization")
+                    printSpecRegistration(typeName, "Seeder")
+                    specializationApplied = true
                 end
                 -- Allow any cultivator to mulch cover crops
-                if SpecializationUtil.hasSpecialization(Cultivator, typeEntry.specializations) then
+                if SpecializationUtil.hasSpecialization(Cultivator, typeEntry.specializations) and
+                    not SpecializationUtil.hasSpecialization(FertilizingCultivator, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_CultivatorSpecialization")
+                    printSpecRegistration(typeName, "Cultivator")
+                    specializationApplied = true
                 end
                 -- Extend combines so straw chopping can fertilize the field if desired
                 if SpecializationUtil.hasSpecialization(Combine, typeEntry.specializations) then
                     g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_ChopperSpecialization")
+                    printSpecRegistration(typeName, "Chopper")
+                    specializationApplied = true
+                end
+                -- Extend combines so straw chopping can fertilize the field if desired
+                if SpecializationUtil.hasSpecialization(FertilizingCultivator, typeEntry.specializations) then
+                    g_vehicleTypeManager:addSpecialization(typeName, MOD_NAME .. ".CA_FertilizingCultivatorSpecialization")
+                    printSpecRegistration(typeName, "FertilizingCultivator")
+                    specializationApplied = true
+                end
+                if not specializationApplied then
+                    printSpecRegistration(typeName, "no")
                 end
             end
         end
