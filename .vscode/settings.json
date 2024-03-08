@@ -78,6 +78,8 @@
         "Cultivator",
         "Combine",
         "g_sprayTypeManager",
-        "g_fillTypeManager"
+        "g_fillTypeManager",
+        "FertilizingCultivator",
+        "DensityRoundingMode"
     ]
 }
