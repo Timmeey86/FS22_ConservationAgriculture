@@ -70,7 +70,7 @@ end
 ---One-time initialization of this specialization
 ---@param savegame table @The save game
 function SeederFertilizerSpecialization:onLoad(savegame)
-    self.spec_CA_SeederSpecialization = self["spec_FS22_ConservationAgriculture.CA_SeederSpecialization"]
+    self.spec_CA_SeederSpecialization = self["spec_" .. MOD_NAME .. ".CA_SeederSpecialization"]
     local spec = self.spec_CA_SeederSpecialization
 
     -- Prepare the possibility to toggle field creation.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.1.1</version>
+    <version>1.0.1.2</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
@@ -48,7 +48,7 @@ If you do find issues or weird behaviour, please create an issue at my GitHub re
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
-v1.0.1.0:
+v1.0.1.2:
 - Chopping straw while harvesting will now fertilize the field in base game, but only to the first level
 - Cultivators an be used on cover crops in order to receive a fertilizer bonus in base game (but no mulching bonus)
 - Added "Additional fertilizer level" strategy for base game
@@ -115,7 +115,7 @@ Wenn du Probleme oder seltsames Verhalten feststellst, berichte das Problem bitt
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
-v1.0.1.0:
+v1.0.1.2:
 - Wenn Stroh bei der Ernte gehäckselt wird, düngt das jetzt auch das Feld, aber nur die erste Stufe (funktioniert noch nicht mit Precision Farming)
 - Wenn Grubber auf Zwischenfrüchte angewendet werden, wird das Feld ebenfalls gedüngt (aber nicht gemulcht; funktioniert noch nicht mit Precision Farming)
 - Dünge-Strategie "Ein zusätzliches Level" für das Base Game hinzugefügt
