@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Ziuta</translationContributors>
+    <texts>
+        <text name="ca_group_title" text="Rolnictwo ochronne"/>
+        <text name="ca_enable_roller_crimping_short" text="Wałowanie dogniatające"/>
+        <text name="ca_enable_roller_crimping_long" text="Jeśli jest włączone, wałowanie roślin okrywowych spowoduje ich zgniecenie w celu zatrzymania ich wzrostu i wytworzenia pokrywy glebowej."/>
+        <text name="ca_enable_roller_mulch_bonus_short" text="Bonus mulczowania wałami"/>
+        <text name="ca_enable_roller_mulch_bonus_long" text="Jeśli jest włączone, zagniatając wałami rośliny okrywowe otrzymasz bonus mulczowania."/>
+        <text name="ca_enable_seeder_mulch_bonus_short" text="Bonus mulczowania siewnikiem"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="Jeśli jest włączone, sianie bezpośrednie w rośliny okrywowe otrzymasz bonus mulczowania."/>
+        <text name="ca_fertilization_behavior_base_game_short" text="Nawożenie (podstawowa gra)"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Określa strategię nawożenia podczas wałowania, mulczowania lub siewu bezpośredniego roślin okrywowych."/>
+        <text name="ca_fertilization_behavior_base_game_off" text="Brak nawożenia"/>
+        <text name="ca_fertilization_behavior_base_game_first" text="Pierwszy etap nawożenia"/>
+        <text name="ca_fertilization_behavior_base_game_full" text="Pełne nawożenie"/>
+        <text name="ca_fertilization_behavior_base_game_add_one" text="Dodatkowy etap nawożenia"/>
+        <text name="ca_fertilization_behavior_pf_short" text="Nawożenie (rolnictwo precyzyjne)"/>
+        <text name="ca_fertilization_behavior_pf_long" text="Określa strategię nawożenia podczas wałowania, mulczowania lub siewu bezpośredniego roślin okrywowych z aktywnym DLC Precyzyjne rolnictwo."/>
+        <text name="ca_fertilization_behavior_pf_off" text="Brak nawożenia"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Stała wartość"/>
+        <text name="ca_enable_weed_suppression_short" text="Zwalczanie chwastów"/>
+        <text name="ca_enable_weed_suppression_long" text="Jeśli jest włączone, chwasty nie będą rosły po siewie bezpośrednim w rośliny okrywowe lub wysiewie w zwałowane/zmulczowane rośliny okrywowych."/>
+        <text name="ca_allow_direct_seeder_field_creation_short" text="Zezwalaj na tworzenie pól siewnikiem"/>
+        <text name="ca_allow_direct_seeder_field_creation_long" text="Jeśli jest włączone, siewnik z siewem bezpośrednim może być użyty do tworzenia pola. Tworzenie pól można przełączać dla każdego siewnika osobno za pomocą skrótu klawiszowego 'Wystaw/Schowaj rurę' (Domyślnie: 'O')."/>
+        <text name="ca_enable_grass_dropping_short" text="Wałowanie zostawia trawę"/>
+        <text name="ca_enable_grass_dropping_long" text="Jeśli jest włączone, wałowanie i mulczowanie walcami spowoduje pozostawienie trawy w celu symulacji obecności biomasy. Trawa zostanie automatycznie usunięta podczas siewu."/>
+        <text name="ca_enable_straw_chopping_bonus_short" text="Sieczka nawozi"/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="Jeśli jest włączone, siekanie słomy (zamiast pokosu) użyźni pole. Precyzyjne rolnictwo już to robi, ale ilość będzie regulowana."/>
+        <text name="ca_enable_cultivator_bonus_short" text="Kultywatorowanie"/>
+        <text name="ca_enable_cultivator_bonus_long" text="Jeśli jest włączone, uprawa roślin okrywowych będzie miała takie same skutki jak zagniatanie wałem. Precyzyjne rolnictwo już to robi, ale ilość będzie regulowana."/>
+        <text name="ca_nitrogen_amount_roller_crimping_short" text="Bonus azotowy (wałowane)"/>
+        <text name="ca_nitrogen_amount_roller_crimping_long" text="Określa ilość kg/ha azotu uzyskiwanego podczas wałowania lub mulczowania roślin okrywowych."/>
+        <text name="ca_nitrogen_amount_direct_seeding_short" text="Bonus azotowy (sianie bezpośrednie)"/>
+        <text name="ca_nitrogen_amount_direct_seeding_long" text="Określa ilość kg/ha azotu uzyskiwanego podczas siewu bezpośredniego w rośliny okrywowe."/>
+        <text name="ca_nitrogen_amount_straw_chopping_short" text="Bonus azotowy (sieczka)"/>
+        <text name="ca_nitrogen_amount_straw_chopping_long" text="Określa ilość kg/ha azotu uzyskiwanego podczas siekania słomy podczas żniw (zamiast tworzenia pokosów)."/>
+        <text name="ca_nitrogen_amount_cultivating_short" text="Bonus azotowy (kuktywacja)"/>
+        <text name="ca_nitrogen_amount_cultivating_long" text="Określa ilość kg/ha azotu uzyskiwanego podczas kulywatorowania roślin okrywowych."/>
+    </texts>
+</l10n>
