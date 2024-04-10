@@ -54,6 +54,7 @@ v1.0.1.2:
 - Added "Additional fertilizer level" strategy for base game
 - The "Fixed nitrogen amount" strategy for precision farming now replaces the previous temporary one.
 - Added configurable amounts of nitrogen for precision farming
+- Added Polish translation (provided by Ziuta)
 
 v1.0.0.8:
 - Fixed an issue where seed usage would be extremely high with certain map/mod combinations
@@ -120,6 +121,7 @@ v1.0.1.2:
 - Wenn Grubber auf Zwischenfrüchte angewendet werden, wird das Feld ebenfalls gedüngt (aber nicht gemulcht; funktioniert noch nicht mit Precision Farming)
 - Dünge-Strategie "Ein zusätzliches Level" für das Base Game hinzugefügt
 - Dünge-Strategie "Konstante Stickstoffmenge" für Precision Farming ersetzt jetzt die alte, temporäre, Strategie
+- Polnische Übersetzung hinzugefügt (bereitgestellt von Ziuta)
 
 v1.0.0.8:
 - Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.
