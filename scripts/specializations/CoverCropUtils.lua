@@ -241,8 +241,12 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
             FruitType.POPLAR
         }
         -- Avoid mod conflicts with mods which add fruit types without adding density maps
+		local wheatFruitType = g_fruitTypeManager:getFruitTypeByName("WHEAT")
         for _, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
-            if desc.terrainDataPlaneId == nil or desc.startStateChannel == nil or desc.numStateChannels == nil then
+			-- Note about the fourth check: SwathingAddon sets the wheat density map for all fruit types which don't have a density map, but we still need to ignore such fruit types
+			-- => We ignore them if they use the wheat density map but are in fact a different fruit type
+            if desc.terrainDataPlaneId == nil or desc.startStateChannel == nil or desc.numStateChannels == nil 
+				or (desc.terrainDataPlaneId == wheatFruitType.terrainDataPlaneId and desc.index ~= wheatFruitType.index) then
                 excludedFruitTypes[desc.index] = true
             end
         end
