@@ -57,6 +57,7 @@ v1.0.1.3:
 - Added configurable amounts of nitrogen for precision farming
 - Added Polish translation (provided by Ziuta)
 - Fixed an issue where only wheat would be planted if Conservation Agriculture, LFHA ForageOptima Standard and SwathingAddon were all active at the same time
+- Fixed an issue which would cause extreme seed usage with field creation turned on
 
 v1.0.0.8:
 - Fixed an issue where seed usage would be extremely high with certain map/mod combinations
@@ -125,6 +126,7 @@ v1.0.1.3:
 - Dünge-Strategie "Konstante Stickstoffmenge" für Precision Farming ersetzt jetzt die alte, temporäre, Strategie
 - Polnische Übersetzung hinzugefügt (bereitgestellt von Ziuta)
 - Problem behoben, durch das nur noch Weizen gesät wurde, wenn CA, LFHA ForageOptima Standard und das Swathing Addon alle aktiv waren
+- Problem behoben, durch das die Saatmenge bei der Felderzeugung extrem hoch war.
 
 v1.0.0.8:
 - Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.
