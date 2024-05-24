@@ -6,7 +6,7 @@
         <en>Conservation Agriculture</en>
         <de>Konservierende Landwirschaft</de>
         <ru>Почвозащитное Земледелие</ru>
-        <pl>Rolnictwo ochronne</pl>
+        <pl>Rolnictwo Ochronne</pl>
     </title>
     
     <description>
@@ -51,7 +51,7 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 Changelog:
 v1.0.1.3:
 - Chopping straw while harvesting will now fertilize the field in base game, but only to the first level
-- Cultivators an be used on cover crops in order to receive a fertilizer bonus in base game (but no mulching bonus)
+- Cultivators can be used on cover crops in order to receive a fertilizer bonus in base game (but no mulching bonus)
 - Added "Additional fertilizer level" strategy for base game
 - The "Fixed nitrogen amount" strategy for precision farming now replaces the previous temporary one.
 - Added configurable amounts of nitrogen for precision farming
