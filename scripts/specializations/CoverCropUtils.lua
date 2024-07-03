@@ -248,11 +248,6 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
             if desc.terrainDataPlaneId == nil or desc.startStateChannel == nil or desc.numStateChannels == nil 
 				or (desc.terrainDataPlaneId == wheatFruitType.terrainDataPlaneId and desc.index ~= wheatFruitType.index) then
                 excludedFruitTypes[desc.index] = true
-                if desc.terrainDataPlaneId == nil then
-                    -- Do the same thing SwathingAddon does since otherwise weed suppression will not work.
-                    -- As a matter of fact, not even base game weeders will work on the map without this workaround.
-                    desc.terrainDataPlaneId = wheatFruitType.terrainDataPlaneId
-                end
             end
         end
 
