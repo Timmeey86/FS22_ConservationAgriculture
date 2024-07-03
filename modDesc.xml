@@ -4,7 +4,7 @@
     <version>1.0.1.4</version>
     <title>
         <en>Conservation Agriculture</en>
-        <de>Konservierende Landwirschaft</de>
+        <de>Ökologische Landwirschaft</de>
         <ru>Почвозащитное Земледелие</ru>
         <pl>Rolnictwo Ochronne</pl>
     </title>
@@ -78,31 +78,31 @@ v1.0.0.3:
 v1.0.0.2:
 - Fixed compatibility issues with "Cultivator Field Creator" mod
 ]]></en>
-        <de><![CDATA[Diese Mod macht regenerative Anbaumethoden lukrativer.
+        <de><![CDATA[Diese Mod macht regenerative Anbaumethoden noch rentabler.
 
 Sie fügt die folgenden Funktionen hinzu:
-- Gras-ähnliche Früchte, Getreide und Wurzelgemüse kann nun als Zwischenfrucht verwendet werden.
-- Wenn Zwischenfrüchte ausreichend gewachsen sind, können sie mit Walzen, Mulchern, Grubbern und Direktsaatmaschinen terminiert werden.
-- Wenn Zwischenfrüchte terminiert werden, wird das Feld gedüngt (funktioniert auch mit Precision Farming), und Unkraut wächst bis zur nächsten Ernte nicht mehr.
-- Walzen oder Mulchen von Zwischenfrüchten gibt zusätzlich einen Mulchbonus.
-- Wenn Zwischenfrüchte terminiert werden, kann optional eine dünne Grasschicht auf das Feld geworfen werden, um das Vorhandensein von Biomasse zu simulieren (nur visuell, standardmäßig angeschaltet).
-- Wenn Stroh bei der Ernte gehäckselt wird, düngt es das Feld, sodass es eine lohnenswerte Alternative zum Ballen machen sein kann.
-- Direktsägeräte haben eine Funktion zur Felderzeugung.
-- Viele gemoddete Früchte sind automatisch unterstützt.
-- Die meisten Effekte können an- und ausgeschaltet werden (im Mehrspieler dürfen das nur Admins).
-- Verschiedene Dünge-Strategien für das Base Game und verschiedene Düngermengen für Precision Farming.
+- Gras, Getreide und Wurzelgemüse können jetzt als Zwischenfrüchte verwendet werden.
+- Wenn Zwischenfrüchte ausreichend gewachsen sind, können sie mit Walzen, Mulchern, Grubbern und Direktsaatmaschinen bearbeitet werden.
+- Durch das bearbeiten von Zwischenfrüchten wird das Feld gedüngt (auch Precision Farming wird unterstützt) und das Unkraut jäten bis nach der nächsten Ernte verhindert.
+- Beim Walzen oder Mulchen von Zwischenfrüchten wird außerdem ein Mulchbonus gewährt.
+- Beim bearbeiten von Zwischenfrüchten kann eine dünne Grasschicht hinzugefügt werden, um das Vorhandensein von Biomasse zu simulieren (nur visueller Effekt, standardmäßig aktiviert).
+- Das Häckseln von Stroh während der Ernte düngt das Feld und ist somit eine sinnvollere Alternative zum Pressen.
+- Direktsaatmaschinen erhalten eine Option, die das Anlegen von Feldern ermöglicht.
+- Viele modifizierte Feldfrüchte werden automatisch unterstützt.
+- Die meisten Effekte können in den Einstellungen ein- oder ausgeschaltet werden (im Mehrspielermodus können dies nur Administratoren tun).
+- Unterschiedliche Düngungsstrategien für das Basisspiel und unterschiedliche Düngungsmengen für Precision Farming.
 
 Die Mod hat folgende Zusammenhänge zur realen Landwirtschaft:
 
-Die Mod basiert auf den drei Grundprinzipien der "Conservation Agriculture" (konservierende Landwirtschaft, CA):
+Die Mod basiert auf den drei Grundprinzipien der "Ökologischen Landwirtschaft":
 1. Minimale Bodenbewegung (d.h. möglichst keine Bodenbearbeitung)
-2. Permanente Bodenbedekcung (durch Rückstände und/oder Zwischenfruchtmischungen)
+2. Permanente Bodenbedeckung (durch Rückstände und/oder Zwischenfruchtmischungen)
 3. Biodiversität (durch geeignete Fruchtfolgen usw.)
 (Quelle: FAO, Organisation für Ernährung und Landwirtschaft der vereinten Nationen)
 
 Die Theorie dabei ist, dass jedes System, das diese drei Grundprinzipien verfolgt, langfristig nachhaltig ist, da es Humus aufbaut.
 Der Ansatz hat das Potenzial, Probleme mit Bodenerosion und Nährstoffauswaschung zu beheben, was wiederum dazu führt, dass weniger Nährstoffe in den Boden gegeben werden müssen.
-Regenerative Landwirtschaft ist jedoch ein komplexes Thema, und es gibt viele Variationen und Faktoren, die berücksichtigt werden müssen, sodass es nicht leicht in einem Simulations-Spiel abgebildet werden kann.
+Regenerative Landwirtschaft ist jedoch ein komplexes Thema, und es gibt viele Variationen und Faktoren, die berücksichtigt werden müssen, sodass es nicht leicht in einem Simulations-Spiel abgebildet zu werden.
 
 Die Mod verwendet daher Düngestufen und den Mulchbonus, um dem Spieler zumindest irgend eine Belohnung für das Befolgen der Prinzipien zu geben.
 Sie versucht ebenso, viele Dinge einstellbar zu machen, sodass jeder es so einstellen kann, wie es aus eigener Sicht am realistischsten ist.
@@ -114,14 +114,14 @@ Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, du
 
 Changelog:
 v1.0.1.4:
-- Düngebonus für Stroh Häckseln hinzugefügt (nur bis 50% im Base Game, einstellbar für PF)
-- Düngebonus beim Mulchen von Zwischenfrüchten für Grubber, Eggen usw. hinzugefügt (nur bis 50% im Base Game, einstellbar für PF)
-- Düngestrategie "Ein zusätzliches Level" für Base Game hinzugefügt
-- Mehrere einstellbare Stickstoffmengen für Precision Farming hinzugefügt
-- Existierende Düngestrategie für PF durch "Konstante Stickstoffmenge" ersetzt
+- Dünge-Bonus beim Häckseln von Stroh während der Ernte hinzugefügt (nur bis 50% im Basisspiel, konfigurierbar für PF)
+- Dünge-Bonus beim Anbau von Zwischenfrüchten hinzugefügt (nur zu 50% im Basisspiel, konfigurierbar für PF)
+- Strategie "Zusätzlicher Düngerlevel" für das Basisspiel hinzugefügt
+- Mehrere konfigurierbare Stickstoffmengen für Precision Farming hinzugefügt
+- Bestehende Dünge-Strategie für PF durch "Feste Stickstoffmenge" ersetzt
 - Polnische Übersetzung hinzugefügt (bereitgestellt von Ziuta)
-- Problem behoben, durch das nur noch Weizen gesät wurde, wenn bestimmte Mod Kombinationen aktiv waren
-- Problem behoben, durch das die Saatmenge bei der Felderzeugung extrem hoch war.
+- Ein Problem wurde behoben, bei dem mit bestimmten Mod-Kombinationen nur Weizen gepflanzt werden konnte
+- Ein Problem mit extrem hohem Saatgutverbrauch bei eingeschalteter Felderstellung wurde behoben
 
 v1.0.0.8:
 - Problem behoben, durch das die Saatmenge in manchen Mod- und Karten-Konstellationen extrem hoch werden konnte.
