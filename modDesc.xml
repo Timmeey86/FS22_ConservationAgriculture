@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="80">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.1.4</version>
+    <version>1.0.1.5</version>
     <title>
         <en>Conservation Agriculture</en>
-        <de>Ökologische Landwirschaft</de>
+        <de>Regenerative Landwirschaft</de>
         <ru>Почвозащитное Земледелие</ru>
         <pl>Rolnictwo Ochronne</pl>
     </title>
@@ -46,6 +46,9 @@ If you do find issues or weird behaviour, please create an issue at https://gith
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
+v1.0.1.5:
+-
+
 v1.0.1.4:
 - Added fertilizing bonus when chopping straw while harvesting (only to 50% in base game, configurable for PF)
 - Added fertilizing bonus when cultivating cover crops (only to 50% in base game, configurable for PF)
@@ -94,7 +97,7 @@ Sie fügt die folgenden Funktionen hinzu:
 
 Die Mod hat folgende Zusammenhänge zur realen Landwirtschaft:
 
-Die Mod basiert auf den drei Grundprinzipien der "Ökologischen Landwirtschaft":
+Die Mod basiert auf den drei Grundprinzipien von "Conservation Agriculture":
 1. Minimale Bodenbewegung (d.h. möglichst keine Bodenbearbeitung)
 2. Permanente Bodenbedeckung (durch Rückstände und/oder Zwischenfruchtmischungen)
 3. Biodiversität (durch geeignete Fruchtfolgen usw.)
@@ -102,7 +105,7 @@ Die Mod basiert auf den drei Grundprinzipien der "Ökologischen Landwirtschaft":
 
 Die Theorie dabei ist, dass jedes System, das diese drei Grundprinzipien verfolgt, langfristig nachhaltig ist, da es Humus aufbaut.
 Der Ansatz hat das Potenzial, Probleme mit Bodenerosion und Nährstoffauswaschung zu beheben, was wiederum dazu führt, dass weniger Nährstoffe in den Boden gegeben werden müssen.
-Regenerative Landwirtschaft ist jedoch ein komplexes Thema, und es gibt viele Variationen und Faktoren, die berücksichtigt werden müssen, sodass es nicht leicht in einem Simulations-Spiel abgebildet zu werden.
+Regenerative Landwirtschaft ist jedoch ein komplexes Thema mit vielen Variationen und Faktoren, die nicht vollumfänglich in einer Spiel-Modifikation umgesetzt werden können.
 
 Die Mod verwendet daher Düngestufen und den Mulchbonus, um dem Spieler zumindest irgend eine Belohnung für das Befolgen der Prinzipien zu geben.
 Sie versucht ebenso, viele Dinge einstellbar zu machen, sodass jeder es so einstellen kann, wie es aus eigener Sicht am realistischsten ist.
@@ -113,6 +116,9 @@ Wenn du Probleme oder seltsames Verhalten feststellst, berichte das Problem bitt
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+v1.0.1.5:
+- 
+
 v1.0.1.4:
 - Dünge-Bonus beim Häckseln von Stroh während der Ernte hinzugefügt (nur bis 50% im Basisspiel, konfigurierbar für PF)
 - Dünge-Bonus beim Anbau von Zwischenfrüchten hinzugefügt (nur zu 50% im Basisspiel, konfigurierbar für PF)

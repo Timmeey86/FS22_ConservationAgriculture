@@ -2,25 +2,25 @@
 <l10n>
     <translationContributors>Farmsim Tim</translationContributors>
     <texts>
-        <text name="ca_group_title" text="Ökologische Landwirtschaft"/>
+        <text name="ca_group_title" text="Regenerative Landwirtschaft"/>
         <text name="ca_enable_roller_crimping_short" text="Walzen-Crimping"/>
         <text name="ca_enable_roller_crimping_long" text="Wenn aktiv, können Zwischenfrüchte plattgewalzt werden, um ihr Wachstum zu stoppen und eine Bodenbedeckung zu erreichen"/>
         <text name="ca_enable_roller_mulch_bonus_short" text="Mulchbonus für Walzen"/>
         <text name="ca_enable_roller_mulch_bonus_long" text="Wenn aktiv, wird beim Walzen-Crimping von Zwischenfrüchten auch ein Mulchbonus vergeben"/>
         <text name="ca_enable_seeder_mulch_bonus_short" text="Mulchbonus für Sämaschinen"/>
-        <text name="ca_enable_seeder_mulch_bonus_long" text="Wenn aktiv, wird bei der Direktsaat von Zwischenfrüchten auch ein Mulchbonus vergeben"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="Wenn aktiv, wird bei der Direktsaat in noch stehende Zwischenfrüchte auch ein Mulchbonus vergeben"/>
         <text name="ca_fertilization_behavior_base_game_short" text="Düngeverhalten (Basisspiel)"/>
-        <text name="ca_fertilization_behavior_base_game_long" text="Bestimmt das Düngeverhalten beim Walzen-Crimping, Mulchen oder Direktsaat von Zwischenfrüchten"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Bestimmt das Düngeverhalten beim Walzen-Crimping, Mulchen oder Direktsaat in noch stehende Zwischenfrüchte"/>
         <text name="ca_fertilization_behavior_base_game_off" text="Kein Düngebonus"/>
         <text name="ca_fertilization_behavior_base_game_first" text="Erste Düngestufe"/>
         <text name="ca_fertilization_behavior_base_game_full" text="Zweite Düngestufe"/>
         <text name="ca_fertilization_behavior_base_game_add_one" text="Eine Düngestufe mehr"/>
         <text name="ca_fertilization_behavior_pf_short" text="Düngeverhalten (Precision Farming)"/>
-        <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim Walzen-Crimping, Mulchen oder Direktsaat von Zwischenfrüchten, wenn der Precision Farming DLC aktiv ist."/>
+        <text name="ca_fertilization_behavior_pf_long" text="Bestimmt das Düngeverhalten beim Walzen-Crimping, Mulchen oder Direktsaat in noch stehende Zwischenfrüchte, wenn der Precision Farming DLC aktiv ist."/>
         <text name="ca_fertilization_behavior_pf_off" text="Kein Düngebonus"/>
         <text name="ca_fertilization_behavior_pf_fixed_amount" text="Feste Menge"/>
         <text name="ca_enable_weed_suppression_short" text="Unkrautunterdrückung"/>
-        <text name="ca_enable_weed_suppression_long" text="Wenn aktiv, wachsen nach der Direktsaat von Zwischenfrüchten oder dem Säen in gewalzte/gemulchte Zwischenfrüchte keine Unkräuter"/>
+        <text name="ca_enable_weed_suppression_long" text="Wenn aktiv, wachsen nach der Direktsaat in noch stehende Zwischenfrüchte oder dem Säen in gewalzte/gemulchte Zwischenfrüchte keine Unkräuter"/>
         <text name="ca_allow_direct_seeder_field_creation_short" text="Erlaube Felderzeugung mit Sämaschinen"/>
         <text name="ca_allow_direct_seeder_field_creation_long" text="Wenn aktiv, können Direktsaatmaschinen zur Felderzeugung genutzt werden. Diese Funktion lässt sich zusätzlich für jedes Gerät separat ein-oder ausschalten (Funktion 'Rohr ein-/ausklappen', Taste 'o')"/>
         <text name="ca_enable_grass_dropping_short" text="Walzen-Crimping erzeugt Gras"/>
@@ -32,7 +32,7 @@
         <text name="ca_nitrogen_amount_roller_crimping_short" text="Stickstoffmenge (roller crimping)"/>
         <text name="ca_nitrogen_amount_roller_crimping_long" text="Gibt die kg/ha Stickstoff an, die man beim Walzen-Crimping von Zwischenfrüchten bekommt."/>
         <text name="ca_nitrogen_amount_direct_seeding_short" text="Stickstoffmenge (Direktsaat)"/>
-        <text name="ca_nitrogen_amount_direct_seeding_long" text="Gibt die kg/ha Stickstoff an, die man bei der Direktsaat von Zwischenfrüchten bekommt."/>
+        <text name="ca_nitrogen_amount_direct_seeding_long" text="Gibt die kg/ha Stickstoff an, die man bei der Direktsaat in noch stehende Zwischenfrüchte bekommt."/>
         <text name="ca_nitrogen_amount_straw_chopping_short" text="Stickstoffmenge (Stroh häckseln)"/>
         <text name="ca_nitrogen_amount_straw_chopping_long" text="Gibt die kg/ha Stickstoff an, die man beim Stroh Häckseln bekommt."/>
         <text name="ca_nitrogen_amount_cultivating_short" text="Stickstoffmenge (Grubbern)"/>
