@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="80">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.1.5</version>
+    <version>1.0.1.6</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Regenerative Landwirschaft</de>
@@ -46,7 +46,7 @@ If you do find issues or weird behaviour, please create an issue at https://gith
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
-v1.0.1.5:
+v1.0.1.6:
 - Fixed an issue where weed suppression would cause lua errors on mod maps with incomplete fruit types
 
 v1.0.1.4:
@@ -116,8 +116,8 @@ Wenn du Probleme oder seltsames Verhalten feststellst, berichte das Problem bitt
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
-v1.0.1.5:
-- 
+v1.0.1.6:
+- Ein Problem wurde behoben, bei dem die Unkrautunterdrückung auf Karten mit unvollständigen Fruchtdefinitionen zu Lua Fehlern führte.
 
 v1.0.1.4:
 - Dünge-Bonus beim Häckseln von Stroh während der Ernte hinzugefügt (nur bis 50% im Basisspiel, konfigurierbar für PF)
