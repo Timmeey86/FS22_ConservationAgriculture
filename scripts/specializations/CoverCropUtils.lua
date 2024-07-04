@@ -249,6 +249,13 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
 				or (desc.terrainDataPlaneId == wheatFruitType.terrainDataPlaneId and desc.index ~= wheatFruitType.index) then
                 excludedFruitTypes[desc.index] = true
             end
+
+            -- WORKAROUND: FSDensityMapUtil.updateWeederArea seems to cause issues on maps which have incomplete fruit types
+            -- No matter if this is a map or a code issue: We prevent the issue by temporarily assigning a terrain data plane id.
+            -- This needs to be reverted after processing everything since otherwise other base game functions will fail
+            if desc.hasNoTerrainDataPlaneId then
+                desc.terrainDataPlaneId = wheatFruitType.terrainDataPlaneId
+            end
         end
 
         -- Determine a safe drop area which won't get caught by the mulcher again
@@ -315,6 +322,13 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                     end
                 end
             end
+        end
+    end
+
+    for _, desc in pairs(g_fruitTypeManager:getFruitTypes()) do
+        -- WORKAROUND CLEANUP: Reset terrain data plane id back to nil so other mods and game functions behave as usual
+        if desc.hasNoTerrainDataPlaneId then
+            desc.terrainDataPlaneId = nil
         end
     end
 

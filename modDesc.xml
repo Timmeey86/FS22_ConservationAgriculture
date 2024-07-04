@@ -47,7 +47,7 @@ Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provi
 
 Changelog:
 v1.0.1.5:
--
+- Fixed an issue where weed suppression would cause lua errors on mod maps with incomplete fruit types
 
 v1.0.1.4:
 - Added fertilizing bonus when chopping straw while harvesting (only to 50% in base game, configurable for PF)

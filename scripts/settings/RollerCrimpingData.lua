@@ -31,6 +31,13 @@ function RollerCrimpingData:init(fruitTypes)
             maxForageState = fruitDescription.maxHarvestingGrowthState
         end
 
+        -- Sometimes mappers define fruit types but don't assign a density map channel to them.
+        -- These fruit types break weeding and thus also weed suppression
+        -- We flag them here so we can execute workarounds while suppressing weeds
+        if fruitDescription.terrainDataPlaneId == nil then
+            fruitDescription.hasNoTerrainDataPlaneId = true
+        end
+
         -- Store the information for fast lookup later
         self.forageableStatesPerFruit[index] = { min = minForageState, max = maxForageState }
     end
