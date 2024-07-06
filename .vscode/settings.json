@@ -1,4 +1,5 @@
 {
+    "editor.renderWhitespace": "all",
     "Lua.diagnostics.globals": [
         "g_currentMission",
         "FieldDensityMap",

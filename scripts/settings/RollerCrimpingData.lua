@@ -11,9 +11,9 @@ function RollerCrimpingData.new()
     return self
 end
 
----Initializes forage data based on the provided table of fruit types
+---Initializes forage data based on the provided table of fruit types. This is an internal function, do not call it outside of this class
 ---@param fruitTypes table  @Provides information about growth states of fruit types
-function RollerCrimpingData:init(fruitTypes)
+function RollerCrimpingData:internalInit(fruitTypes)
     self.forageableStatesPerFruit = {}
     for index, fruitDescription in pairs(fruitTypes) do
         -- For grains and anything else not specially handled: allow from "half grown" (rounded down) to the last state before "ready to harvest"
@@ -43,15 +43,20 @@ function RollerCrimpingData:init(fruitTypes)
     end
 end
 
+---Performs a one time initialization of this class. It is safe to call this method more than once
+function RollerCrimpingData:initializeIfNecessary()
+    if not self.isInitialized then
+        -- Perform a one-time initialization the first time it is required. This makes sure mods which come much later in the alphabet have 
+        -- already registered all their fruit types
+        self:internalInit(g_fruitTypeManager:getFruitTypes())
+        self.isInitialized = true
+    end
+end
+
 ---Provides fast lookup of the growth states which allow roller crimping
 ---@param fruitTypeIndex integer @The index of the fruit type in the global list of fruit types
 ---@return table @A pair of minimum and maximum growth states indexed by "min" and "max"
 function RollerCrimpingData:getForageableStates(fruitTypeIndex)
-    if not self.isInitialized then
-        -- Perform a one-time initialization the first time it is required. This makes sure mods which come much later in the alphabet have 
-        -- already registered all their fruit types
-        self:init(g_fruitTypeManager:getFruitTypes())
-        self.isInitialized = true
-    end
+    self:initializeIfNecessary()
     return self.forageableStatesPerFruit[fruitTypeIndex] or { min = nil, max = nil }
 end
