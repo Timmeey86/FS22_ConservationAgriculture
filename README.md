@@ -1,5 +1,19 @@
 # FS22_ConservationAgriculture
 
+## A note on Terra Life Plus
+
+### Is Conservation Agriculture compatible with Terra Life Plus?
+
+No, it currently is not. If you load a Terra Life Plus map with CA in the mod folder, CA will automatically become deactivated.
+
+### Will Conservation Agriculture be made compatible with Terra Life Plus?
+
+As of now, I don't know. I will need some time to explore the features of Terra Life Plus so I can see wether or not there is even any point in having CA in addition to TLP.
+
+### Will Conservation Agriculture come to FS25?
+
+Most likely not. I will however integrate some of its features towards Terra Life Plus for FS25.
+
 ## Mod description
 
 Make cover crops useful again!
