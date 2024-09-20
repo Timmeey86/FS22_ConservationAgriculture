@@ -81,6 +81,7 @@
         "g_sprayTypeManager",
         "g_fillTypeManager",
         "FertilizingCultivator",
-        "DensityRoundingMode"
+        "DensityRoundingMode",
+        "g_iconGenerator"
     ]
 }
