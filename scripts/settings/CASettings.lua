@@ -168,6 +168,7 @@ function CASettings:onReadStream(streamId, connection)
     self.cultivatorNitrogenBonus = streamReadInt8(streamId)
     self.rollerCrimpingNitrogenBonus = streamReadInt8(streamId)
     self.directSeedingNitrogenBonus = streamReadInt8(streamId)
+    print(MOD_NAME .. ": Done receiving settings")
 end
 
 ---Sends the current settings to a client which is connecting to a multiplayer game
@@ -191,4 +192,5 @@ function CASettings:onWriteStream(streamId, connection)
     streamWriteInt8(streamId, self.cultivatorNitrogenBonus)
     streamWriteInt8(streamId, self.rollerCrimpingNitrogenBonus)
     streamWriteInt8(streamId, self.directSeedingNitrogenBonus)
+    print(MOD_NAME .. ": Done sending settings")
 end
