@@ -82,6 +82,7 @@
         "g_fillTypeManager",
         "FertilizingCultivator",
         "DensityRoundingMode",
-        "g_iconGenerator"
+        "g_iconGenerator",
+        "DensityMapMultiModifier"
     ]
 }

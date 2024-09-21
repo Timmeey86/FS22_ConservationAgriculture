@@ -3,7 +3,11 @@
 CANitrogenLockMap = {
     NAME = "caNitrogenLockMap",
     GRLEFILE = "ConservationAgriculture_NitrogenLockMap.grle",
-    SIZE = 1024
+    SIZE = 1024,
+    LOCK_STATES = {
+        ELIGIBLE_FOR_BONUS = 0,
+        BONUS_APPLIED = 1
+    }
 }
 
 -- This class doesn't make sense without Precision Farming
@@ -19,13 +23,16 @@ local CANitrogenLockMap_mt = Class(CANitrogenLockMap, FS22_precisionFarming.Valu
 function CANitrogenLockMap.new(pfModule)
     local self = FS22_precisionFarming.ValueMap.new(pfModule, CANitrogenLockMap_mt)
     self.name = CANitrogenLockMap.NAME
+    self.nitrogenMap = FS22_precisionFarming.g_precisionFarming.nitrogenMap
+    self.functionCaches = {}
+    self.functionCaches.applyNitrogenAmount = nil
+    self.functionCaches.resetLock = nil
     return self
 end
 
 ---Initializes the class
 function CANitrogenLockMap:initialize()
     CANitrogenLockMap:superClass().initialize(self)
-    self.densityMapModifier = nil
 end
 
 ---Deletes the cache object which represents the bit vector map (but not the GRLE/XML files in the save game)
@@ -45,7 +52,7 @@ function CANitrogenLockMap:loadFromXML(xmlFile, key, ...)
     self.firstChannel = 0
     self.numChannels = 1
     self.maxValue = 1
-    self.bitVectorMap = self:loadSavedBitVectorMap(CANitrogenLockMap.NAME, CANitrogenLockMap.GRLEFILE, 1, self.sizeX)
+    self.bitVectorMap = self:loadSavedBitVectorMap(CANitrogenLockMap.NAME, CANitrogenLockMap.GRLEFILE, self.numChannels, self.sizeX)
 
     self:addBitVectorMapToSync(self.bitVectorMap)
     self:addBitVectorMapToSave(self.bitVectorMap, CANitrogenLockMap.GRLEFILE)
@@ -90,9 +97,84 @@ function CANitrogenLockMap:getShowInMenu()
     return false
 end
 
-function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, nitrogenAmount)
-    -- TODO
+
+function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, nitrogenAmount, filter1, filter2)
+    if self.nitrogenMap == nil then
+        return 0 -- shouldn't happen
+    end
+
+    local functionCache
+    if self.functionCaches.applyNitrogenAmount == nil then
+        functionCache = {}
+
+        -- Create a modifier for setting and resetting bits on spots where a cover crop nitrogen bonus was applied
+        functionCache.lockMapModifier = DensityMapModifier.new(self.bitVectorMap, self.firstChannel, self.numChannels)
+        functionCache.lockMapModifier:setPolygonRoundingMode(DensityRoundingMode.INCLUSIVE)
+        functionCache.lockMapModifier:setDensityMapChannels(0, 1)
+
+        -- Filter only for pixels which are eligible for a cover crop nitrogen bonus
+        functionCache.notLockedFilter = DensityMapFilter.new(functionCache.lockMapModifier)
+        functionCache.notLockedFilter:setValueCompareParams(DensityValueCompareType.EQUAL, CANitrogenLockMap.LOCK_STATES.ELIGIBLE_FOR_BONUS)
+        functionCache.lockedFilter = DensityMapFilter.new(functionCache.lockMapModifier)
+        functionCache.lockedFilter:setValueCompareParams(DensityValueCompareType.EQUAL, CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED)
+
+        -- This modifier will modify the Precision Farming nitrogen amount directly
+        functionCache.nitrogenMapModifier = DensityMapModifier.new(self.nitrogenMap.bitVectorMap, self.nitrogenMap.firstChannel, self.nitrogenMap.numChannels)
+        functionCache.nitrogenMapModifier:setPolygonRoundingMode(DensityRoundingMode.INCLUSIVE)
+        functionCache.nearMaxNitrogenFilter = DensityMapFilter.new(functionCache.nitrogenMapModifier)
+        functionCache.regularNitrogenFilter = DensityMapFilter.new(functionCache.nitrogenMapModifier)
+
+        self.functionCaches.applyNitrogenAmount = functionCache
+    else
+        functionCache = self.functionCaches.applyNitrogenAmount
+    end
+
+    -- Transform the coordinates to density map coords
+    startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ = worldCoordsToLocalCoords(
+        startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, g_currentMission.terrainSize)
+
+    -- Limit the modifiers to the coordinates which correspond to the current working area
+    functionCache.lockMapModifier:setParallelogramDensityMapCoords(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, DensityCoordType.POINT_POINT_POINT)
+    functionCache.nitrogenMapModifier:setParallelogramDensityMapCoords(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, DensityCoordType.POINT_POINT_POINT)
+
+    -- Track the amount of pixels which may still receive a nitrogen bonus
+    local _, eligiblePixelsBefore, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter)
+
+    if eligiblePixelsBefore == 0 then
+        return 0 -- no bonus will be applied in this area
+    end
+
+    local _, eligibleTEMP1, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
+    local _, eligibleTEMP2, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter, filter1, filter2)
+
+    -- Create a multi modifier which updates both the PF nitrogen map and our lock map at the same time
+    local multiModifier = DensityMapMultiModifier.new()
+
+    -- Add nitrogen amount. We need to do this in two steps in order to prevent the code from setting the nitrogen amount too high
+    functionCache.nearMaxNitrogenFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, self.nitrogenMap.maxValue - nitrogenAmount + 1, self.nitrogenMap.maxValue)
+    functionCache.regularNitrogenFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 1, self.nitrogenMap.maxValue - nitrogenAmount)
+    multiModifier:addExecuteAdd(nitrogenAmount, functionCache.nitrogenMapModifier, functionCache.regularNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
+    multiModifier:addExecuteSet(self.nitrogenMap.maxValue, functionCache.nitrogenMapModifier, functionCache.nearMaxNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
+    -- Lock any pixels which match the filters
+    multiModifier:addExecuteSet(CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED, functionCache.lockMapModifier, functionCache.notLockedFilter, filter1, filter2)
+
+    -- Execute the modifier now
+    multiModifier:execute(false)
+
+    -- TODO: Multi modifier does not work like I think it does
+    local _, eligibleTEMP3, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
+    local _, eligibleTEMP4, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter, filter1, filter2)
+    print((">>>>>>>>>> %d, %d -> %d, %d"):format(eligibleTEMP1, eligibleTEMP2, eligibleTEMP3, eligibleTEMP4))
+
+    -- Check how many pixels are still eligible (will be larger than zero if the fruit filter or on field filter excluded some bits)
+    local _, eligiblePixelsAfter, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter)
+
+    print(">>>>>>>>>>>" .. tostring(eligiblePixelsBefore) .. " -> " .. tostring(eligiblePixelsAfter))
+    return eligiblePixelsBefore - eligiblePixelsAfter
 end
 function CANitrogenLockMap:resetLock(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ)
-    -- TODO
+    if self.nitrogenMap == nil then
+        return 0 -- shouldn't happen
+    end
+
 end

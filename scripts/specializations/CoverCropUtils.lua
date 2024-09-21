@@ -176,19 +176,14 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
         end
     else
         -- precision farming: modify the nitrogen map instead
-        local precisionFarming = FS22_precisionFarming.g_precisionFarming
-        local nitrogenMap = precisionFarming.nitrogenMap
-
-        local nitrogenValue = pfNitrogenValue
         if settings.fertilizationBehaviorPF == CASettings.FERTILIZATION_BEHAVIOR_PF_OFF then
-            nitrogenValue = 0
+            return
         end
-        local choppedStrawValueBefore = nitrogenMap.choppedStrawStateChange
-        nitrogenMap.choppedStrawStateChange = nitrogenValue
-        nitrogenMap:preUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
-        FSDensityMapUtil.setGroundTypeLayerArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
-        nitrogenMap:postUpdateStrawChopperArea(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, sprayType)
-        nitrogenMap.choppedStrawStateChange = choppedStrawValueBefore
+
+        local precisionFarming = FS22_precisionFarming.g_precisionFarming
+        local nitrogenLockMap = precisionFarming.caNitrogenLockMap
+        local modifiedPixels = nitrogenLockMap:applyNitrogenAmount(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, pfNitrogenValue, filter3, filter2)
+        print(">>>>>>>>>>>>> Modified " .. tostring(modifiedPixels) .. " pixels")
     end
 end
 
