@@ -83,6 +83,9 @@
         "FertilizingCultivator",
         "DensityRoundingMode",
         "g_iconGenerator",
-        "DensityMapMultiModifier"
+        "DensityMapMultiModifier",
+        "localToWorld",
+        "getCorrectTextSize",
+        "getTerrainHeightAtWorldPos"
     ]
 }

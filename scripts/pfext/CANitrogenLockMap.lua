@@ -61,6 +61,14 @@ function CANitrogenLockMap:loadFromXML(xmlFile, key, ...)
     return true
 end
 
+---Converts a single coordinate (X or Z dimension) to a local bit vector map coordinate
+---@param coord number @The coordinate
+---@param terrainSize number @The size of the terrain
+---@return number @The local coordinate
+local function worldCoordToLocalCoord(coord, terrainSize)
+    return CANitrogenLockMap.SIZE * (coord + terrainSize * .5) / terrainSize
+end
+
 ---Converts world coordinates to local bit vector map coordinates
 ---@param startWorldX number @The X world coordinate of the first corner
 ---@param startWorldZ number @The Z world coordinate of the first corner
@@ -77,12 +85,12 @@ end
 ---@return number @The Z local coordinate of the third corner
 local function worldCoordsToLocalCoords(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, terrainSize)
     return
-        CANitrogenLockMap.SIZE * (startWorldX + terrainSize * 0.5) / terrainSize,
-        CANitrogenLockMap.SIZE * (startWorldZ + terrainSize * 0.5) / terrainSize,
-        CANitrogenLockMap.SIZE * (widthWorldX + terrainSize * 0.5) / terrainSize,
-        CANitrogenLockMap.SIZE * (widthWorldZ + terrainSize * 0.5) / terrainSize,
-        CANitrogenLockMap.SIZE * (heightWorldX + terrainSize * 0.5) / terrainSize,
-        CANitrogenLockMap.SIZE * (heightWorldZ + terrainSize * 0.5) / terrainSize
+        worldCoordToLocalCoord(startWorldX, terrainSize),
+        worldCoordToLocalCoord(startWorldZ, terrainSize),
+        worldCoordToLocalCoord(widthWorldX, terrainSize),
+        worldCoordToLocalCoord(widthWorldZ, terrainSize),
+        worldCoordToLocalCoord(heightWorldX, terrainSize),
+        worldCoordToLocalCoord(heightWorldZ, terrainSize)
 end
 
 ---Overwrites additional game functions when necessary
@@ -144,37 +152,60 @@ function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWo
         return 0 -- no bonus will be applied in this area
     end
 
-    local _, eligibleTEMP1, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
-    local _, eligibleTEMP2, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter, filter1, filter2)
-
-    -- Create a multi modifier which updates both the PF nitrogen map and our lock map at the same time
-    local multiModifier = DensityMapMultiModifier.new()
-
     -- Add nitrogen amount. We need to do this in two steps in order to prevent the code from setting the nitrogen amount too high
     functionCache.nearMaxNitrogenFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, self.nitrogenMap.maxValue - nitrogenAmount + 1, self.nitrogenMap.maxValue)
     functionCache.regularNitrogenFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, 1, self.nitrogenMap.maxValue - nitrogenAmount)
-    multiModifier:addExecuteAdd(nitrogenAmount, functionCache.nitrogenMapModifier, functionCache.regularNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
-    multiModifier:addExecuteSet(self.nitrogenMap.maxValue, functionCache.nitrogenMapModifier, functionCache.nearMaxNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
+    functionCache.nitrogenMapModifier:executeAdd(nitrogenAmount,functionCache.regularNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
+    functionCache.nitrogenMapModifier:executeSet(self.nitrogenMap.maxValue, functionCache.nearMaxNitrogenFilter, functionCache.notLockedFilter, filter1, filter2)
     -- Lock any pixels which match the filters
-    multiModifier:addExecuteSet(CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED, functionCache.lockMapModifier, functionCache.notLockedFilter, filter1, filter2)
-
-    -- Execute the modifier now
-    multiModifier:execute(false)
-
-    -- TODO: Multi modifier does not work like I think it does
-    local _, eligibleTEMP3, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
-    local _, eligibleTEMP4, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter, filter1, filter2)
-    print((">>>>>>>>>> %d, %d -> %d, %d"):format(eligibleTEMP1, eligibleTEMP2, eligibleTEMP3, eligibleTEMP4))
+    functionCache.lockMapModifier:executeSet(CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED, functionCache.notLockedFilter, filter1, filter2)
 
     -- Check how many pixels are still eligible (will be larger than zero if the fruit filter or on field filter excluded some bits)
     local _, eligiblePixelsAfter, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter)
 
-    print(">>>>>>>>>>>" .. tostring(eligiblePixelsBefore) .. " -> " .. tostring(eligiblePixelsAfter))
     return eligiblePixelsBefore - eligiblePixelsAfter
 end
+
 function CANitrogenLockMap:resetLock(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ)
     if self.nitrogenMap == nil then
         return 0 -- shouldn't happen
     end
 
 end
+
+function CANitrogenLockMap.debugLockMap(player)
+    if not g_modIsLoaded["FS22_precisionFarming"] then
+        return
+    end
+
+    local lockMap = FS22_precisionFarming.g_precisionFarming.caNitrogenLockMap
+
+    local lockMapModifier = DensityMapModifier.new(lockMap.bitVectorMap, lockMap.firstChannel, lockMap.numChannels)
+    lockMapModifier:setPolygonRoundingMode(DensityRoundingMode.INCLUSIVE)
+    lockMapModifier:setDensityMapChannels(0, 1)
+
+    local lockedFilter = DensityMapFilter.new(lockMapModifier)
+    lockedFilter:setValueCompareParams(DensityValueCompareType.EQUAL, CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED)
+
+    -- Get the player position
+    local x, y, z = localToWorld(player.rootNode, 0, 0, 0)
+    -- Round X/Z to a 2m resolution
+    x = math.floor( x )
+    z = math.floor( z )
+    local terrainSize = g_currentMission.terrainSize
+
+    -- Draw 24m around the player
+    for xWorld = x - 24, x + 24, 1 do
+        for zWorld = z - 24, z + 24, 1 do
+            -- Get the value at this area
+            local xBitMap, zBitMap = worldCoordToLocalCoord(xWorld, terrainSize), worldCoordToLocalCoord(zWorld, terrainSize)
+
+            lockMapModifier:setParallelogramDensityMapCoords(xBitMap, zBitMap, xBitMap, zBitMap, xBitMap, zBitMap, DensityCoordType.POINT_POINT_POINT)
+            local numLockedPixels = lockMapModifier:executeGet(lockedFilter)
+
+            local yWorld = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, xWorld, 0, zWorld) + .5
+            Utils.renderTextAtWorldPosition(xWorld, yWorld, zWorld, tostring(numLockedPixels), getCorrectTextSize(.02), 0)
+        end
+    end
+end
+Player.update = Utils.appendedFunction(Player.update, CANitrogenLockMap.debugLockMap)
