@@ -74,7 +74,7 @@ function SeederFertilizerSpecialization:onLoad(savegame)
     local spec = self.spec_CA_SeederSpecialization
 
     -- Prepare the possibility to toggle field creation.
-    print("Loading SeederFertilizerSpecialization. Setting limitToField to true")
+    print(MOD_NAME .. "Loading SeederFertilizerSpecialization. Setting limitToField to true")
     spec.limitToField = true
     spec.texts = {}
     -- Reuse the basegame texts for plows

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="80">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.1.0.0</version>
+    <version>1.1.0.1</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Regenerative Landwirschaft</de>
@@ -166,6 +166,7 @@ v1.0.0.2:
         <sourceFile filename="scripts/events/SowingMachineLimitToFieldEvent.lua" />
         <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
         <sourceFile filename="scripts/pfext/CAPrecisionFarmingExt.lua" />
+        <sourceFile filename="scripts/pfext/CALockMapRepository.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
 

@@ -9,7 +9,6 @@ source(MOD_DIR .. "scripts/specializations/CultivatorFertilizerSpecialization.lu
 source(MOD_DIR .. "scripts/specializations/ChopperFertilizerSpecialization.lua")
 source(MOD_DIR .. "scripts/specializations/FertilizingCultivatorSpecialization.lua")
 
-print("Test")
 local function printSpecRegistration(typeName, specType)
     print(("%s: Type %s will be handled by %s specialization"):format(MOD_NAME, typeName, specType))
 end
@@ -105,6 +104,7 @@ TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, r
 g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
         CASettingsRepository.restoreSettings()
+        CALockMapRepository.restoreLockMapData()
     end)
 
 -- Create (and cleanup) a global settings object
@@ -117,4 +117,7 @@ InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGe
 InGameMenuGeneralSettingsFrame.updateGameSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGameSettings, CASettingsGUI.inj_updateGameSettings)
 
 -- Save and load settings (loading is done in loadMapFinished)
-FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, CASettingsRepository.storeSettings)
+FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, function()
+    CASettingsRepository.storeSettings()
+    CALockMapRepository.storeLockMapData()
+end)

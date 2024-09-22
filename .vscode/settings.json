@@ -55,7 +55,7 @@
         "CheckedOptionElement",
         "MultiTextOptionElement",
         "XMLSchema",
-        "XmlValueType",
+        "XMLValueType",
         "createXMLFile",
         "createXmlFile",
         "setXMLBool",
@@ -86,6 +86,9 @@
         "DensityMapMultiModifier",
         "localToWorld",
         "getCorrectTextSize",
-        "getTerrainHeightAtWorldPos"
+        "getTerrainHeightAtWorldPos",
+        "GrowthSystem",
+        "setXMLFloat",
+        "XMLFile"
     ]
 }

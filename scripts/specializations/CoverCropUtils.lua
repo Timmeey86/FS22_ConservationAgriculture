@@ -183,7 +183,6 @@ function CoverCropUtils.applyFertilizer(coords, sprayLevelModifier, sprayLevelFi
         local precisionFarming = FS22_precisionFarming.g_precisionFarming
         local nitrogenLockMap = precisionFarming.caNitrogenLockMap
         local modifiedPixels = nitrogenLockMap:applyNitrogenAmount(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3, pfNitrogenValue, filter3, filter2)
-        print(">>>>>>>>>>>>> Modified " .. tostring(modifiedPixels) .. " pixels")
     end
 end
 

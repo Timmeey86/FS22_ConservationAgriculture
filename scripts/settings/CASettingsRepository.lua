@@ -20,32 +20,33 @@ CASettingsRepository = {
     NITROGEN_AMOUNT_DIRECT_SEEDING = "nitrogenAmountDirectSeeding"
 }
 
+-- TODO This is currently not being used
 ---Creates and returns an XML schema for the settings.
 ---@return  table   @the XML schema
 function CASettingsRepository.createXmlSchema()
     local xmlSchema = XMLSchema.new(CASettingsRepository.CA_KEY)
 
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_CRIMPING_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_MULCH_BONUS_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_CRIMPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_MULCH_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
 
     -- v 1.0.0.9+
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY))
 
     -- v 1.0.1.0+
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING))
 
     return xmlSchema
 end

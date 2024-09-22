@@ -27,6 +27,8 @@ function CANitrogenLockMap.new(pfModule)
     self.functionCaches = {}
     self.functionCaches.applyNitrogenAmount = nil
     self.functionCaches.resetLock = nil
+    -- Stores the work areas which shall have their lock bits reset when sleeping
+    self.pendingWorkAreas = {}
     return self
 end
 
@@ -40,15 +42,13 @@ function CANitrogenLockMap:delete()
     CANitrogenLockMap:superClass().delete(self)
 end
 
----Restores a nitrogen lock map from an XML and GRLE file
----@param xmlFile number @A handle to the XML file
----@param key string @The base key in the XML, in case more than one thing is stored in the same file
+---Restores a nitrogen lock map from the savegame. XML parameters are ignored because there is nothing in the PrecisionFarming.xml
+---for our custom bit vector map, of course
 ---@param ... unknown @Unused parameters
 ---@return boolean @Currently always true (since failing to load the bit vector map would lead to an unrecoverable error anyway)
-function CANitrogenLockMap:loadFromXML(xmlFile, key, ...)
-    key = key .. "." .. CANitrogenLockMap.NAME
-    self.sizeX = getXMLInt(xmlFile, key .. "#sizeX") or CANitrogenLockMap.SIZE
-    self.sizeY = getXMLInt(xmlFile, key .. "#sizeY") or CANitrogenLockMap.SIZE
+function CANitrogenLockMap:loadFromXML(...)
+    self.sizeX = CANitrogenLockMap.SIZE
+    self.sizeY = CANitrogenLockMap.SIZE
     self.firstChannel = 0
     self.numChannels = 1
     self.maxValue = 1
@@ -105,7 +105,17 @@ function CANitrogenLockMap:getShowInMenu()
     return false
 end
 
-
+---Applies a fixed nitrogen amount on the field. This can only be done once per day, in order to prevent overfertilization
+---@param startWorldX number @The X world coordinate of the first corner
+---@param startWorldZ number @The Z world coordinate of the first corner
+---@param widthWorldX number @The X world coordinate of the second corner
+---@param widthWorldZ number @The Z world coordinate of the second corner
+---@param heightWorldX number @The X world coordinate of the third corner
+---@param heightWorldZ number @The Z world coordinate of the third corner
+---@param nitrogenAmount number @The amount of nitrogen which shall be applied
+---@param filter1 table @An optional DensityMapFilter used for limiting where nitrogen shall be applied
+---@param filter2 table @An second optional DensityMapFilter used for limiting where nitrogen shall be applied
+---@return integer @The amount of pixels which were affected
 function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, nitrogenAmount, filter1, filter2)
     if self.nitrogenMap == nil then
         return 0 -- shouldn't happen
@@ -138,15 +148,15 @@ function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWo
     end
 
     -- Transform the coordinates to density map coords
-    startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ = worldCoordsToLocalCoords(
+    local startLocalX, startLocalZ, widthLocalX, widthLocalZ, heightLocalX, heightLocalZ = worldCoordsToLocalCoords(
         startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, g_currentMission.terrainSize)
 
-    -- Limit the modifiers to the coordinates which correspond to the current working area
-    functionCache.lockMapModifier:setParallelogramDensityMapCoords(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, DensityCoordType.POINT_POINT_POINT)
-    functionCache.nitrogenMapModifier:setParallelogramDensityMapCoords(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ, DensityCoordType.POINT_POINT_POINT)
+    -- Limit the modifiers to the coordinates which correspond to the current work area
+    functionCache.lockMapModifier:setParallelogramDensityMapCoords(startLocalX, startLocalZ, widthLocalX, widthLocalZ, heightLocalX, heightLocalZ, DensityCoordType.POINT_POINT_POINT)
+    functionCache.nitrogenMapModifier:setParallelogramDensityMapCoords(startLocalX, startLocalZ, widthLocalX, widthLocalZ, heightLocalX, heightLocalZ, DensityCoordType.POINT_POINT_POINT)
 
     -- Track the amount of pixels which may still receive a nitrogen bonus
-    local _, eligiblePixelsBefore, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter)
+    local _, eligiblePixelsBefore, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
 
     if eligiblePixelsBefore == 0 then
         return 0 -- no bonus will be applied in this area
@@ -161,17 +171,89 @@ function CANitrogenLockMap:applyNitrogenAmount(startWorldX, startWorldZ, widthWo
     functionCache.lockMapModifier:executeSet(CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED, functionCache.notLockedFilter, filter1, filter2)
 
     -- Check how many pixels are still eligible (will be larger than zero if the fruit filter or on field filter excluded some bits)
-    local _, eligiblePixelsAfter, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter)
+    local _, eligiblePixelsAfter, _ = functionCache.lockMapModifier:executeGet(functionCache.notLockedFilter, filter1, filter2)
+
+    -- Remember the work area
+    self.pendingWorkAreas[#self.pendingWorkAreas + 1] = {
+        x1 = startLocalX,
+        z1 = startLocalZ,
+        x2 = heightLocalX,
+        z2 = heightLocalZ,
+        x3 = widthLocalX,
+        z3 = widthLocalZ
+    }
 
     return eligiblePixelsBefore - eligiblePixelsAfter
 end
 
-function CANitrogenLockMap:resetLock(startWorldX, startWorldZ, widthWorldX, widthWorldZ, heightWorldX, heightWorldZ)
+---Resets any lock bits in the given area
+---@param startLocalX  number @The X local coordinate of the first corner
+---@param startLocalZ  number @The Z local coordinate of the first corner
+---@param widthLocalX  number @The X local coordinate of the second corner
+---@param widthLocalZ  number @The Z local coordinate of the second corner
+---@param heightLocalX number @The X local coordinate of the third corner
+---@param heightLocalZ number @The Z local coordinate of the third corner
+---@return integer @The amount of affected pixels
+function CANitrogenLockMap:resetLock(startLocalX, startLocalZ, widthLocalX, widthLocalZ, heightLocalX, heightLocalZ)
     if self.nitrogenMap == nil then
         return 0 -- shouldn't happen
     end
 
+    local functionCache
+    if self.functionCaches.resetLock == nil then
+        functionCache = {}
+
+        -- Create a modifier for setting and resetting bits on spots where a cover crop nitrogen bonus was applied
+        functionCache.lockMapModifier = DensityMapModifier.new(self.bitVectorMap, self.firstChannel, self.numChannels)
+        functionCache.lockMapModifier:setPolygonRoundingMode(DensityRoundingMode.INCLUSIVE)
+        functionCache.lockMapModifier:setDensityMapChannels(0, 1)
+
+        -- Filter only for pixels where the nitrogen bonus has been applied already
+        functionCache.lockedFilter = DensityMapFilter.new(functionCache.lockMapModifier)
+        functionCache.lockedFilter:setValueCompareParams(DensityValueCompareType.EQUAL, CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED)
+
+        self.functionCaches.resetLock = functionCache
+    else
+        functionCache = self.functionCaches.resetLock
+    end
+
+    -- Limit the modifiers to the coordinates which correspond to the current work area
+    functionCache.lockMapModifier:setParallelogramDensityMapCoords(startLocalX, startLocalZ, widthLocalX, widthLocalZ, heightLocalX, heightLocalZ, DensityCoordType.POINT_POINT_POINT)
+
+    -- Track the amount of pixels which have already received a nitrogen bonus
+    local _, lockedPixelsBefore, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter)
+
+    if lockedPixelsBefore == 0 then
+        return 0 -- nothing needs to be unlocked
+    end
+
+    -- Unlock any pixels which match the filters
+    functionCache.lockMapModifier:executeSet(CANitrogenLockMap.LOCK_STATES.ELIGIBLE_FOR_BONUS, functionCache.notLockedFilter)
+
+    -- Check how many pixels are still locked (probably always zero)
+    local _, lockedPixelsAfter, _ = functionCache.lockMapModifier:executeGet(functionCache.lockedFilter)
+
+    return lockedPixelsBefore - lockedPixelsAfter
 end
+
+---Resets the locks in any pending work areas
+function CANitrogenLockMap:resetLocksInpendingWorkAreas()
+    for i, coords in ipairs(self.pendingWorkAreas) do
+        self:resetLock(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3)
+    end
+end
+
+--- Reset lock bits whenever the growth states are advancing
+GrowthSystem.performScriptBasedGrowth = Utils.appendedFunction(GrowthSystem.performScriptBasedGrowth, function(...)
+    -- Reset all the lock bits in any pending work areas
+    if not g_modIsLoaded["FS22_precisionFarming"] then
+        return
+    end
+
+    local lockMap = FS22_precisionFarming.g_precisionFarming.caNitrogenLockMap
+    lockMap:resetLocksInpendingWorkAreas()
+end)
+
 
 function CANitrogenLockMap.debugLockMap(player)
     if not g_modIsLoaded["FS22_precisionFarming"] then
