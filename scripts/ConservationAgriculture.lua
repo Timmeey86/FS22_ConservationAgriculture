@@ -1,6 +1,11 @@
 MOD_DIR = g_currentModDirectory or ""
 MOD_NAME = g_currentModName or "unknown"
 
+DEBUG_CA_PERFORMANCE = true
+function CA_PRINT_DEBUG_TIME(operation, passedMsec)
+    print(("%s[PERF]: %s took %.3f seconds"):format(MOD_NAME, operation, passedMsec / 1000))
+end
+
 -- Dynamically load the specializations
 source(MOD_DIR .. "scripts/specializations/MulcherFertilizerSpecialization.lua")
 source(MOD_DIR .. "scripts/specializations/RollerFertilizerSpecialization.lua")

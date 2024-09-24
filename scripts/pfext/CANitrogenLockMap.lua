@@ -237,9 +237,16 @@ function CANitrogenLockMap:resetLock(startLocalX, startLocalZ, widthLocalX, widt
 end
 
 ---Resets the locks in any pending work areas
-function CANitrogenLockMap:resetLocksInpendingWorkAreas()
+function CANitrogenLockMap:resetLocksInPendingWorkAreas()
+    local time = netGetTime()
+    local amount = #self.pendingWorkAreas
     for i, coords in ipairs(self.pendingWorkAreas) do
         self:resetLock(coords.x1, coords.z1, coords.x2, coords.z2, coords.x3, coords.z3)
+    end
+    self.pendingWorkAreas = {}
+
+    if DEBUG_CA_PERFORMANCE then
+        CA_PRINT_DEBUG_TIME(("Resetting lock bits in %d work areas"):format(amount), netGetTime() - time)
     end
 end
 
@@ -251,11 +258,28 @@ GrowthSystem.performScriptBasedGrowth = Utils.appendedFunction(GrowthSystem.perf
     end
 
     local lockMap = FS22_precisionFarming.g_precisionFarming.caNitrogenLockMap
-    lockMap:resetLocksInpendingWorkAreas()
+    lockMap:resetLocksInPendingWorkAreas()
 end)
 
+function CANitrogenLockMap.debugPlayerUpdate(player)
+    -- Get the player position
+    local x, y, z = localToWorld(player.rootNode, 0, 0, 0)
+    CANitrogenLockMap.debugLockMap(x, y, z)
+end
+Player.update = Utils.appendedFunction(Player.update, CANitrogenLockMap.debugPlayerUpdate)
 
-function CANitrogenLockMap.debugLockMap(player)
+function CANitrogenLockMap.debugVehicleUpdate(vehicle)
+    if not g_currentMission or vehicle ~= g_currentMission.controlledVehicle then
+        return
+    end
+
+    -- Get the vehicle root node position
+    local x, y, z = localToWorld(vehicle.rootNode, 0, 0, 0)
+    CANitrogenLockMap.debugLockMap(x, y, z)
+end
+Vehicle.update = Utils.appendedFunction(Vehicle.update, CANitrogenLockMap.debugVehicleUpdate)
+
+function CANitrogenLockMap.debugLockMap(x, y, z)
     if not g_modIsLoaded["FS22_precisionFarming"] then
         return
     end
@@ -269,9 +293,7 @@ function CANitrogenLockMap.debugLockMap(player)
     local lockedFilter = DensityMapFilter.new(lockMapModifier)
     lockedFilter:setValueCompareParams(DensityValueCompareType.EQUAL, CANitrogenLockMap.LOCK_STATES.BONUS_APPLIED)
 
-    -- Get the player position
-    local x, y, z = localToWorld(player.rootNode, 0, 0, 0)
-    -- Round X/Z to a 2m resolution
+    -- Round X/Z to a 1m resolution
     x = math.floor( x )
     z = math.floor( z )
     local terrainSize = g_currentMission.terrainSize
@@ -290,4 +312,3 @@ function CANitrogenLockMap.debugLockMap(player)
         end
     end
 end
-Player.update = Utils.appendedFunction(Player.update, CANitrogenLockMap.debugLockMap)

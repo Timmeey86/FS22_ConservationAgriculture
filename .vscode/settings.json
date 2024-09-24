@@ -89,6 +89,9 @@
         "getTerrainHeightAtWorldPos",
         "GrowthSystem",
         "setXMLFloat",
-        "XMLFile"
+        "XMLFile",
+        "Vehicle",
+        "g_time",
+        "netGetTime"
     ]
 }

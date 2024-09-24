@@ -70,6 +70,8 @@ function CALockMapRepository.restoreLockMapData()
         -- Mod hasn't been active during the last save most likely
         return
     end
+
+    local time = netGetTime()
     -- Load the XML if possible
     local xmlFile = XMLFile.load("CALockMap", xmlPath, CALockMapRepository.createXmlSchema())
     if xmlFile == nil then
@@ -89,6 +91,10 @@ function CALockMapRepository.restoreLockMapData()
         }
         lockMap.pendingWorkAreas[i] = coords
     end)
+
+    if DEBUG_CA_PERFORMANCE then
+        CA_PRINT_DEBUG_TIME(("Loading %d work areas from the XML"):format(#lockMap.pendingWorkAreas), netGetTime() - time)
+    end
 end
 
 ---Builds a path to the XML file which contains the settings
