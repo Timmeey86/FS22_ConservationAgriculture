@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Rudolfet</translationContributors>
+    <texts>
+        <text name="ca_group_title" text="Agricoltura conservativa"/>
+        <text name="ca_enable_roller_crimping_short" text="Crimpatura a rullo"/>
+        <text name="ca_enable_roller_crimping_long" text="Se abilitata, la rullatura delle colture di copertura le schiaccerà per arrestarne la crescita e produrre una copertura del suolo."/>
+        <text name="ca_enable_roller_mulch_bonus_short" text="Bonus pacciamatura a rullo"/>
+        <text name="ca_enable_roller_mulch_bonus_long" text="Se abilitata, la copertura a rullo garantisce un bonus di pacciamatura."/>
+        <text name="ca_enable_seeder_mulch_bonus_short" text="Bonus pacciamatura con seminatrice"/>
+        <text name="ca_enable_seeder_mulch_bonus_long" text="Se abilitata, la semina diretta nelle colture di copertura garantirà un bonus di pacciamatura."/>
+        <text name="ca_fertilization_behavior_base_game_short" text="Comportamento di fertilizzazione (gioco base)"/>
+        <text name="ca_fertilization_behavior_base_game_long" text="Impostare la strategia di concimazione quando si rullano, si pacciamano o si seminano direttamente le colture di copertura."/>
+        <text name="ca_fertilization_behavior_base_game_off" text="Nessuna fertilizzazione"/>
+        <text name="ca_fertilization_behavior_base_game_first" text="Primo Stadio di Fertilizzazione"/>
+        <text name="ca_fertilization_behavior_base_game_full" text="Fertilizzazione completa"/>
+        <text name="ca_fertilization_behavior_base_game_add_one" text="Fase di fertilizzazione aggiuntiva"/>
+        <text name="ca_fertilization_behavior_pf_short" text="Comportamento di concimazione (agricoltura di precisione)"/>
+        <text name="ca_fertilization_behavior_pf_long" text="Imposta la strategia di fertilizzazione quando si effettua la rullatura, la pacciamatura o la semina diretta in colture di copertura con il DLC Precision Farming attivo."/>
+        <text name="ca_fertilization_behavior_pf_off" text="Nessuna fertilizzazione"/>
+        <text name="ca_fertilization_behavior_pf_fixed_amount" text="Importo fisso"/>
+        <text name="ca_enable_weed_suppression_short" text="Soppressione delle erbacce"/>
+        <text name="ca_enable_weed_suppression_long" text="Se abilitato, le erbe infestanti non cresceranno dopo la semina diretta in colture di copertura o la semina in colture di copertura pacciamate o crimpate a rulli."/>
+        <text name="ca_allow_direct_seeder_field_creation_short" text="Consentite la creazione di campi"/>
+        <text name="ca_allow_direct_seeder_field_creation_long" text="Se abilitato, le seminatrici dirette possono essere usati per la creazione dei campi. La creazione del campo può essere attivata separatamente per ogni seminatore, utilizzando il keybind 'Toggle pipe' (predefinito: 'o')."/>
+        <text name="ca_enable_grass_dropping_short" text="Rullo di crimpatura gocce d'erba"/>
+        <text name="ca_enable_grass_dropping_long" text="Se abilitato, il rullo di taglio e la pacciamatura lasceranno cadere l'erba sul terreno per simulare la presenza di biomateria. L'erba verrà rimossa automaticamente al momento della semina."/>
+        <text name="ca_enable_straw_chopping_bonus_short" text="La paglia tritata fertilizza"/>
+        <text name="ca_enable_straw_chopping_bonus_long" text="Se abilitata, la trinciatura della paglia (invece dell'andana) fertilizzerà il campo. L'agricoltura di precisione lo fa già, ma la quantità sarà regolabile."/>
+        <text name="ca_enable_cultivator_bonus_short" text="Incorporazione di coltivatori"/>
+        <text name="ca_enable_cultivator_bonus_long" text="Se abilitata, la coltivazione di colture di copertura avrà gli stessi effetti della rullatura. L'agricoltura di precisione lo fa già, ma la quantità sarà regolabile."/>
+        <text name="ca_nitrogen_amount_roller_crimping_short" text="Bonus di azoto (crimpatura a rulli)                                                                                                                                                                                                                   "/>
+        <text name="ca_nitrogen_amount_roller_crimping_long" text="Definisce i kg/ha di azoto che si ottengono con la rullatura o la pacciamatura delle colture di copertura."/>
+        <text name="ca_nitrogen_amount_direct_seeding_short" text="Bonus di azoto (semina diretta)"/>
+        <text name="ca_nitrogen_amount_direct_seeding_long" text="Definisce i kg/ha di azoto che si ottengono con la semina diretta nelle colture di copertura."/>
+        <text name="ca_nitrogen_amount_straw_chopping_short" text="Bonus di azoto (trinciatura della paglia)"/>
+        <text name="ca_nitrogen_amount_straw_chopping_long" text="Definisce i kg/ha di azoto che si ottengono quando si trincia la paglia con la mietitrebbia (anziché con l'andana)."/>
+        <text name="ca_nitrogen_amount_cultivating_short" text="Bonus di azoto (coltivazione)"/>
+        <text name="ca_nitrogen_amount_cultivating_long" text="Definisce i kg/ha di azoto che si ottengono incorporando le colture di copertura nel terreno con un coltivatore."/>
+    </texts>
+</l10n>
