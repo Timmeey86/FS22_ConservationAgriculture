@@ -262,6 +262,9 @@ GrowthSystem.performScriptBasedGrowth = Utils.appendedFunction(GrowthSystem.perf
 end)
 
 function CANitrogenLockMap.debugPlayerUpdate(player)
+    if not g_modIsLoaded["FS22_precisionFarming"] or not g_showDevelopmentWarnings then
+        return
+    end
     -- Get the player position
     local x, y, z = localToWorld(player.rootNode, 0, 0, 0)
     CANitrogenLockMap.debugLockMap(x, y, z)
@@ -269,6 +272,9 @@ end
 Player.update = Utils.appendedFunction(Player.update, CANitrogenLockMap.debugPlayerUpdate)
 
 function CANitrogenLockMap.debugVehicleUpdate(vehicle)
+    if not g_modIsLoaded["FS22_precisionFarming"] or not g_showDevelopmentWarnings then
+        return
+    end
     if not g_currentMission or vehicle ~= g_currentMission.controlledVehicle then
         return
     end
@@ -280,9 +286,6 @@ end
 Vehicle.update = Utils.appendedFunction(Vehicle.update, CANitrogenLockMap.debugVehicleUpdate)
 
 function CANitrogenLockMap.debugLockMap(x, y, z)
-    if not g_modIsLoaded["FS22_precisionFarming"] then
-        return
-    end
 
     local lockMap = FS22_precisionFarming.g_precisionFarming.caNitrogenLockMap
 
