@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="80">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>1.0.1.7</version>
+    <version>1.1.0.3</version>
     <title>
         <en>Conservation Agriculture</en>
         <de>Regenerative Landwirschaft</de>
@@ -46,6 +46,9 @@ If you do find issues or weird behaviour, please create an issue at https://gith
 Special thanks to Matthias, FS Gentleman and Cookie Cat for help and ideas provided to make this mod possible.
 
 Changelog:
+v1.1.0.3:
+- Establish compatibility with Terra Life Plus (weed prevention will be disabled in that case, however)
+
 v1.0.1.7:
 - Fixed an issue where weed suppression would cause lua errors on mod maps with incomplete fruit types
 
@@ -116,6 +119,9 @@ Wenn du Probleme oder seltsames Verhalten feststellst, berichte das Problem bitt
 Besonderen Dank an Matthias, FS Gentleman und Cookie Cat für Tips und Ideen, durch die diese Mod möglich wurde.
 
 Changelog:
+v1.1.0.3:
+- Kompatibilität mit Terra Life Plus hergestellt (Unkrautunterdrückung ist dann jedoch deaktiviert)
+
 v1.0.1.7:
 - Ein Problem wurde behoben, bei dem die Unkrautunterdrückung auf Karten mit unvollständigen Fruchtdefinitionen zu Lua Fehlern führte.
 
@@ -165,8 +171,12 @@ v1.0.0.2:
         <sourceFile filename="scripts/events/CASettingsChangeEvent.lua" />
         <sourceFile filename="scripts/events/SowingMachineLimitToFieldEvent.lua" />
         <sourceFile filename="scripts/ui/CASettingsGUI.lua" />
+        <sourceFile filename="scripts/pfext/CAPrecisionFarmingExt.lua" />
+        <sourceFile filename="scripts/pfext/CALockMapRepository.lua" />
         <sourceFile filename="scripts/ConservationAgriculture.lua" />
     </extraSourceFiles>
 
     <l10n filenamePrefix="i18n/locale" />
+
+    <terraLife />
 </modDesc>

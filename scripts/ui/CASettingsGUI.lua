@@ -278,9 +278,9 @@ function CASettingsGUI.updateUiElements(generalSettingsPage)
     end
     ]]
 
-    -- Disable weed suppression in case of certain mod conflicts
+    -- Disable weed suppression in case of certain mod incompatibilities
     if settings.preventWeeding then
         generalSettingsPage.ca_enableWeedSuppression:setDisabled(true)
-        generalSettingsPage.ca_enableWeedSuppression.elements[6]:setText("Disabled because LFHA ForageOptima Standard was detected (it breaks weeders)")
+        generalSettingsPage.ca_enableWeedSuppression.elements[6]:setText("Disabled since mods which change the weed system were loaded.")
     end
 end

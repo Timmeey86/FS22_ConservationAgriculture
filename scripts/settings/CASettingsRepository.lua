@@ -20,32 +20,33 @@ CASettingsRepository = {
     NITROGEN_AMOUNT_DIRECT_SEEDING = "nitrogenAmountDirectSeeding"
 }
 
+-- TODO This is currently not being used
 ---Creates and returns an XML schema for the settings.
 ---@return  table   @the XML schema
 function CASettingsRepository.createXmlSchema()
     local xmlSchema = XMLSchema.new(CASettingsRepository.CA_KEY)
 
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_CRIMPING_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_MULCH_BONUS_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_CRIMPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_MULCH_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_MULCH_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.WEED_SUPPRESSION_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.SEEDER_FIELD_CREATION_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.GRASS_DROPPING_KEY))
 
     local fertilizationBehaviorPath = CASettingsRepository.CA_KEY .. "." .. CASettingsRepository.FERTILIZATION_BEHAVIOR_KEY
 
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.BASE_GAME_KEY, fertilizationBehaviorPath))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.PF_KEY, fertilizationBehaviorPath))
 
     -- v 1.0.0.9+
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY))
-    xmlSchema.register(XmlValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.STRAW_CHOPPING_KEY))
+    xmlSchema:register(XMLValueType.BOOL, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.CULTIVATOR_BONUS_KEY))
 
     -- v 1.0.1.0+
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING))
-    xmlSchema.register(XmlValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_STRAW_CHOPPING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_CULTIVATING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING))
+    xmlSchema:register(XMLValueType.INT, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING))
 
     return xmlSchema
 end
@@ -86,6 +87,15 @@ function CASettingsRepository.storeSettings()
     saveXMLFile(settingsXmlId)
 end
 
+function CASettingsRepository.disableWeedingIfNecessary(settings)
+    -- LFHA ForageOptima Standard breaks weeders, so weed suppression will cause lua errors
+    -- TerraLifePlus has an extended weed system which we don't want to interfere with
+    if g_modIsLoaded['FS22_ForageOptima'] or g_modIsLoaded['FS22_TerraLifePlus'] then
+        settings.weedSuppressionIsEnabled = false
+        settings.preventWeeding = true
+    end
+end
+
 ---Reads the settings from an existing XML file (or leaves them at default if there is none yet)
 function CASettingsRepository.restoreSettings()
     local xmlPath = CASettingsRepository.getXmlFilePath()
@@ -99,7 +109,10 @@ function CASettingsRepository.restoreSettings()
 
     -- Load the XML if possible
     local settingsXmlId = loadXMLFile("CASettings", xmlPath)
-    if settingsXmlId == 0 then return end
+    if settingsXmlId == 0 then
+        CASettingsRepository.disableWeedingIfNecessary(settings)
+        return
+    end
 
     -- Read XML from memory
     settings.rollerCrimpingIsEnabled = getXMLBool(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.ROLLER_CRIMPING_KEY))
@@ -129,11 +142,7 @@ function CASettingsRepository.restoreSettings()
     settings.rollerCrimpingNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_ROLLER_CRIMPING )) or settings.rollerCrimpingNitrogenBonus
     settings.directSeedingNitrogenBonus = getXMLInt(settingsXmlId, CASettingsRepository.getXmlStateAttributePath(CASettingsRepository.NITROGEN_AMOUNT_DIRECT_SEEDING )) or settings.directSeedingNitrogenBonus
 
-    -- LFHA ForageOptima Standard breaks weeders, so weed suppression will cause lua errors
-    if g_modIsLoaded['FS22_ForageOptima'] then
-        settings.weedSuppressionIsEnabled = false
-        settings.preventWeeding = true
-    end
+    CASettingsRepository.disableWeedingIfNecessary(settings)
 end
 
 

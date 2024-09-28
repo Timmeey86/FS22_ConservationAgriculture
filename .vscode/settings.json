@@ -55,7 +55,7 @@
         "CheckedOptionElement",
         "MultiTextOptionElement",
         "XMLSchema",
-        "XmlValueType",
+        "XMLValueType",
         "createXMLFile",
         "createXmlFile",
         "setXMLBool",
@@ -81,6 +81,18 @@
         "g_sprayTypeManager",
         "g_fillTypeManager",
         "FertilizingCultivator",
-        "DensityRoundingMode"
+        "DensityRoundingMode",
+        "g_iconGenerator",
+        "DensityMapMultiModifier",
+        "localToWorld",
+        "getCorrectTextSize",
+        "getTerrainHeightAtWorldPos",
+        "GrowthSystem",
+        "setXMLFloat",
+        "XMLFile",
+        "Vehicle",
+        "g_time",
+        "netGetTime",
+        "g_showDevelopmentWarnings"
     ]
 }

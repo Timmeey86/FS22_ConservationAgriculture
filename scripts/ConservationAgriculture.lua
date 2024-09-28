@@ -1,13 +1,20 @@
-local modDirectory = g_currentModDirectory or ""
+MOD_DIR = g_currentModDirectory or ""
 MOD_NAME = g_currentModName or "unknown"
 
+function CA_PRINT_DEBUG_TIME(operation, passedMsec)
+    print(("%s[PERF]: %s took %.3f seconds"):format(MOD_NAME, operation, passedMsec / 1000))
+end
+function CA_PRINT_DEBUG_MSG(text)
+    print(("%s[DEBUG]: %s"):format(MOD_NAME, text))
+end
+
 -- Dynamically load the specializations
-source(modDirectory .. "scripts/specializations/MulcherFertilizerSpecialization.lua")
-source(modDirectory .. "scripts/specializations/RollerFertilizerSpecialization.lua")
-source(modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua")
-source(modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua")
-source(modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua")
-source(modDirectory .. "scripts/specializations/FertilizingCultivatorSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/MulcherFertilizerSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/RollerFertilizerSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/SeederFertilizerSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/CultivatorFertilizerSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/ChopperFertilizerSpecialization.lua")
+source(MOD_DIR .. "scripts/specializations/FertilizingCultivatorSpecialization.lua")
 
 local function printSpecRegistration(typeName, specType)
     print(("%s: Type %s will be handled by %s specialization"):format(MOD_NAME, typeName, specType))
@@ -20,17 +27,17 @@ local function registerSpecialization(manager)
 
         -- Register the specialization types in the specialization manager (this also allows other mods to extend them)
         g_specializationManager:addSpecialization(
-            "CA_MulcherSpecialization", "MulcherFertilizerSpecialization", modDirectory .. "scripts/specializations/MulcherFertilizerSpecialization.lua", nil)
+            "CA_MulcherSpecialization", "MulcherFertilizerSpecialization", MOD_DIR .. "scripts/specializations/MulcherFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
-            "CA_RollerSpecialization", "RollerFertilizerSpecialization", modDirectory .. "scripts/specializations/RollerFertilizerSpecialization.lua", nil)
+            "CA_RollerSpecialization", "RollerFertilizerSpecialization", MOD_DIR .. "scripts/specializations/RollerFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
-            "CA_SeederSpecialization", "SeederFertilizerSpecialization", modDirectory .. "scripts/specializations/SeederFertilizerSpecialization.lua", nil)
+            "CA_SeederSpecialization", "SeederFertilizerSpecialization", MOD_DIR .. "scripts/specializations/SeederFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
-            "CA_CultivatorSpecialization", "CultivatorFertilizerSpecialization", modDirectory .. "scripts/specializations/CultivatorFertilizerSpecialization.lua", nil)
+            "CA_CultivatorSpecialization", "CultivatorFertilizerSpecialization", MOD_DIR .. "scripts/specializations/CultivatorFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
-            "CA_ChopperSpecialization", "ChopperFertilizerSpecialization", modDirectory .. "scripts/specializations/ChopperFertilizerSpecialization.lua", nil)
+            "CA_ChopperSpecialization", "ChopperFertilizerSpecialization", MOD_DIR .. "scripts/specializations/ChopperFertilizerSpecialization.lua", nil)
         g_specializationManager:addSpecialization(
-            "CA_FertilizingCultivatorSpecialization", "FertilizingCultivatorSpecialization", modDirectory .. "scripts/specializations/FertilizingCultivatorSpecialization.lua", nil)
+            "CA_FertilizingCultivatorSpecialization", "FertilizingCultivatorSpecialization", MOD_DIR .. "scripts/specializations/FertilizingCultivatorSpecialization.lua", nil)
 
         -- Add the specializations to vehicles based on which kind of specializations they already have
         for typeName, typeEntry in pairs(g_vehicleTypeManager:getTypes()) do
@@ -104,6 +111,7 @@ TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, r
 g_rollerCrimpingData = RollerCrimpingData.new()
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
         CASettingsRepository.restoreSettings()
+        CALockMapRepository.restoreLockMapData()
     end)
 
 -- Create (and cleanup) a global settings object
@@ -116,4 +124,7 @@ InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGe
 InGameMenuGeneralSettingsFrame.updateGameSettings = Utils.appendedFunction(InGameMenuGeneralSettingsFrame.updateGameSettings, CASettingsGUI.inj_updateGameSettings)
 
 -- Save and load settings (loading is done in loadMapFinished)
-FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, CASettingsRepository.storeSettings)
+FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, function()
+    CASettingsRepository.storeSettings()
+    CALockMapRepository.storeLockMapData()
+end)
