@@ -66,7 +66,7 @@ function CALockMapRepository.restoreLockMapData()
     local lockMap = FS22_precisionFarming.g_precisionFarming.caNitrogenLockMap
     local xmlPath = CALockMapRepository.getXmlFilePath()
 
-    if not fileExists(xmlPath) then
+    if not xmlPath or not fileExists(xmlPath) then
         -- Mod hasn't been active during the last save most likely
         return
     end
@@ -92,7 +92,7 @@ function CALockMapRepository.restoreLockMapData()
         lockMap.pendingWorkAreas[i] = coords
     end)
 
-    if DEBUG_CA_PERFORMANCE then
+    if g_showDevelopmentWarnings then
         CA_PRINT_DEBUG_TIME(("Loading %d work areas from the XML"):format(#lockMap.pendingWorkAreas), netGetTime() - time)
     end
 end

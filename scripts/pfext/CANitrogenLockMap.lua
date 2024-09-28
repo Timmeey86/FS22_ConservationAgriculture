@@ -245,7 +245,7 @@ function CANitrogenLockMap:resetLocksInPendingWorkAreas()
     end
     self.pendingWorkAreas = {}
 
-    if DEBUG_CA_PERFORMANCE then
+    if g_showDevelopmentWarnings then
         CA_PRINT_DEBUG_TIME(("Resetting lock bits in %d work areas"):format(amount), netGetTime() - time)
     end
 end

@@ -40,6 +40,14 @@ function RollerCrimpingData:internalInit(fruitTypes)
 
         -- Store the information for fast lookup later
         self.forageableStatesPerFruit[index] = { min = minForageState, max = maxForageState }
+        if g_showDevelopmentWarnings then
+            self.forageableStatesPerFruit[index].name = fruitDescription.name
+            self.forageableStatesPerFruit[index].cutState = fruitDescription.cutState
+        end
+    end
+    if g_showDevelopmentWarnings then
+        print(MOD_NAME .. "[DEBUG] Fruit growth data:")
+        DebugUtil.printTableRecursively(self.forageableStatesPerFruit, "  ", 0, 2)
     end
 end
 

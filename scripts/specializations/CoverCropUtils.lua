@@ -32,7 +32,7 @@ end
 function CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
     local rollerCrimpingGrowthStates = g_rollerCrimpingData:getForageableStates(fruitTypeIndex)
 
-    if rollerCrimpingGrowthStates.min ~= nil and rollerCrimpingGrowthStates.max ~= nil then
+    if rollerCrimpingGrowthStates.min ~= nil and rollerCrimpingGrowthStates.max ~= nil and rollerCrimpingGrowthStates.max > 0 then
         fruitFilter:setValueCompareParams(DensityValueCompareType.BETWEEN, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max)
         return true
     else
@@ -266,7 +266,7 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
                 fruitModifier:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
                 fruitFilter:resetDensityMapAndChannels(desc.terrainDataPlaneId, desc.startStateChannel, desc.numStateChannels)
 
-                local fruitFilterCouldBeConstructed = CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
+                local fruitIsCrimpable = CoverCropUtils.filterForForageableFruit(fruitFilter, fruitTypeIndex)
 
                 -- if possible, use the mulched fruit state, otherwise use the cut state
                 local mulchedFruitState = desc.cutState or 0
@@ -276,11 +276,17 @@ function CoverCropUtils.mulchAndFertilizeCoverCrops(implement, workArea, groundS
 
                 -- Cut (mulch) any pixels which match the fruit type (including growth stage) and haven't had their stubble level set to max
                 local numPixelsAffected = 0
-                if fruitFilterCouldBeConstructed then
+                if fruitIsCrimpable then
                     _, numPixelsAffected, _ = fruitModifier:executeSet(mulchedFruitState, fruitFilter, onFieldFilter)
                 end
                 if numPixelsAffected > 0 then
 
+                    if g_showDevelopmentWarnings then
+                        local rollerCrimpingGrowthStates = g_rollerCrimpingData:getForageableStates(fruitTypeIndex)
+                        CA_PRINT_DEBUG_MSG(("Mulched %d pixels of fruit %s between growth states %d and %d"):format(
+                            numPixelsAffected, desc.name, rollerCrimpingGrowthStates.min, rollerCrimpingGrowthStates.max
+                        ))
+                    end
                     -- Remember that we processed this part of the work area
                     table.insert(processedCoordParts, coords)
 
